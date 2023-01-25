@@ -1,0 +1,297 @@
+% !Rnw weave = knitr
+\documentclass[addpoints,answers]{exam}
+\usepackage{amsmath}  % for \nobreakdash
+\usepackage[
+  a4paper,
+  margin = 2cm,
+  footskip = 20pt  % footer pushed too far with exam class; adjust with footskip
+]{geometry}
+%\usepackage[utf8]{inputenc}  % this is ignored with utf8 based engines like XeTeX
+\usepackage{lastpage}
+\usepackage{siunitx}  % for number formatting
+
+% These packages are best loaded last after other packages.
+\usepackage[pdfusetitle]{hyperref}
+%\usepackage{refcheck}  % must be loaded after hyperref; uncomment to check references
+
+% Global R settings
+% -----------------
+<<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
+@
+
+% Commands
+% --------
+\newcommand{\assignment}{Worksheet 1}
+\newcommand{\coursecode}{STAC33H3 S}
+\newcommand{\semester}{Winter 2023}
+\newcommand{\name}{Sibo Dong}
+
+% Typography
+% ----------
+\title{\coursecode, \semester: \assignment}
+% This file is shared in a public Git repository, so a dummy student number is used
+% below for privacy, just in case.
+\author{\name \\ \texttt{1234567890}}
+\date{Monday January~16, 2023 11:59pm}
+
+\runningheadrule
+\header{\coursecode, \semester}{}{\assignment}
+\footer{}{}{Page \thepage \ of \pageref{LastPage}}
+
+% Use titled questions with an altered question format to somewhat match markup in
+% worksheet_1_c33.html
+\qformat{\textbf{Question \thequestion: \thequestiontitle}\dotfill (\totalpoints\ points)}
+
+% NOTE: If page breaks for knitr code chunks aren't needed in the final document, it is
+% safe to leave the \renewenvironment line commented out.
+%
+% Don't define kframe environment; kframe uses frame, which does not interact well inside
+% of another framed box, like the box around solutions from the exam class. The downside
+% to doing this is that we lose background colour since there is no more box/frame, but
+% page breaks are worth it.
+%\renewenvironment{kframe}{}{}
+
+% Miscellaneous
+% -------------
+\synctex=1
+
+\begin{document}
+
+\maketitle
+\thispagestyle{foot}  % include only footer on title page
+
+\noindent
+The questions here have solutions attached at \href{https://ritsokiguess.site/STAC33/worksheet_1_c33.html}{\texttt{worksheet\_1\_c33.html}}.
+Follow the solutions to see what to do, if you cannot otherwise guess.
+
+\medskip
+\noindent
+It is worth your while to work through these problems, and the ones in future tutorial
+worksheets, because they will get you used to how R operates, and gain you some comfort
+in coding simple things. If you do not work through these problems now, any issues that
+you could have dealt with this week (with help available) come back to bite you when you
+will have an assignment due. This is stress you would do well to be without.
+
+\medskip
+\noindent
+If you don't get to the end in tutorial, it's a good idea to finish them on your own time
+this week.
+
+\bigskip
+\begin{center}
+  \gradetable[v][questions]
+\end{center}
+
+\newpage
+
+\begin{questions}
+
+\titledquestion{Using R Studio online}
+
+  \begin{parts}
+
+    \part
+      Point your web browser at \url{http://r.datatools.utoronto.ca}. Click on the button
+      to the left of \textit{R Studio} (it will show blue), click the orange \textit{Log
+      in to start}, and log in using your UTorID and password.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Take a look around, and create a new Project. Give the new project any name you
+      like.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      One last piece of testing: find the Console window (which is probably bottom left
+      on yours). Click next to the blue \texttt{>}, and type \texttt{library(tidyverse)}.
+      Press \texttt{Enter}.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Getting started}
+  This question is to get you started to using R.
+
+  \begin{parts}
+
+    \part
+      Start R Studio on Jupyter (or on your computer), in some project. (If you started
+      up a new project in the previous question and are still logged in, use that; if
+      not, create a new project with \textit{File}, \textit{New Project}, and \textit{New
+      Directory}. Then select \textit{New Project} and give it a name. Click \textit{Create
+      Project}. This will give you an empty workspace to start from.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      We're going to do some stuff in R here, just to get used to it. First, make an R
+      Notebook by selecting \textit{File}, \textit{New File} and \textit{R Notebook}.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Change the title to something of your choosing. Then go down to line~5, click on
+      the \textit{Insert} button and select \textit{R}. You should see a ``code chunk''
+      appear at line~5, which we are going to use in a moment.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Type the line of code shown below into the chunk in the R Notebook:
+<<mtcars, eval = FALSE>>=
+mtcars
+@
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Run this command. To do that, look at the top right of your code chunk block
+      (shaded in a slightly different colour). You should see a gear symbol, a down arrow
+      and a green ``play button''. Click the play button. This will run the code, and
+      show the output below the code chunk.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Something a little more interesting: \texttt{summary} obtains a summary of whatever
+      you feed it (the five-number summary plus the mean for numerical variables). Obtain
+      this for our data frame. To do this, create a new code chunk below the previous
+      one, type \texttt{summary(mtcars)} into the code chunk, and run it.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Let's make a histogram of the gas mileage data. Type the code below into another
+      new code chunk:
+<<mtcars-mpg-plot, eval = FALSE>>=
+ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
+@
+      The code looks a bit wordy, but we'll see what all those pieces do later in the
+      course (like, maybe tomorrow).
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Some aesthetics to finish with: delete the template notebook (all the stuff you
+      didn't type below your code chunks and output). Then add some narrative text above
+      and below your code chunks. Above the code chunk is where you say what you are
+      going to do (and maybe why you are doing it), and below is where you say what you
+      conclude from the output you just obtained. I find it looks better if you have a
+      blank line above and below each code chunk.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Save your notebook (the usual way with \textit{File} and \textit{Save}). This saves
+      it on the \emph{Jupyter servers} (and not on your computer). This means that when
+      you come back to it later, even from another device, this notebook will still be
+      available to you. (This of course does not apply if you are running R Studio on
+      your own computer.)
+      \par
+      Now click \textit{Preview}. This produces a pretty HTML version of your notebook.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Practice handing in your previewed R notebook, as if it were an assignment that was
+      worth something. (It is good to get the practice in a low-stakes situation, so that
+      you'll know what to do next week.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Optional extra. Something more ambitious: make a scatter plot of gas mileage,
+      \texttt{mpg}, on the \(y\)\nobreakdash-axis, against horsepower, \texttt{hp}, on
+      the \(x\)\nobreakdash-axis.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Reading data from a file}
+  In this question, we read a file from the web and do some descriptive statistics and a
+  graph. This is very like what you will be doing on future assignments, so it's good to
+  practice it now.
+  \par
+  Take a look at the data file at \url{http://ritsokiguess.site/datafiles/jumping.txt}.
+  These are measurements on \num{30} rats that were randomly made to do different amounts
+  of jumping by group (we'll see the details later in the course). The control group did
+  no jumping, and the other groups did ``low jumping'' and ``high jumping''. The first
+  column says which jumping group each rat was in, and the second is the rat's bone
+  density (the experimenters' supposition was that more jumping should go with higher
+  bone density).
+
+  \begin{parts}
+
+    \part
+      What are the two columns of data separated by? (The fancy word is ``delimited'').
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Make a new R Notebook. Leave the first four lines, but get rid of the rest of the
+      template document. Start with a code chunk containing \texttt{library(tidyverse)}.
+      Run it.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Put the URL of the data file in a variable called \texttt{my\_url}. Then use
+      \texttt{read\_delim} to read in the file. (See solutions for how.) \texttt{read\_delim}
+      reads data files where the data values are always separated by the same single
+      character, here a space. Save the data frame in a variable \texttt{rats}.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Take a look at your data frame, by making a new code chunk and putting the data
+      frame's name in it (as we did with \texttt{mtcars}).
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Find the mean bone density for rats that did each amount of jumping.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Make a box plot of bone density for each jumping group.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+  If you want more practice, work through question~3.4 of \href{http://ritsokiguess.site/%
+  pasias/getting-used-to-r-and-r-studio.html#reading-data-from-a-file}{PASIAS}.
+
+\end{questions}
+
+\end{document}
