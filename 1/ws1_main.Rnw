@@ -17,6 +17,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -218,8 +219,21 @@ ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
       The code looks a bit wordy, but we'll see what all those pieces do later in the
       course (like, maybe tomorrow).
       \begin{solution}
-        % TODO
+        See \autoref{fig:mtcars-mpg} for the histogram outputted from the code chunk
+        above. We can see that the histogram of the gas mileage data has a relatively
+        long right tail, which supports our guess in Part~\ref{part@2@6}'s answer about
+        \texttt{mpg} being skewed-right.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<mtcars-mpg-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Gas mileage of cars from 1974 \textit{Motor Trends} US magazine}
+    \label{fig:mtcars-mpg}
+  \end{figure}
+\fi
 
     \part
       Some aesthetics to finish with: delete the template notebook (all the stuff you
