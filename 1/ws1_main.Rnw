@@ -50,7 +50,7 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 % of another framed box, like the box around solutions from the exam class. The downside
 % to doing this is that we lose background colour since there is no more box/frame, but
 % page breaks are worth it.
-%\renewenvironment{kframe}{}{}
+\renewenvironment{kframe}{}{}
 
 % Miscellaneous
 % -------------
@@ -96,7 +96,7 @@ this week.
       to the left of \textit{RStudio} (it will show blue), click the orange \textit{Log
       in to start}, and log in using your UTorID and password.
       \begin{solution}
-        Solution is trivial. Moreover, I typically use a locally installed R alongside
+        Solution is trivial. However, I typically use a locally installed R alongside
         \href{https://github.com/jalvesaq/Nvim-R}{Nvim-R} instead of RStudio (online).
       \end{solution}
 
@@ -139,14 +139,17 @@ library(tidyverse)
       Directory}. Then select \textit{New Project} and give it a name. Click \textit{Create
       Project}. This will give you an empty workspace to start from.)
       \begin{solution}
-        % TODO
+        Solution is trivial. However, I typically do not use RStudio or its projects,
+        instead opting for organization via plain old directories.
       \end{solution}
 
     \part
       We're going to do some stuff in R here, just to get used to it. First, make an R
       Notebook by selecting \textit{File}, \textit{New File} and \textit{R Notebook}.
       \begin{solution}
-        % TODO
+        Solution is trivial. However, I typically use Rnoweb files (i.e., \LaTeX{} plus
+        \href{https://en.wikipedia.org/wiki/Knitr}{knitr}) instead of R Notebooks written
+        in R Markdown.
       \end{solution}
 
     \part
@@ -154,7 +157,13 @@ library(tidyverse)
       the \textit{Insert} button and select \textit{R}. You should see a ``code chunk''
       appear at line~5, which we are going to use in a moment.
       \begin{solution}
-        % TODO
+        Solution is trivial. I typically use Rnoweb files, where the basic syntax for a
+        knitr code chunk is as follows:
+        % What follows is a hacky way to print a verbatim code chunk. knitr's verbatim
+        % engine seems to only work with R Markdown, hence the solution below.
+<<echo = FALSE, comment = "">>=
+cat("<<>>=\n# Code goes here\n@\n")
+@
       \end{solution}
 
     \part
@@ -163,7 +172,13 @@ library(tidyverse)
 mtcars
 @
       \begin{solution}
-        % TODO
+        Solution is trivial. Note that the following syntax is valid for Rnoweb files but
+        not R Markdown files (by default):
+        % What follows is a hacky way to print a verbatim code chunk. knitr's verbatim
+        % engine seems to only work with R Markdown, hence the solution below.
+<<echo = FALSE, comment = "">>=
+cat("<<>>=\nmtcars\n@\n")
+@
       \end{solution}
 
     \part
@@ -172,7 +187,11 @@ mtcars
       and a green ``play button''. Click the play button. This will run the code, and
       show the output below the code chunk.
       \begin{solution}
-        % TODO
+        Solution is trivial:
+<<mtcars>>=
+@
+        I typically use Nvim-R, where independent code chunks can be ran with the
+        \texttt{\textbackslash{}cc} keybinding.
       \end{solution}
 
     \part
