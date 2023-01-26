@@ -276,8 +276,38 @@ ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
       \texttt{mpg}, on the \(y\)\nobreakdash-axis, against horsepower, \texttt{hp}, on
       the \(x\)\nobreakdash-axis.
       \begin{solution}
-        % TODO
+        We draw a scatter plot of gas mileage (the dependent variable) changing with
+        horsepower (the independent variable), along with a linear regression line (see
+        \autoref{fig:mtcars-hp-mpg} for the outputted scatter plot):
+<<mtcars-hp-mpg-plot, eval = FALSE>>=
+ggplot(mtcars, aes(hp, mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "Gross horsepower (hp)", y = "Fuel economy (mpg)")
+@
+        We can see a general downwards trend from our scatter plot. This seems to make
+        sense as a more powerful car will likely consume more gas and have an inferior
+        fuel economy. However, our linear trend line does not seem to fit as well. We
+        can check this linear model's \(R^2\) for a measure of how well it fits to our
+        data:
+<<mtcars-hp-mpg-r2>>=
+(hp.mpg.fit <- lm(mpg ~ hp, mtcars))
+summary(hp.mpg.fit)$r.squared
+@
+        The \(R^2\) above is less than \num{0.9}, so a linear model does not fit our data
+        very well. This may be due several reasons: outliers, a nonlinear model being
+        more suitable, etc.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<mtcars-hp-mpg-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{1974 \textit{Motor Trends} cars' effect of horsepower on gas mileage}
+    \label{fig:mtcars-hp-mpg}
+  \end{figure}
+\fi
 
   \end{parts}
 
