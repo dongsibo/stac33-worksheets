@@ -243,7 +243,9 @@ ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
       conclude from the output you just obtained. I find it looks better if you have a
       blank line above and below each code chunk.
       \begin{solution}
-        % TODO
+        Solution is trivial as narrative text has already been added for the code chunks
+        above. Moreover, ``delete the template notebook'' is not applicable here as I am
+        using my own Rnoweb file.
       \end{solution}
 
     \part
@@ -255,7 +257,10 @@ ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
       \par
       Now click \textit{Preview}. This produces a pretty HTML version of your notebook.
       \begin{solution}
-        % TODO
+        Solution is trivial. As mentioned, I am also knitting an Rnoweb file which
+        results in a PDF document instead of an HTML notebook. My worksheets for this
+        course are also hosted on GitHub, which is another way of sharing them across
+        devices.
       \end{solution}
 
     \part
@@ -263,7 +268,7 @@ ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
       worth something. (It is good to get the practice in a low-stakes situation, so that
       you'll know what to do next week.)
       \begin{solution}
-        % TODO
+        Solution is trivial.
       \end{solution}
 
     \part
