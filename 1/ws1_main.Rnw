@@ -96,14 +96,16 @@ this week.
       to the left of \textit{R Studio} (it will show blue), click the orange \textit{Log
       in to start}, and log in using your UTorID and password.
       \begin{solution}
-        % TODO
+        Solution is trivial. Moreover, I typically use a locally installed R alongside
+        \href{https://github.com/jalvesaq/Nvim-R}{Nvim-R} instead of R Studio (online).
       \end{solution}
 
     \part
       Take a look around, and create a new Project. Give the new project any name you
       like.
       \begin{solution}
-        % TODO
+        Solution is trivial. I also usually use something other than R Studio (see
+        Part~\ref{part@1@1}'s answer).
       \end{solution}
 
     \part
@@ -111,7 +113,14 @@ this week.
       on yours). Click next to the blue \texttt{>}, and type \texttt{library(tidyverse)}.
       Press \texttt{Enter}.
       \begin{solution}
-        % TODO
+        We load the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}, a
+        collection of packages used extensively in STAC33H3 (i.e., this course):
+<<common, message = FALSE>>=
+library(tidyverse)
+@
+        Loading the tidyverse usually results in some messages (e.g., attached packages),
+        but these messages usually only appear the first time in a clean R session, so we
+        purposely omit them in the document, for reproducibility.
       \end{solution}
 
   \end{parts}
