@@ -200,7 +200,13 @@ cat("<<>>=\nmtcars\n@\n")
       this for our data frame. To do this, create a new code chunk below the previous
       one, type \texttt{summary(mtcars)} into the code chunk, and run it.
       \begin{solution}
-        % TODO
+        Solution is trivial:
+<<mtcars-summary>>=
+summary(mtcars)
+@
+        The differences between the median and mean for each variable can tell us about
+        their skewness. For example, the mean for \texttt{mpg} is larger than its median,
+        so this suggests a distribution that is skewed-right.
       \end{solution}
 
     \part
