@@ -87,24 +87,24 @@ this week.
 
 \begin{questions}
 
-\titledquestion{Using R Studio online}
+\titledquestion{Using RStudio online}
 
   \begin{parts}
 
     \part
       Point your web browser at \url{http://r.datatools.utoronto.ca}. Click on the button
-      to the left of \textit{R Studio} (it will show blue), click the orange \textit{Log
+      to the left of \textit{RStudio} (it will show blue), click the orange \textit{Log
       in to start}, and log in using your UTorID and password.
       \begin{solution}
         Solution is trivial. Moreover, I typically use a locally installed R alongside
-        \href{https://github.com/jalvesaq/Nvim-R}{Nvim-R} instead of R Studio (online).
+        \href{https://github.com/jalvesaq/Nvim-R}{Nvim-R} instead of RStudio (online).
       \end{solution}
 
     \part
       Take a look around, and create a new Project. Give the new project any name you
       like.
       \begin{solution}
-        Solution is trivial. I also usually use something other than R Studio (see
+        Solution is trivial. I also usually use something other than RStudio (see
         Part~\ref{part@1@1}'s answer).
       \end{solution}
 
@@ -133,7 +133,7 @@ library(tidyverse)
   \begin{parts}
 
     \part
-      Start R Studio on Jupyter (or on your computer), in some project. (If you started
+      Start RStudio on Jupyter (or on your computer), in some project. (If you started
       up a new project in the previous question and are still logged in, use that; if
       not, create a new project with \textit{File}, \textit{New Project}, and \textit{New
       Directory}. Then select \textit{New Project} and give it a name. Click \textit{Create
@@ -211,7 +211,7 @@ ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
       Save your notebook (the usual way with \textit{File} and \textit{Save}). This saves
       it on the \emph{Jupyter servers} (and not on your computer). This means that when
       you come back to it later, even from another device, this notebook will still be
-      available to you. (This of course does not apply if you are running R Studio on
+      available to you. (This of course does not apply if you are running RStudio on
       your own computer.)
       \par
       Now click \textit{Preview}. This produces a pretty HTML version of your notebook.
