@@ -332,7 +332,7 @@ summary(hp.mpg.fit)$r.squared
     \part
       What are the two columns of data separated by? (The fancy word is ``delimited'').
       \begin{solution}
-        % TODO
+        The columns of \texttt{jumping.txt} are delimited by single spaces.
       \end{solution}
 
     \part
@@ -340,7 +340,9 @@ summary(hp.mpg.fit)$r.squared
       template document. Start with a code chunk containing \texttt{library(tidyverse)}.
       Run it.
       \begin{solution}
-        % TODO
+        This question is typeset in the same Rnoweb file as the other questions in
+        \assignment{} and \texttt{library(tidyverse)} has already been run in \ref{question@1},
+        so the instructions in this question are unnecessary here.
       \end{solution}
 
     \part
