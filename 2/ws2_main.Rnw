@@ -87,6 +87,14 @@ how wrong your initial guess is.
 
 \newpage
 
+\noindent
+\textbf{Note:} This worksheet (and the \coursecode{} course) make(s) use of the
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}:
+
+<<common, message = FALSE>>=
+library(tidyverse)
+@
+
 \begin{questions}
 
 \titledquestion{The Boat Race}
@@ -101,13 +109,20 @@ how wrong your initial guess is.
       Take a look at the data file (in your web browser), and describe how the data
       values are separated one from the next.
       \begin{solution}
-        % TODO
+        The columns of \texttt{boat\_race.txt} are delimited by single spaces.
       \end{solution}
 
     \part
       Read the file into a data frame and display at least some of it.
       \begin{solution}
-        % TODO
+        We read the data into a variable from the URL above and display its contents:
+<<read-boat-race-data, message = FALSE>>=
+(boat.race <- read_delim("https://ritsokiguess.site/datafiles/boat_race.txt"))
+@
+        We can see that \texttt{read\_delim} correctly guessed the column delimiter, even
+        though we did not explicitly specify it. Although deliberately not shown above
+        (due to width restrictions), this is also evident from the code chunk's message,
+        part of which reads \texttt{Delimiter: " "}.
       \end{solution}
 
     \part
