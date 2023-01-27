@@ -63,8 +63,9 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 \thispagestyle{foot}  % include only footer on title page
 
 \noindent
-The questions here have solutions attached at \href{https://ritsokiguess.site/STAC33/worksheet_1_c33.html}{\texttt{worksheet\_1\_c33.html}}.
-Follow the solutions to see what to do, if you cannot otherwise guess.
+The questions here have solutions attached at \href{https://ritsokiguess.site/STAC33/%
+worksheet_1_c33.html}{\texttt{worksheet\_1\_c33.html}}. Follow the solutions to see what
+to do, if you cannot otherwise guess.
 
 \medskip
 \noindent
