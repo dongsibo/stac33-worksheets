@@ -17,6 +17,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -128,8 +129,43 @@ library(tidyverse)
     \part
       Make a suitable graph of your data.
       \begin{solution}
-        % TODO
+        We draw a box plot of the participant weights grouped by university team (see
+        \autoref{fig:boatrace-weights-1} for the outputted box plot):
+<<boat-race-weights-plot-1, eval = FALSE>>=
+ggplot(boat.race, aes(university, weight)) +
+  geom_boxplot() +
+  labs(x = "University", y = "Participant weight (lb)")
+@
+        Alternatively, we can draw a histogram for each university, stacked on top of
+        each other, to compare the participants weight distributions (see \autoref{fig:%
+        boatrace-weights-2}) for the outputted histograms):
+<<boat-race-weights-plot-2, eval = FALSE>>=
+ggplot(boat.race, aes(weight)) +
+  geom_histogram(binwidth = 8) +
+  facet_wrap(vars(university), ncol = 1) +
+  labs(x = "Participant weight (lb)", y = "Frequency")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<boat-race-weights-plot-1, echo = FALSE, message = FALSE>>=
+@
+    \caption{1992 Boat Race participant weights for each university team}
+    \label{fig:boatrace-weights-1}
+  \end{figure}
+\fi
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<boat-race-weights-plot-2, echo = FALSE, message = FALSE>>=
+@
+    \caption{1992 Boat Race participant weights for each university team}
+    \label{fig:boatrace-weights-2}
+  \end{figure}
+\fi
 
     \part
       Would you say, based on your plot, that the average or typical weights of the
