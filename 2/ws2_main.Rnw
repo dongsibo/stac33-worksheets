@@ -187,7 +187,13 @@ ggplot(boat.race, aes(weight)) +
       row themselves. Which of the nine individuals in each team do you think is the cox?
       Explain briefly.
       \begin{solution}
-        % TODO
+        A cox (aka coxswain) is the member that steers the boat instead of rowing. They
+        literally do not ``pull their own weight'', so an optimal rowing crew would have
+        their cox be as light as possible for easier rowing and higher speed.
+        \par
+        From Figures \ref{fig:boatrace-weights-1} and~\ref{fig:boatrace-weights-2}, we
+        can see that the coxes for each team would likely be the low outliers, i.e., the
+        lightest participants at around \qty{110}{lb} each.
       \end{solution}
 
   \end{parts}
