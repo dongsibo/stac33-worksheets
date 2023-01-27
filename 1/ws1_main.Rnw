@@ -23,8 +23,8 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 
 % Commands
 % --------
-\newcommand{\assignment}{Worksheet 1}
-\newcommand{\coursecode}{STAC33H3 S}
+\newcommand{\assignment}{Worksheet~1}
+\newcommand{\coursecode}{STAC33H3~S}
 \newcommand{\semester}{Winter 2023}
 \newcommand{\name}{Sibo Dong}
 
@@ -115,7 +115,7 @@ this week.
       Press \texttt{Enter}.
       \begin{solution}
         We load the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}, a
-        collection of packages used extensively in STAC33H3 (i.e., this course):
+        collection of packages used extensively in \coursecode{} (i.e., this course):
 <<common, message = FALSE>>=
 library(tidyverse)
 @
