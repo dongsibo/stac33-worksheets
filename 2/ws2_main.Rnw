@@ -171,7 +171,14 @@ ggplot(boat.race, aes(weight)) +
       Would you say, based on your plot, that the average or typical weights of the
       rowers on the two teams are similar or different? Explain briefly.
       \begin{solution}
-        % TODO
+        From \autoref{fig:boatrace-weights-1}, we can see that the median weights of the
+        rowers on both university teams are fairly similar (the bold lines for both boxes
+        are around the same level), given the amount of variability.
+        \par
+        Similarly, from \autoref{fig:boatrace-weights-2}, we can see that the distributions
+        for each university team are centered around the same bin, indicating that the
+        typical weights for each team are similar. Moreover, the distributions overall
+        appear mostly similar as well.
       \end{solution}
 
     \part
