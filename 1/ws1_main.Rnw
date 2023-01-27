@@ -377,14 +377,45 @@ rats
     \part
       Find the mean bone density for rats that did each amount of jumping.
       \begin{solution}
-        % TODO
+        We can find the mean bone density for the rats, grouped by jumping, via
+        \texttt{group\_by} and \texttt{summarize}:
+<<jumping-mean-density>>=
+rats %>% group_by(group) %>% summarize(mean.density = mean(density))
+@
+        The groups of rats with the highest to lowest mean bone density are as follows:
+        the high jumping group, the low jumping group, and the no jumping group. These
+        results seem to support the experimenters' supposition that ``more jumping goes
+        with higher bone density'' but only with high jumps.
       \end{solution}
 
     \part
       Make a box plot of bone density for each jumping group.
       \begin{solution}
-        % TODO
+        We draw a box plot grouped by jumping group with the following code chunk (see
+        \autoref{fig:rats-plot} for the outputted box plot):
+<<jumping-plot, eval = FALSE>>=
+ggplot(rats, aes(group, density)) +
+  geom_boxplot() +
+  labs(x = "Group", y = "Bone density")
+@
+        We can see from our box plot that the median bone density for the control and low
+        jumping group are relatively similar. The high jumping group overall seems to
+        have a higher bone density than the other two groups. Again, this seems to
+        support the experimenters' supposition, but only with high jumps.
+        \par
+        Note that the control group has outliers, one of which is a rat with a high bone
+        density that would be more typical for a rat in the high jumping group.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<jumping-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Bone density of rats that performed jumps of different heights}
+    \label{fig:rats-plot}
+  \end{figure}
+\fi
 
   \end{parts}
 
