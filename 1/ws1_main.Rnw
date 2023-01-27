@@ -351,14 +351,27 @@ summary(hp.mpg.fit)$r.squared
       reads data files where the data values are always separated by the same single
       character, here a space. Save the data frame in a variable \texttt{rats}.
       \begin{solution}
-        % TODO
+        We read the data into the \texttt{rats} variable from the URL given above:
+<<read-jumping-data, message = FALSE>>=
+my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
+rats <- read_delim(my_url, delim = " ")
+@
       \end{solution}
 
     \part
       Take a look at your data frame, by making a new code chunk and putting the data
       frame's name in it (as we did with \texttt{mtcars}).
       \begin{solution}
-        % TODO
+        We take a look at the data frame to verify that it looks sound:
+<<jumping>>=
+rats
+@
+        Note that displaying the data frame could have done during variable assignment
+        with parentheses, to avoid an extra line of code (this code chunk is just for
+        example, so it does not run on purpose):
+<<jumping-paren, eval = FALSE>>=
+(rats <- read_delim(my_url, delim = " "))
+@
       \end{solution}
 
     \part
