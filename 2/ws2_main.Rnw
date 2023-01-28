@@ -240,8 +240,39 @@ ggplot(boat.race, aes(weight)) +
       Make a suitable graph of the two variables of interest. Make sure you consider what
       type of variable these are (which might not be the same as how they are recorded).
       \begin{solution}
-        % TODO
+        Our two variables of interest are \texttt{sta} and \texttt{typ}, which are both
+        categorical varibles. However, they are classified as doubles in \texttt{icudat},
+        so it is sensible to convert them into factors for certain analyses.
+        \par
+        We draw a bar chart of ICU patient vital statues grouped by their admission type
+        (see \autoref{fig:icudat} for the outputted bar chart):
+<<icudat-plot, eval = FALSE>>=
+ggplot(icudat %>%
+       mutate(sta = recode_factor(sta, `0` = "Lived", `1` = "Died"),
+              typ = recode_factor(typ, `0` = "Elective", `1` = "Emergency")),
+       aes(typ, fill = sta)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Type of admission", y = "Frequency", fill = "Vital status")
+@
+        Note that as mentioned, we need to first convert two variables of interest to
+        factors to obtain a sensible plot from R. tidyverse's \texttt{recode\_factor} is
+        used with \texttt{mutate} above, to obtain more human-readable factor levels, but
+        this conversion can also be achieved more simply with \texttt{factor} (at the
+        expense of leaving the factor levels as \num{0} and \num{1}):
+<<icudat-plot-eg, eval = FALSE>>=
+ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<icudat-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Vital statuses of \num{\Sexpr{nrow(icudat)}} patients admitted to the ICU}
+    \label{fig:icudat}
+  \end{figure}
+\fi
 
     \part
       What do you learn from your graph, in the context of the data?
