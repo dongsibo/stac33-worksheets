@@ -312,7 +312,12 @@ ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
     \part
       Read in and display (some of) the dataset.
       \begin{solution}
-        % TODO
+        We read the CSV file into a variable from the URL above and display part of its
+        content:
+<<read-heliconia-data, message = FALSE>>=
+(heliconia.long <-
+  read_csv("http://ritsokiguess.site/datafiles/heliconia_long.csv"))
+@
       \end{solution}
 
     \part
