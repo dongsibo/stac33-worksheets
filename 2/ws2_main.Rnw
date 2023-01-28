@@ -277,7 +277,18 @@ ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
     \part
       What do you learn from your graph, in the context of the data?
       \begin{solution}
-        % TODO
+        From \autoref{fig:icudat}, we can observe several things. Firstly, of the \num{%
+        \Sexpr{nrow(icudat)}} ICU patients, the majority were admitted as an emergency.
+        This makes sense as the ICU is meant for urgent treatment; people who have
+        suffered severe accidents are more likely to lack the faculties needed to admit
+        themselves to the ICU (e.g., due to unconsciousness).
+        \par
+        Of the patients admitted electively, a very large majority of them lived, while
+        the small remainder died. Most patients who were admitted to the ICU as an
+        emergency still survived, but there were relatively more deaths among them as
+        well. These results make sense as those who are admitted electively are probably
+        in better condition than those who are not, thus, they are more likely to
+        survive.
       \end{solution}
 
   \end{parts}
