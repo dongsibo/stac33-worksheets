@@ -219,13 +219,21 @@ ggplot(boat.race, aes(weight)) +
     \part
       In your web browser, take a look at the data, and describe how the data are laid out.
       \begin{solution}
-        % TODO
+        The columns of \texttt{icudat.txt} are delimited by multiple spaces so that they
+        line up. The first column is also preceded by leading white space.
       \end{solution}
 
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the data into a variable from the URL above and display part of its
+        contents:
+<<read-icudat-data, message = FALSE>>=
+(icudat <- read_table(str_c("http://www.medicine.mcgill.ca/epidemiology/Joseph/",
+                            "courses/EPIB-621/icudat.txt")))
+@
+        Note that the URL is long, so we use \texttt{str\_c} from the tidyverse to break
+        it down and make it fit within a certain width.
       \end{solution}
 
     \part
