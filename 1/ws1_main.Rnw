@@ -34,7 +34,7 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 % This file is shared in a public Git repository, so a dummy student number is used
 % below for privacy, just in case.
 \author{\name \\ \texttt{1234567890}}
-\date{Monday January~16, 2023 11:59pm}
+\date{Monday January~16, 2023 12:00pm}
 
 \runningheadrule
 \header{\coursecode, \semester}{}{\assignment}
