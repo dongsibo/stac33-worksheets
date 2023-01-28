@@ -323,19 +323,52 @@ ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
     \part
       Why would a box plot be a suitable graph for these data? Explain briefly.
       \begin{solution}
-        % TODO
+        We are interested in comparing the lengths of different varieties of \textit{%
+        Heliconia}. One thing that a box plot does is allow us to compare the median of a
+        quantitative variable across different categories. Here, we our quantitative
+        variable is flower length and our categorical variable is the flower variety, so
+        a box plot is a suitable graph for our data set.
       \end{solution}
 
     \part
       Draw a box plot of these data.
       \begin{solution}
-        % TODO
+        We draw a box plot of flower lengths grouped by flower variety (see \autoref{fig:%
+        heliconia-1} for the outputted box plot):
+<<heliconia-plot-1, eval = FALSE>>=
+ggplot(heliconia.long, aes(variety, length)) +
+  geom_boxplot() +
+  labs(x = "Heliconia variety", y = "Flower length (mm)")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<heliconia-plot-1, echo = FALSE, message = FALSE>>=
+@
+    \caption{Lengths of various \textit{Heliconia} flower varieties}
+    \label{fig:heliconia-1}
+  \end{figure}
+\fi
 
     \part
       What do you learn from your box plot? Explain briefly.
       \begin{solution}
-        % TODO
+        We learn several things from \autoref{fig:heliconia-1}:
+        \begin{itemize}
+          \item \textit{Bihai} has a longer median length than \textit{caribaea} red and
+            yellow, with \textit{caribaea} yellow having the shortest median length of
+            all three \textit{Heliconia} varieties.
+          \item \textit{Caribaea} red has the largest spread (aka interquartile range)
+            since its box is the tallest. The other two \textit{Heliconia} varieties have
+            similar degrees of spread.
+          \item \textit{Bihai} is right-skewed due to its relatively long upper whisker
+            and due its box's larger upper half (i.e., the median lies closer to the
+            first quartile than the third). Likewise, \textit{caribaea} red appears
+            right-skewed but to a lesser degree and \textit{caribaea} yellow appears
+            roughly symmetric.
+        \end{itemize}
       \end{solution}
 
     \part
