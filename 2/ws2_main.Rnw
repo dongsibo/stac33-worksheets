@@ -378,8 +378,26 @@ ggplot(heliconia.long, aes(variety, length)) +
       Problem~7.9(c) in \href{http://ritsokiguess.site/pasias/two-sample-inference.html%
       #parking-close-to-the-curb-1}{PASIAS}.
       \begin{solution}
-        % TODO
+        We draw a histogram for each \textit{Heliconia} flower variety, stacked on top of
+        each other, to compare the flower length distributions (see \autoref{fig:%
+        heliconia-2} for the outputted histograms):
+<<heliconia-plot-2, eval = FALSE>>=
+ggplot(heliconia.long, aes(length)) +
+  geom_histogram(bins = 12) +
+  facet_grid(rows = vars(variety)) +
+  labs(x = "Flower length (mm)", y = "Frequency")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<heliconia-plot-2, echo = FALSE, message = FALSE>>=
+@
+    \caption{Lengths of various \textit{Heliconia} flower varieties}
+    \label{fig:heliconia-2}
+  \end{figure}
+\fi
 
   \end{parts}
 
