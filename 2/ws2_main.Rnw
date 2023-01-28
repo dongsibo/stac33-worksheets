@@ -293,6 +293,58 @@ ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
 
   \end{parts}
 
+\newpage
+
+\titledquestion{Hummingbirds and flowers}
+  The tropical flower \textit{Heliconia} is fertilized by hummingbirds, a different
+  species for each variety of \textit{Heliconia}. Over time, the lengths of the flowers
+  and the form of the hummingbirds' beaks have evolved to match each other. The length of
+  the heliconia flower is therefore an important measurement. Does it differ among
+  varieties?
+  \par
+  The data set at \url{http://ritsokiguess.site/datafiles/heliconia_long.csv} contains
+  the lengths (in millimetres) of samples of flowers from each of three varieties of
+  \textit{Heliconia}: \textit{bihai}, \textit{caribaea} red, and \textit{caribaea}
+  yellow.
+
+  \begin{parts}
+
+    \part
+      Read in and display (some of) the dataset.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Why would a box plot be a suitable graph for these data? Explain briefly.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Draw a box plot of these data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      What do you learn from your box plot? Explain briefly.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      An alternative graph in this situation is a set of three histograms next to each
+      other. Draw this graph. Consider your aims in drawing the graph; you will need to
+      think about what ``next to each other'' most usefully means for you. Hint:
+      Problem~7.9(c) in \href{http://ritsokiguess.site/pasias/two-sample-inference.html%
+      #parking-close-to-the-curb-1}{PASIAS}.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
 \end{questions}
 
 \end{document}
