@@ -159,7 +159,12 @@ ucdavis %>%
       For this data set, display how much time the students have spent watching TV and on
       the computer. (Display only these two columns.)
       \begin{solution}
-        % TODO
+        We select the columns for TV and computer time and display the first few rows (to
+        save on vertical space):
+<<ucdavis-tv-computer>>=
+ucdavis %>% select(TV, computer)
+@
+        Note that the full results can be more easily displayed in an HTML Notebook.
       \end{solution}
 
     \part
