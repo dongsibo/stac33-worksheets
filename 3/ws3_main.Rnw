@@ -185,7 +185,11 @@ ucdavis %>% select(ends_with("height"))
     \part
       Display only the students who sit at the back of the classroom.
       \begin{solution}
-        % TODO
+        We filter for only the students who sit at the back of the classroom and display
+        the first few rows (to save on vertical space):
+<<ucdavis-backseaters>>=
+ucdavis %>% filter(Seat == "Back")
+@
       \end{solution}
 
     \part
