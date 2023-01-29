@@ -16,6 +16,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(R.options = list(width = 78))
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -81,6 +82,14 @@ how wrong your initial guess is.
 
 \newpage
 
+\noindent
+\textbf{Note:} This worksheet (and the \coursecode{} course) make(s) use of the
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}:
+
+<<common, message = FALSE>>=
+library(tidyverse)
+@
+
 \begin{questions}
 
 \titledquestion{Student stats}
@@ -114,7 +123,11 @@ how wrong your initial guess is.
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the CSV file into a variable from the URL above and display part of its
+        content:
+<<read-ucdavis-data, message = FALSE>>=
+(ucdavis <- read_csv("http://ritsokiguess.site/datafiles/UCDavis1.csv"))
+@
       \end{solution}
 
     \part
