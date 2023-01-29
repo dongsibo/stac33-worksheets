@@ -209,7 +209,42 @@ ucdavis %>% filter(Sleep <= 5 | TV > 30)
       probably be missing. Why is that? Look at Dr.~Butler's solution to see how to get
       the answers you were expecting.
       \begin{solution}
-        % TODO
+        Note that some students have missing values for their parents' heights for one
+        reason or another (e.g., they are an orphan, opted to not input their parents'
+        heights):
+<<ucdavis-show-na>>=
+ucdavis %>%
+  filter(if_any(c(momheight, dadheight), is.na)) %>%
+  select(ends_with("height"))
+@
+        In this case, it seems reasonable to remove these missing values. (This may not
+        be reasonable if values being missing actually informs something about heights,
+        e.g., being ashamed of their parents being too short and preferring not to share
+        their heights.) Otherwise, our mean heights may be \texttt{NA} as well. We filter
+        for the students that are \num{70} inches or taller and calculate the mean
+        heights of their mother and father, while removing the missing values:
+<<ucdavis-parent-mean-heights-1>>=
+ucdavis %>%
+  filter(Height >= 70) %>%
+  summarize(across(c(momheight, dadheight),
+                   ~ mean(.x, na.rm = TRUE),
+                   .names = "{.col}.mean"))
+@
+        Note that there are a few different ways of dropping missing values. What follows is a method using \texttt{drop\_na}:
+<<ucdavis-parent-mean-heights-2>>=
+parheights <- c("momheight", "dadheight")
+ucdavis %>%
+  filter(Height >= 70) %>%
+  drop_na(all_of(parheights)) %>%
+  summarize(across(all_of(parheights), mean, .names = "{.col}.mean"))
+@
+        We can also filter out missing values in \texttt{filter} while applying our other
+        filter conditions:
+<<ucdavis-parent-mean-heights-3>>=
+ucdavis %>%
+  filter(Height >= 70 & !if_any(all_of(parheights), is.na)) %>%
+  summarize(across(all_of(parheights), mean, .names = "{.col}.mean"))
+@
       \end{solution}
 
   \end{parts}
