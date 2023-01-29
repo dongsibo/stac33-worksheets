@@ -196,7 +196,11 @@ ucdavis %>% filter(Seat == "Back")
       Display all the students that either slept \num{5}~hours or less or watched over
       \num{30}~hours of TV (or both).
       \begin{solution}
-        % TODO
+        We filter for the students that slept \num{5}~hours or less or watched over
+        \num{30}~hours of TV and display the first few rows (to save on vertical space):
+<<ucdavis-sleep-or-tv>>=
+ucdavis %>% filter(Sleep <= 5 | TV > 30)
+@
       \end{solution}
 
     \part
