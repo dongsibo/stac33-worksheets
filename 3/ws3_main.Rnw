@@ -50,7 +50,7 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 % of another framed box, like the box around solutions from the exam class. The downside
 % to doing this is that we lose background colour since there is no more box/frame, but
 % page breaks are worth it.
-%\renewenvironment{kframe}{}{}
+\renewenvironment{kframe}{}{}
 
 % Miscellaneous
 % -------------
@@ -171,7 +171,15 @@ ucdavis %>% select(TV, computer)
       Several of the columns are heights. Display all of these columns, without naming
       any columns.
       \begin{solution}
-        % TODO
+        All columns pertaining to height end in some case variant of ``height'', so we
+        select columns matching this pattern and display the first few rows (to save on
+        vertical space):
+<<ucdavis-height-cols>>=
+ucdavis %>% select(ends_with("height"))
+@
+        Note that by default, \texttt{ends\_with} ignores case (the default value of its
+        \texttt{ignore.case} option is \texttt{TRUE}), which is why the \texttt{Height}
+        column also gets matched, despite its capitalization.
       \end{solution}
 
     \part
