@@ -134,7 +134,11 @@ library(tidyverse)
       Find the mean and standard deviation of sleep times (for all the students taken
       together).
       \begin{solution}
-        % TODO
+        We create a new data frame summarizing the mean and standard deviation of sleep
+        times:
+<<ucdavis-mean-sd>>=
+ucdavis %>% summarize(Sleep.Mean = mean(Sleep), Sleep.SD = sd(Sleep))
+@
       \end{solution}
 
     \part
