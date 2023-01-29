@@ -146,7 +146,13 @@ ucdavis %>% summarize(Sleep.Mean = mean(Sleep), Sleep.SD = sd(Sleep))
       number of students and their mean sleep time. (Hint: The column is called \texttt{%
       Seat} with a capital S; the S being uppercase matters.)
       \begin{solution}
-        % TODO
+        We create a new data frame summarizing the number of students and their mean
+        sleep time for each classroom seating group:
+<<ucdavis-seats-summary>>=
+ucdavis %>%
+  group_by(Seat) %>%
+  summarize(Student.Count = n(), Sleep.Mean = mean(Sleep))
+@
       \end{solution}
 
     \part
