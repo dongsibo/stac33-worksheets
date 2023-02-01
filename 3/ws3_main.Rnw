@@ -179,6 +179,9 @@ ucdavis %>% select(ends_with("height"))
         Note that by default, \texttt{ends\_with} ignores case (the default value of its
         \texttt{ignore.case} option is \texttt{TRUE}), which is why the \texttt{Height}
         column also gets matched, despite its capitalization.
+        \par
+        As previously mentioned in Part~\ref{part@1@4}, the full results can be more
+        easily displayed in an HTML Notebook.
       \end{solution}
 
     \part
@@ -189,6 +192,8 @@ ucdavis %>% select(ends_with("height"))
 <<ucdavis-backseaters>>=
 ucdavis %>% filter(Seat == "Back")
 @
+        As previously mentioned in Part~\ref{part@1@4}, the full results can be more
+        easily displayed in an HTML Notebook.
       \end{solution}
 
     \part
@@ -200,6 +205,8 @@ ucdavis %>% filter(Seat == "Back")
 <<ucdavis-sleep-or-tv>>=
 ucdavis %>% filter(Sleep <= 5 | TV > 30)
 @
+        As previously mentioned in Part~\ref{part@1@4}, the full results can be more
+        easily displayed in an HTML Notebook.
       \end{solution}
 
     \part
