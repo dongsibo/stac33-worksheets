@@ -123,8 +123,8 @@ library(tidyverse)
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        We read the CSV file into a variable from the URL above and display part of its
-        content:
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
 <<read-ucdavis-data, message = FALSE>>=
 (ucdavis <- read_csv("http://ritsokiguess.site/datafiles/UCDavis1.csv"))
 @
@@ -134,9 +134,8 @@ library(tidyverse)
       Find the mean and standard deviation of sleep times (for all the students taken
       together).
       \begin{solution}
-        We create a new data frame summarizing the mean and standard deviation of sleep
-        times:
-<<ucdavis-mean-sd>>=
+        We summarize the mean and standard deviation of sleep times for all students:
+<<ucdavis-sleep-times>>=
 ucdavis %>% summarize(Sleep.Mean = mean(Sleep), Sleep.SD = sd(Sleep))
 @
       \end{solution}
@@ -146,9 +145,9 @@ ucdavis %>% summarize(Sleep.Mean = mean(Sleep), Sleep.SD = sd(Sleep))
       number of students and their mean sleep time. (Hint: The column is called \texttt{%
       Seat} with a capital S; the S being uppercase matters.)
       \begin{solution}
-        We create a new data frame summarizing the number of students and their mean
-        sleep time for each classroom seating group:
-<<ucdavis-seats-summary>>=
+        For the students in each classroom seating group, we summarize the number of
+        students and their mean sleep times:
+<<ucdavis-sleep-times-by-seat>>=
 ucdavis %>%
   group_by(Seat) %>%
   summarize(Student.Count = n(), Sleep.Mean = mean(Sleep))
@@ -161,7 +160,7 @@ ucdavis %>%
       \begin{solution}
         We select the columns for TV and computer time and display the first few rows (to
         save on vertical space):
-<<ucdavis-tv-computer>>=
+<<ucdavis-tv-computer-times>>=
 ucdavis %>% select(TV, computer)
 @
         Note that the full results can be more easily displayed in an HTML Notebook.
@@ -174,7 +173,7 @@ ucdavis %>% select(TV, computer)
         All columns pertaining to height end in some case variant of ``height'', so we
         select columns matching this pattern and display the first few rows (to save on
         vertical space):
-<<ucdavis-height-cols>>=
+<<ucdavis-height-variables>>=
 ucdavis %>% select(ends_with("height"))
 @
         Note that by default, \texttt{ends\_with} ignores case (the default value of its
@@ -210,19 +209,19 @@ ucdavis %>% filter(Sleep <= 5 | TV > 30)
       the answers you were expecting.
       \begin{solution}
         Note that some students have missing values for their parents' heights for one
-        reason or another (e.g., they are an orphan, opted to not input their parents'
-        heights):
-<<ucdavis-show-na>>=
+        reason or another (e.g., they are an orphan, they opted to not input their
+        parents' heights):
+<<ucdavis-missing-values>>=
 ucdavis %>%
   filter(if_any(c(momheight, dadheight), is.na)) %>%
   select(ends_with("height"))
 @
         In this case, it seems reasonable to remove these missing values. (This may not
-        be reasonable if values being missing actually informs something about heights,
-        e.g., being ashamed of their parents being too short and preferring not to share
-        their heights.) Otherwise, our mean heights may be \texttt{NA} as well. We filter
+        be reasonable if missing values actually informs something about heights, e.g.,
+        being ashamed of their parents' short stature and preferring not to share their
+        heights.) Otherwise, our mean heights may be \texttt{NA} as well. Thus, we filter
         for the students that are \num{70} inches or taller and calculate the mean
-        heights of their mother and father, while removing the missing values:
+        heights of their mother and father while removing the missing values:
 <<ucdavis-parent-mean-heights-1>>=
 ucdavis %>%
   filter(Height >= 70) %>%
@@ -230,7 +229,8 @@ ucdavis %>%
                    ~ mean(.x, na.rm = TRUE),
                    .names = "{.col}.mean"))
 @
-        Note that there are a few different ways of dropping missing values. What follows is a method using \texttt{drop\_na}:
+        Note that there are a few different ways of dropping missing values. What follows
+        is a method using \texttt{drop\_na}:
 <<ucdavis-parent-mean-heights-2>>=
 parheights <- c("momheight", "dadheight")
 ucdavis %>%
