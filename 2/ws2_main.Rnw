@@ -17,7 +17,8 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
-knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%",
+                      R.options = list(width = 78))
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
