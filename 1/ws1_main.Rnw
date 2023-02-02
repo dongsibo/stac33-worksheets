@@ -373,6 +373,7 @@ rats
 <<read-and-display-jumping, eval = FALSE>>=
 (rats <- read_delim(my_url, delim = " "))
 @
+        The full results can also be more easily displayed in an HTML Notebook.
       \end{solution}
 
     \part
