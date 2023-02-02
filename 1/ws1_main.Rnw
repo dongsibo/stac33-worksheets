@@ -261,8 +261,8 @@ ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 8)
       \begin{solution}
         Solution is trivial. As mentioned, I am also knitting an Rnoweb file which
         results in a PDF document instead of an HTML notebook. My worksheets for this
-        course are also hosted on GitHub, which is another way of sharing them across
-        devices.
+        course are also hosted \href{https://github.com/dongsibo/stac33-worksheets}{on
+        GitHub}, which is another way of sharing them across devices.
       \end{solution}
 
     \part
