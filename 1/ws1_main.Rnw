@@ -171,7 +171,7 @@ cat("<<>>=\n# Code goes here\n@\n")
 
     \part
       Type the line of code shown below into the chunk in the R Notebook:
-<<mtcars, eval = FALSE>>=
+<<display-mtcars, eval = FALSE>>=
 mtcars
 @
       \begin{solution}
@@ -191,7 +191,7 @@ cat("<<>>=\nmtcars\n@\n")
       show the output below the code chunk.
       \begin{solution}
         Solution is trivial:
-<<mtcars>>=
+<<display-mtcars>>=
 @
         I typically use Nvim-R, where independent code chunks can be ran with the
         \texttt{\textbackslash{}cc} keybinding.
@@ -292,7 +292,7 @@ ggplot(mtcars, aes(hp, mpg)) +
         fuel economy. However, our linear trend line does not seem to fit as well. We
         can check this linear model's \(R^2\) for a measure of how well it fits to our
         data:
-<<mtcars-hp-mpg-r2>>=
+<<mtcars-hp-mpg-rsquared>>=
 (hp.mpg.fit <- lm(mpg ~ hp, mtcars))
 summary(hp.mpg.fit)$r.squared
 @
@@ -364,13 +364,13 @@ rats <- read_delim(my_url, delim = " ")
       frame's name in it (as we did with \texttt{mtcars}).
       \begin{solution}
         We take a look at the data frame to verify that it looks sound:
-<<jumping>>=
+<<display-jumping>>=
 rats
 @
         Note that displaying the data frame could have done during variable assignment
-        with parentheses, to avoid an extra line of code (this code chunk is just for
-        example, so it does not run on purpose):
-<<jumping-paren, eval = FALSE>>=
+        with parentheses, to avoid an extra line of code (this code chunk is just for the
+        sake of example; it is not evaluated):
+<<read-and-display-jumping, eval = FALSE>>=
 (rats <- read_delim(my_url, delim = " "))
 @
       \end{solution}
