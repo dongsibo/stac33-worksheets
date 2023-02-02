@@ -117,7 +117,8 @@ library(tidyverse)
     \part
       Read the file into a data frame and display at least some of it.
       \begin{solution}
-        We read the data into a variable from the URL above and display its contents:
+        We read the text file (from the URL above) into a variable and display its
+        contents:
 <<read-boat-race-data, message = FALSE>>=
 (boat.race <- read_delim("https://ritsokiguess.site/datafiles/boat_race.txt"))
 @
@@ -177,7 +178,7 @@ ggplot(boat.race, aes(weight)) +
         are around the same level), given the amount of variability.
         \par
         Similarly, from \autoref{fig:boatrace-weights-2}, we can see that the distributions
-        for each university team are centered around the same bin, indicating that the
+        for each university team are centred around the same bin, indicating that the
         typical weights for each team are similar. Moreover, the distributions overall
         appear mostly similar as well.
       \end{solution}
@@ -227,8 +228,8 @@ ggplot(boat.race, aes(weight)) +
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        We read the data into a variable from the URL above and display part of its
-        contents:
+        We read the text file (from the URL above) into a variable and display part of
+        its contents:
 <<read-icudat-data, message = FALSE>>=
 (icudat <- read_table(str_c("http://www.medicine.mcgill.ca/epidemiology/Joseph/",
                             "courses/EPIB-621/icudat.txt")))
@@ -242,8 +243,8 @@ ggplot(boat.race, aes(weight)) +
       type of variable these are (which might not be the same as how they are recorded).
       \begin{solution}
         Our two variables of interest are \texttt{sta} and \texttt{typ}, which are both
-        categorical varibles. However, they are classified as doubles in \texttt{icudat},
-        so it is sensible to convert them into factors for certain analyses.
+        categorical varibles. However, they are classified as numerical in \texttt{%
+        icudat}, so it is sensible to convert them into factors for certain analyses.
         \par
         We draw a bar chart of ICU patient vital statues grouped by their admission type
         (see \autoref{fig:icudat} for the outputted bar chart):
@@ -257,10 +258,10 @@ ggplot(icudat %>%
 @
         Note that as mentioned, we need to first convert two variables of interest to
         factors to obtain a sensible plot from R. tidyverse's \texttt{recode\_factor} is
-        used with \texttt{mutate} above, to obtain more human-readable factor levels, but
+        used with \texttt{mutate} above to obtain more human-readable factor levels, but
         this conversion can also be achieved more simply with \texttt{factor} (at the
         expense of leaving the factor levels as \num{0} and \num{1}):
-<<icudat-plot-eg, eval = FALSE>>=
+<<icudat-plot-example, eval = FALSE>>=
 ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
 @
       \end{solution}
@@ -282,7 +283,7 @@ ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
         \Sexpr{nrow(icudat)}} ICU patients, the majority were admitted as an emergency.
         This makes sense as the ICU is meant for urgent treatment; people who have
         suffered severe accidents are more likely to lack the faculties needed to admit
-        themselves to the ICU (e.g., due to unconsciousness).
+        themselves to the ICU, for example, due to unconsciousness.
         \par
         Of the patients admitted electively, a very large majority of them lived, while
         the small remainder died. Most patients who were admitted to the ICU as an
@@ -313,8 +314,8 @@ ggplot(icudat, aes(factor(typ), fill = factor(sta))) + ...
     \part
       Read in and display (some of) the dataset.
       \begin{solution}
-        We read the CSV file into a variable from the URL above and display part of its
-        content:
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
 <<read-heliconia-data, message = FALSE>>=
 (heliconia.long <-
   read_csv("http://ritsokiguess.site/datafiles/heliconia_long.csv"))
