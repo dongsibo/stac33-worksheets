@@ -1,0 +1,211 @@
+% !Rnw weave = knitr
+\documentclass[addpoints,answers]{exam}
+\usepackage{amsmath}  % for \nobreakdash
+\usepackage[
+  a4paper,
+  margin = 2cm,
+  footskip = 20pt  % footer pushed too far with exam class; adjust with footskip
+]{geometry}
+%\usepackage[utf8]{inputenc}  % this is ignored with utf8 based engines like XeTeX
+\usepackage{lastpage}
+\usepackage{siunitx}  % for number formatting
+
+% These packages are best loaded last after other packages.
+\usepackage[pdfusetitle]{hyperref}
+%\usepackage{refcheck}  % must be loaded after hyperref; uncomment to check references
+
+% Global R settings
+% -----------------
+<<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
+@
+
+% Commands
+% --------
+\newcommand{\assignment}{Worksheet~4}
+\newcommand{\coursecode}{STAC33H3~S}
+\newcommand{\semester}{Winter 2023}
+\newcommand{\name}{Sibo Dong}
+
+% Typography
+% ----------
+\title{\coursecode, \semester: \assignment}
+% This file is shared in a public Git repository, so a dummy student number is used
+% below for privacy, just in case.
+\author{\name \\ \texttt{1234567890}}
+\date{Monday February~6, 2023 12:00pm}
+
+\runningheadrule
+\header{\coursecode, \semester}{}{\assignment}
+\footer{}{}{Page \thepage \ of \pageref{LastPage}}
+
+% Use titled questions with an altered question format to somewhat match markup in
+% worksheet_4_c33.html
+\qformat{\textbf{Question \thequestion: \thequestiontitle}\dotfill (\totalpoints\ points)}
+
+% NOTE: If page breaks for knitr code chunks aren't needed in the final document, it is
+% safe to leave the \renewenvironment line commented out.
+%
+% Don't define kframe environment; kframe uses frame, which does not interact well inside
+% of another framed box, like the box around solutions from the exam class. The downside
+% to doing this is that we lose background colour since there is no more box/frame, but
+% page breaks are worth it.
+%\renewenvironment{kframe}{}{}
+
+% Miscellaneous
+% -------------
+\synctex=1
+
+\begin{document}
+
+\maketitle
+\thispagestyle{foot}  % include only footer on title page
+
+\noindent
+Questions are below. Dr.~Butler's solutions---see \href{https://ritsokiguess.site/STAC33%
+/worksheet_4_c33.html}{\texttt{worksheet\_4\_c33.html}}---are below all the question
+parts for a question; scroll down there if you get stuck. There is extra discussion below
+that for some of the questions; you might find that interesting to read, maybe after
+tutorial.
+
+\medskip
+\noindent
+For these worksheets, you will learn the most by spending a few minutes thinking about
+how you would answer each question before you look at Dr.~Butler's solution. There are no
+grades attached to these worksheets, so feel free to guess: it makes no difference at all
+how wrong your initial guess is.
+
+\bigskip
+\begin{center}
+  \gradetable[v][questions]
+\end{center}
+
+\newpage
+
+\noindent
+\textbf{Note:} This worksheet (and the \coursecode{} course) make(s) use of the
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}:
+
+<<common, message = FALSE>>=
+library(tidyverse)
+@
+
+\begin{questions}
+
+\titledquestion{Seniors and cellphones}
+  A cellphone company is thinking about offering a discount to new senior customers (aged
+  \num{65} and over) but first wants to know whether seniors differ in their usage of
+  cellphone services. The company knows that for all its current customers in a certain
+  city, the mean length of a voice call is \num{9.2}~minutes; they also want to know
+  whether its current senior customers have the same or a different average length. In a
+  recent survey, the cellphone company contacted a large number of its current customers
+  and asked for (among other things) the customer's age group and when they made their
+  last call. The length of that call was determined from the company's records. There
+  were \num{200}~seniors in the survey.
+  \par
+  The data are in \url{http://ritsokiguess.site/datafiles/senior_phone.csv}. These are
+  only the seniors.
+
+  \begin{parts}
+
+    \part
+      Read in and display (some of) the data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Find the mean and standard standard deviation of the call lengths.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Why might you doubt, even without looking at a graph, that the call lengths will
+      resemble a normal distribution in shape? Explain briefly. You might find it helpful
+      to use the fact that \texttt{pnorm(z)} works out how much of a standard normal
+      distribution is less than the value \texttt{z}.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Draw an appropriate graph of these data. Were your suspicions about shape
+      confirmed?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Explain briefly why, nonetheless, using a \(t\)\nobreakdash-test in this situation
+      may be reasonable.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Test whether the mean length of all seniors' calls in this city could be the same
+      as the overall mean length of all calls made on the company's network in that city
+      or whether it is different. What do you conclude, in the context of the data?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Home prices}
+  A Realtor kept track of the asking prices of \num{37}~homes for sale in West Lafayette,
+  Indiana, in a particular year. The asking prices are in \url{http://ritsokiguess.site/%
+  datafiles/homes.csv}. There are two columns, the asking price (in \unit{\$}) and the
+  number of bedrooms that home has (either \num{3} or~\num{4}, in this data set). The
+  Realtor was interested in whether the mean asking price for \num{4}\nobreakdash-bedroom
+  homes was bigger than for \num{3}\nobreakdash-bedroom homes.
+
+  \begin{parts}
+
+    \part
+      Read in and display (some of) the data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Draw a suitable graph of these data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Comment briefly on your plot. Does it suggest an answer to the Realtor's question?
+      Do you have any doubts about the appropriateness of a \(t\)\nobreakdash-test in
+      this situation? Explain briefly.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Sometimes, prices work better on a log scale. This is because percent changes in
+      prices are often of more interest than absolute dollar-value changes. Re-draw your
+      plot using logs of asking prices. (In R, \texttt{log()} takes natural (base~\(e\))
+      logs, which are fine here.) Do you like the shapes of the distributions better?
+      Hint: You have a couple of options. One is to use the log right in your plotting
+      (or later, testing) functions. Another is to define a new column containing the
+      log-prices and work with that.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Run a suitable \(t\)\nobreakdash-test to compare the log-prices. What do you
+      conclude?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\end{questions}
+
+\end{document}
