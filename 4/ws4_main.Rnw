@@ -248,7 +248,20 @@ ggplot(senior.phone, aes("senior", call_length)) +
       Explain briefly why, nonetheless, using a \(t\)\nobreakdash-test in this situation
       may be reasonable.
       \begin{solution}
-        % TODO
+        The \(t\)\nobreakdash-test assumes normality of the test statistic or more
+        specifically, normality of the sampling distribution of the sample mean. Although
+        we can see in Parts \ref{part@1@3} and~\ref{part@1@4} that the call lengths are
+        not normally distributed themselves, the \textbf{central limit theorem} (CLT)
+        states that if a sample size is \emph{large}, then the \emph{sampling
+        distribution} is normal, no matter the sample's distribution. Here, our sample
+        size is \num{\Sexpr{nrow(senior.phone)}}, which is considered large, so by CTL,
+        using a \(t\)\nobreakdash-test in this situation may be reasonable; the size of
+        the sample overcomes its skewness.
+        \par
+        (We saw in the ``one- and two-sample inference'' and ``bootstrap for sampling
+        distribution'' lecture slides that even a sample size of \num{25} for \texttt{%
+        jays15-home.csv} was considered large. Accordingly, the sampling distribution was
+        shown to be normal.)
       \end{solution}
 
     \part
