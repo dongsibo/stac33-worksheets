@@ -63,7 +63,7 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 
 \noindent
 Questions are below. Dr.~Butler's solutions---see \href{https://ritsokiguess.site/STAC33%
-/worksheet_2_c33.html}{\texttt{worksheet\_2\_c33.html}}---are below all the question
+/worksheet_3_c33.html}{\texttt{worksheet\_3\_c33.html}}---are below all the question
 parts for a question; scroll down there if you get stuck. There is extra discussion below
 that for some of the questions; you might find that interesting to read, maybe after
 tutorial.
