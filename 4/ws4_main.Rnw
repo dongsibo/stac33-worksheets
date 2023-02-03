@@ -17,6 +17,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -184,8 +185,64 @@ library(tidyverse)
       Draw an appropriate graph of these data. Were your suspicions about shape
       confirmed?
       \begin{solution}
-        % TODO
+        We draw a histogram for the call lengths to visualize their distribution, with
+        the number of bins selected via \href{https://en.wikipedia.org/wiki/Sturges'_rule}{%
+        Sturges' rule} (see \autoref{fig:call-length-1} for the outputted histogram):
+<<senior-phone-call-plot-1, eval = FALSE>>=
+ggplot(senior.phone, aes(call_length)) +
+  geom_histogram(bins = 9) +
+  labs(x = "Call length (minutes)", y = "Frequency")
+@
+        Our suspicions about shape in Part~\ref{part@1@3} are indeed confirmed by the
+        histogram. In particular, the call lengths are right-skewed off of \num{0}
+        instead of being normally distributed.
+        \par
+        Alternatively, we can draw a single-box box plot for the call lengths to assess
+        their centre, spread, and skewness (see \autoref{fig:call-length-2} for the
+        outputted box plot):
+<<senior-phone-call-plot-2, eval = FALSE>>=
+ggplot(senior.phone, aes("senior", call_length)) +
+  geom_boxplot() +
+  labs(x = "Age demographic", y = "Call length (minutes)")
+@
+        We see several things from the box plot:
+        \begin{itemize}
+          \item Most calls are short and less than \num{5}~minutes, as seen from the
+            median call length.
+          \item A large majority of the calls are dispersed within the \numrange{2}{11}~%
+            minutes range. However, the numerous large outliers (i.e., long calls) and
+            long upper whisker may also indicate a fair number of calls spanning
+            significantly longer lengths.
+          \item The calls are heavily right-skewed due to the box's larger upper half and
+            its very long upper whisker. Moreover, the unusually numerous large outliers
+            indicate this skewness being a feature of the whole distribution rather than
+            these few outliers being distinct from the rest of the distribution.
+        \end{itemize}
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<senior-phone-call-plot-1, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Call lengths for \num{\Sexpr{nrow(senior.phone)}}~senior customers of some
+      cellphone company%
+    }
+    \label{fig:call-length-1}
+  \end{figure}
+
+  \begin{figure}[h]
+    \centering
+<<senior-phone-call-plot-2, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Call lengths for \num{\Sexpr{nrow(senior.phone)}}~senior customers of some
+      cellphone company%
+    }
+    \label{fig:call-length-2}
+  \end{figure}
+\fi
 
     \part
       Explain briefly why, nonetheless, using a \(t\)\nobreakdash-test in this situation
