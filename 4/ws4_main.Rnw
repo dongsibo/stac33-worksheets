@@ -121,7 +121,25 @@ library(tidyverse)
     \part
       Find the mean and standard standard deviation of the call lengths.
       \begin{solution}
-        % TODO
+        \begingroup
+        \sisetup{
+          round-mode = figures,
+          round-precision = 2
+        }%
+        We summarize the mean and standard deviation of the call lengths:
+<<senior-phone-call-statistics>>=
+(senior.phone %>%
+  summarize(mean = mean(call_length), sd = sd(call_length)) -> call.stats)
+@
+        Thus, the mean call length is \num{\Sexpr{call.stats$mean}}~minutes, while the
+        standard deviation of the call lengths is \num{\Sexpr{call.stats$sd}}~minutes.
+        (As the call lengths are natural numbers with up to two digits, it is more
+        appropriate to display the call length statistics in text with, for example, two
+        significant figures. These kinds of approximations are beneficial to the reader.)
+        \par
+        The call length statistics are also assigned to a variable for further use in
+        Parts \ref{part@1@3} and~\ref{part@1@6}.
+        \endgroup
       \end{solution}
 
     \part
