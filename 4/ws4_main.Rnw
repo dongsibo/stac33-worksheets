@@ -148,7 +148,36 @@ library(tidyverse)
       to use the fact that \texttt{pnorm(z)} works out how much of a standard normal
       distribution is less than the value \texttt{z}.
       \begin{solution}
-        % TODO
+        \begingroup
+        \sisetup{
+          round-mode = figures,
+          round-precision = 2,
+          drop-zero-decimal
+        }%
+        The first thing to note is that call lengths must be greater than \num{0} (since
+        negative call lengths do not make sense). Assuming that the call lengths are
+        approximately normal with the mean and standard deviation in Part~\ref{part@1@2},
+        we can see that we will have call lengths less than \num{0} since the standard
+        deviation is larger than the mean. As mentioned, it is not possible to have
+        negative call lengths, so that means the call lengths do not resemble a normal
+        distribution.
+        \par
+        The large standard deviation is likely a result of some call lengths being much
+        longer than the others. Combined with the large number of short calls in
+        \texttt{senior.phone} (which can be seen via \texttt{arrange}), this means that
+        the distribution skews right from \num{0} instead of being normally distributed.
+        \par
+        It is also possible to see exactly how many call lengths would be less than
+        \num{0} under our sketchy assumption of normality. We evaluate the normal
+        distribution function with mean and standard deviation as in Part~\ref{part@1@2}
+        at input \num{0}:
+<<senior-phone-call-normal-cdf>>=
+(call.norm.cdf <- with(call.stats, pnorm(0, mean, sd)))
+@
+        Thus, the percent of calls with negative length would be around \qty{\Sexpr{
+        call.norm.cdf * 100}}{\percent}, which is nonsense; the call lengths are not
+        normally distributed (as mentioned).
+        \endgroup
       \end{solution}
 
     \part
