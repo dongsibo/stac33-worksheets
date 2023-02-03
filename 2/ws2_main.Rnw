@@ -157,9 +157,7 @@ ggplot(boat.race, aes(weight)) +
     \caption{1992 Boat Race participant weights for each university team}
     \label{fig:boatrace-weights-1}
   \end{figure}
-\fi
 
-\ifprintanswers
   \begin{figure}[h]
     \centering
 <<boat-race-weights-plot-2, echo = FALSE, message = FALSE>>=
