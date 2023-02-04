@@ -301,7 +301,20 @@ ggplot(senior.phone, aes("senior", call_length)) +
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
+<<read-homes-data, message = FALSE>>=
+(homes <- read_csv("http://ritsokiguess.site/datafiles/homes.csv"))
+@
+        Although the \texttt{bdrms} variable is numeric, for our purposes, it makes more
+        sense to consider it a categorical variable since we are interested in comparing
+        \num{4}\nobreakdash-bedroom homes and \num{3}\nobreakdash-bedroom homes as two
+        different groups. We mutate \texttt{bdrms} into a factor and assign the resulting
+        data frame to a new variable (so that the original \texttt{homes} is still
+        accessible):
+<<homes-as-factor>>=
+homes %>% mutate(bdrms = as.factor(bdrms)) -> homes.tidy
+@
       \end{solution}
 
     \part
