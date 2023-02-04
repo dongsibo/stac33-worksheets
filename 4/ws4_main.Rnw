@@ -320,15 +320,61 @@ homes %>% mutate(bdrms = as.factor(bdrms)) -> homes.tidy
     \part
       Draw a suitable graph of these data.
       \begin{solution}
-        % TODO
+        We draw a box plot of house prices grouped by the number of bedrooms (see
+        \autoref{fig:home-prices} for the outputted box plot):
+<<homes-price-plot, eval = FALSE>>=
+ggplot(homes.tidy, aes(bdrms, price)) +
+  geom_boxplot() +
+  labs(x = "Number of bedrooms", y = "Asking price ($)")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<homes-price-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Asking prices of \num{\Sexpr{nrow(homes.tidy)}}~homes in West Lafayette, Indiana%
+    }
+    \label{fig:home-prices}
+  \end{figure}
+\fi
 
     \part
       Comment briefly on your plot. Does it suggest an answer to the Realtor's question?
       Do you have any doubts about the appropriateness of a \(t\)\nobreakdash-test in
       this situation? Explain briefly.
       \begin{solution}
-        % TODO
+        One thing we can observe from \autoref{fig:home-prices} is that the typical (or
+        median) asking price of \num{4}\nobreakdash-bedroom homes is much higher than
+        that of \num{3}\nobreakdash-bedroom homes, thus suggesting an answer to the
+        Realtor's question.
+        \par
+        As touched on in Part~\ref{part@1@5} of \ref{question@1}, a \(t\)\nobreakdash-test
+        is suitable when the data is normally distributed or when the sampling
+        distribution is normally distributed. From the aforementioned box plot, we can
+        see that the distributions for both types of home are right-skewed, due to the
+        relatively longer upper whiskers (and large outliers for \num{3}\nobreakdash-bedroom
+        homes). In other words, we cannot assume that the data are normally distributed
+        to justify application of the \(t\)\nobreakdash-test.
+        \par
+        We can then look to the sampling distributions of the sample means of both types
+        of home. By CLT, large sample sizes indicate normal sampling distributions. The
+        sample sizes for each type of home are as follows:
+<<homes-sample-sizes>>=
+homes.tidy %>% count(bdrms)
+@
+        These sample sizes do not seem large (especially compared to the sample in
+        \ref{question@1}), so they may not be large enough to overcome their skewness,
+        via CLT. In other words, it is reasonably possible that the sampling
+        distributions are not normally distributed. (Recall in Part~\ref{part@1@5} that
+        CLT applied even with a sample size of \num{25}. Rigorously testing whether CLT
+        actually applies here can be done via \href{https://en.wikipedia.org/wiki/%
+        Bootstrapping_(statistics)}{bootstrapping}.)
+        \par
+        Thus, there are reasonable doubts as to whether the requirements to apply the
+        \(t\)\nobreakdash-test hold.
       \end{solution}
 
     \part
