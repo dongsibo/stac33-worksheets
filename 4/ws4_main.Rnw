@@ -386,8 +386,36 @@ homes.tidy %>% count(bdrms)
       (or later, testing) functions. Another is to define a new column containing the
       log-prices and work with that.
       \begin{solution}
-        % TODO
+        We mutate a new column for the log-prices for use in our plotting and testing
+        functions:
+<<homes-log-prices>>=
+homes.tidy %>% mutate(log.price = log(price)) -> homes.tidy
+@
+        We then redraw the box plot in \autoref{fig:home-prices} with the log-prices
+        instead of the regular asking prices (see \autoref{fig:home-log-prices} for the
+        outputted box plot):
+<<homes-log-price-plot, eval = FALSE>>=
+ggplot(homes.tidy, aes(bdrms, log.price)) +
+  geom_boxplot() +
+  labs(x = "Number of bedrooms", y = "Log-asking price (ln $)")
+@
+        The box plot with log-prices looks better since the \num{4}\nobreakdash-bedroom
+        distribution seems almost symmetric and since the \num{3}\nobreakdash-bedroom
+        distribution has no outliers. Thus, there might be fewer problems with running a
+        \(t\)\nobreakdash-test now.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<homes-log-price-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Log--asking prices of \num{\Sexpr{nrow(homes.tidy)}}~homes in West Lafayette, Indiana%
+    }
+    \label{fig:home-log-prices}
+  \end{figure}
+\fi
 
     \part
       Run a suitable \(t\)\nobreakdash-test to compare the log-prices. What do you
