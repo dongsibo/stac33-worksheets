@@ -421,7 +421,29 @@ ggplot(homes.tidy, aes(bdrms, log.price)) +
       Run a suitable \(t\)\nobreakdash-test to compare the log-prices. What do you
       conclude?
       \begin{solution}
-        % TODO
+        We (and the Realtor) are interested in whether the mean log--asking price for
+        \num{4}\nobreakdash-bedroom homes is bigger than for \num{3}\nobreakdash-bedroom
+        homes. Thus, our null hypothesis (\(H_0\)) is \(\mu_3 = \mu_4\), while our
+        alternative hypothesis (\(H_a\)) is \(\mu_3 < \mu_4\). The two boxes in
+        \autoref{fig:home-log-prices} seem to indicate that both types of homes to have
+        the same spread (i.e., variance), so we perform a one-sided two-sample pooled
+        \(t\)\nobreakdash-test to determine whether or not to reject \(H_0\):
+        % NOTE: The output of t.test here is very long and exceeds the solution box in
+        % the PDF document, resulting in an overfull \hbox. Setting the width option in R
+        % does not seem to influence the t.test output width here, so this is
+        % unfortunately left as is.
+<<homes-t-test>>=
+(homes.t.test <-
+  t.test(log.price ~ bdrms, homes.tidy, alternative = "less", var.equal = TRUE))
+@
+        % NOTE: \num cannot be used around the p-value below because \Sexpr outputs LaTeX
+        % notation (for scientific notation) that is incompatible with siunitx. We
+        % default to using R's signif for formatting decimal places instead.
+        We see that our \(p\)\nobreakdash-value is around \Sexpr{signif(homes.t.test$p.value,
+        3)}. Assuming a significance level (\(\alpha\)) of \num{0.05}, \(p \leq \alpha\);
+        the evidence against \(H_0\) is weak, so we reject it. In other words, we can
+        conclude that mean (log--)asking price for \num{4}\nobreakdash-bedroom homes is
+        higher than that for \num{3}\nobreakdash-bedroom homes.
       \end{solution}
 
   \end{parts}
