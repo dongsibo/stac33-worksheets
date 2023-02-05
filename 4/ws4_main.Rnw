@@ -365,12 +365,12 @@ ggplot(homes.tidy, aes(bdrms, price)) +
 <<homes-sample-sizes>>=
 homes.tidy %>% count(bdrms)
 @
-        These sample sizes do not seem large (especially compared to the sample in
-        \ref{question@1}), so they may not be large enough to overcome their skewness,
-        via CLT. In other words, it is reasonably possible that the sampling
-        distributions are not normally distributed. (Recall in Part~\ref{part@1@5} that
-        CLT applied even with a sample size of \num{25}. Rigorously testing whether CLT
-        actually applies here can be done via \href{https://en.wikipedia.org/wiki/%
+        These sample sizes do seem large enough for CLT to apply, but the size of the
+        \num{3}\nobreakdash-bedroom group may not be large enough to overcome its
+        skewness and outliers. In other words, it is reasonably possible that some of the
+        sampling distributions are not normally distributed. (Recall in Part~\ref{part@1@5}
+        that CLT applied even with a sample size of \num{25}. Rigorously testing whether
+        CLT actually applies here can be done via \href{https://en.wikipedia.org/wiki/%
         Bootstrapping_(statistics)}{bootstrapping}.)
         \par
         Thus, there are reasonable doubts as to whether the requirements to apply the
