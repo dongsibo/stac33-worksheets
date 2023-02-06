@@ -375,7 +375,58 @@ homes.tidy %>% count(bdrms)
         \par
         Thus, there are reasonable doubts as to whether the requirements to apply the
         \(t\)\nobreakdash-test hold.
+        \rule{\linewidth}{\arrayrulewidth}
+        To verify whether the sampling distributions of the sample means for the
+        \num{3}\nobreakdash-bedroom and \num{4}\nobreakdash-bedroom groups are normal, we
+        can draw bootstrap samples:
+<<homes-bootstrap>>=
+`3.homes` <- homes.tidy %>% filter(bdrms == 3)
+`4.homes` <- homes.tidy %>% filter(bdrms == 4)
+
+set.seed(25)  # for reproducibility with sample function
+tibble(.rows = 1000) %>%
+  rowwise() %>%
+  mutate(`3.sample` = list(sample(`3.homes`$price, replace = TRUE)),
+         `3.mean` = mean(`3.sample`),
+         `4.sample` = list(sample(`4.homes`$price, replace = TRUE)),
+         `4.mean` = mean(`4.sample`)) -> homes.bs
+@
+        We draw a histogram of the bootstrapped sample means for \num{3}\nobreakdash-bedroom
+        homes (see \autoref{fig:3bdrms-bootstrap} for the outputted histogram):
+<<homes-bootstrap-3-bedrooms-plot, eval = FALSE>>=
+ggplot(homes.bs, aes(`3.mean`)) +
+  geom_histogram(bins = 10) +
+  labs(x = "Mean asking price ($)", y = "Frequency")
+@
+        Similarly for \num{4}\nobreakdash-bedroom homes (see \autoref{fig:4bdrms-bootstrap}
+        for the outputted histogram):
+<<homes-bootstrap-4-bedrooms-plot, eval = FALSE>>=
+ggplot(homes.bs, aes(`4.mean`)) +
+  geom_histogram(bins = 10) +
+  labs(x = "Mean asking price ($)", y = "Frequency")
+@
+        We can see from our histograms that the sampling distributions appear fairly
+        normal. Thus, a \(t\)\nobreakdash-test might actually be suitable as the samples
+        appear large enough to overcome their skewness and outliers.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<homes-bootstrap-3-bedrooms-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Bootstrapped mean asking prices of \num{3}\nobreakdash-bedroom homes}
+    \label{fig:3bdrms-bootstrap}
+  \end{figure}
+
+  \begin{figure}[h]
+    \centering
+<<homes-bootstrap-4-bedrooms-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Bootstrapped mean asking prices of \num{4}\nobreakdash-bedroom homes}
+    \label{fig:4bdrms-bootstrap}
+  \end{figure}
+\fi
 
     \part
       Sometimes, prices work better on a log scale. This is because percent changes in
