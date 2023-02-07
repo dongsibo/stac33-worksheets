@@ -376,9 +376,11 @@ homes.tidy %>% count(bdrms)
         Thus, there are reasonable doubts as to whether the requirements to apply the
         \(t\)\nobreakdash-test hold.
         \rule{\linewidth}{\arrayrulewidth}
-        To verify whether the sampling distributions of the sample means for the
-        \num{3}\nobreakdash-bedroom and \num{4}\nobreakdash-bedroom groups are normal, we
-        can draw bootstrap samples:
+        Bootstrapping can help us verify whether the sampling distributions of the sample
+        means for \num{3}\nobreakdash-bedroom and \num{4}\nobreakdash-bedroom homes are
+        normal. First, we need to assume that our sample of \num{\Sexpr{nrow(homes.tidy)}}%
+        ~homes in West Lafayette, Indiana, are representative of all homes there (i.e.,
+        the population). We can then draw bootstrap samples and their means:
 <<homes-bootstrap>>=
 `3.homes` <- homes.tidy %>% filter(bdrms == 3)
 `4.homes` <- homes.tidy %>% filter(bdrms == 4)
