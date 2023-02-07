@@ -400,7 +400,7 @@ ggplot(homes.bs, aes(`3.mean`)) +
   geom_histogram(bins = 10) +
   labs(x = "Mean asking price ($)", y = "Frequency")
 @
-        Similarly for \num{4}\nobreakdash-bedroom homes (see \autoref{fig:4bdrms-bootstrap}
+        We do the same for \num{4}\nobreakdash-bedroom homes (see \autoref{fig:4bdrms-bootstrap}
         for the outputted histogram):
 <<homes-bootstrap-4-bedrooms-plot, eval = FALSE>>=
 ggplot(homes.bs, aes(`4.mean`)) +
