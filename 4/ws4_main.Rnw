@@ -352,7 +352,7 @@ ggplot(homes.tidy, aes(bdrms, price)) +
         Realtor's question.
         \par
         As touched on in Part~\ref{part@1@5} of \ref{question@1}, a \(t\)\nobreakdash-test
-        is suitable when the data is normally distributed or when the sampling
+        is suitable when the data are normally distributed or when the sampling
         distribution is normally distributed. From the aforementioned box plot, we can
         see that the distributions for both types of home are right-skewed, due to the
         relatively longer upper whiskers (and large outliers for \num{3}\nobreakdash-bedroom
