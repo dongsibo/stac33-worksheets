@@ -119,14 +119,15 @@ library(tidyverse)
 @
       \end{solution}
 
+    \begingroup
+    \sisetup{
+      drop-zero-decimal,
+      round-mode = figures,
+      round-precision = 2
+    }%
     \part
       Find the mean and standard standard deviation of the call lengths.
       \begin{solution}
-        \begingroup
-        \sisetup{
-          round-mode = figures,
-          round-precision = 2
-        }%
         We summarize the mean and standard deviation of the call lengths:
 <<senior-phone-call-statistics>>=
 (senior.phone %>%
@@ -140,7 +141,6 @@ library(tidyverse)
         \par
         The call length statistics are also assigned to a variable for further use in
         Parts \ref{part@1@3} and~\ref{part@1@6}.
-        \endgroup
       \end{solution}
 
     \part
@@ -149,12 +149,6 @@ library(tidyverse)
       to use the fact that \texttt{pnorm(z)} works out how much of a standard normal
       distribution is less than the value \texttt{z}.
       \begin{solution}
-        \begingroup
-        \sisetup{
-          round-mode = figures,
-          round-precision = 2,
-          drop-zero-decimal
-        }%
         The first thing to note is that call lengths must be greater than \num{0} (since
         negative call lengths do not make sense). Assuming that the call lengths are
         approximately normal with the mean and standard deviation in Part~\ref{part@1@2},
@@ -178,8 +172,8 @@ library(tidyverse)
         Thus, the percent of calls with negative length would be around \qty{\Sexpr{
         call.norm.cdf * 100}}{\percent}, which is nonsense; the call lengths are not
         normally distributed (as mentioned).
-        \endgroup
       \end{solution}
+    \endgroup
 
     \part
       Draw an appropriate graph of these data. Were your suspicions about shape
