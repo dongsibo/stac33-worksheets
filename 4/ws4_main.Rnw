@@ -490,7 +490,7 @@ ggplot(homes.tidy, aes(bdrms, log.price)) +
         We see that our \(p\)\nobreakdash-value is around \Sexpr{signif(homes.t.test$p.value,
         3)}. Assuming a significance level (\(\alpha\)) of \num{0.05}, \(p \leq \alpha\);
         the evidence against \(H_0\) is weak, so we reject it. In other words, we can
-        conclude that mean (log--)asking price for \num{4}\nobreakdash-bedroom homes is
+        conclude that the mean (log--)asking price for \num{4}\nobreakdash-bedroom homes is
         higher than that for \num{3}\nobreakdash-bedroom homes.
       \end{solution}
 
