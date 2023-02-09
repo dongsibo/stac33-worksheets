@@ -163,7 +163,7 @@ library(tidyverse)
         the distribution skews right from \num{0} instead of being normally distributed.
         \par
         It is also possible to see exactly how many call lengths would be less than
-        \num{0} under our sketchy assumption of normality. We evaluate the normal
+        \num{0} under a sketchy assumption of normality. We evaluate the normal
         distribution function with mean and standard deviation as in Part~\ref{part@1@2}
         at input \num{0}:
 <<senior-phone-call-normal-cdf>>=
@@ -412,7 +412,7 @@ ggplot(homes.bs, aes(`3.mean` - `4.mean`)) +
 <<homes-bootstrap-plot, echo = FALSE, message = FALSE>>=
 @
     \caption{%
-      Bootstrapped mean asking price differences of \num{3}\nobreakdash-bedroom and 
+      Bootstrapped mean asking price differences of \num{3}\nobreakdash-bedroom and
       \num{4}\nobreakdash-bedroom homes%
     }
     \label{fig:homes-bootstrap}
@@ -453,7 +453,8 @@ ggplot(homes.tidy, aes(bdrms, log.price)) +
 <<homes-log-price-plot, echo = FALSE, message = FALSE>>=
 @
     \caption{%
-      Log--asking prices of \num{\Sexpr{nrow(homes.tidy)}}~homes in West Lafayette, Indiana%
+      Log--asking prices of \num{\Sexpr{nrow(homes.tidy)}}~homes in West Lafayette,
+      Indiana%
     }
     \label{fig:home-log-prices}
   \end{figure}
