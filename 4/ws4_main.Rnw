@@ -167,10 +167,10 @@ library(tidyverse)
         distribution function with mean and standard deviation as in Part~\ref{part@1@2}
         at input \num{0}:
 <<senior-phone-call-normal-cdf>>=
-(call.norm.cdf <- with(call.stats, pnorm(0, mean, sd)))
+(call.pnorm <- with(call.stats, pnorm(0, mean, sd)))
 @
         Thus, the percent of calls with negative length would be around \qty{\Sexpr{
-        call.norm.cdf * 100}}{\percent}, which is nonsense; the call lengths are not
+        call.pnorm * 100}}{\percent}, which is nonsense; the call lengths are not
         normally distributed (as mentioned).
       \end{solution}
     \endgroup
@@ -268,10 +268,10 @@ ggplot(senior.phone, aes("senior", call_length)) +
         our alternative hypothesis (\(H_a\)) is \(\mu \neq 9.2\). We perform a two-sided
         \(t\)\nobreakdash-test to determine whether or not to reject \(H_0\):
 <<senior-phone-t-test>>=
-(call.t.test <- t.test(senior.phone$call_length, mu = 9.2))
+(call.ttest <- t.test(senior.phone$call_length, mu = 9.2))
 @
         We see that our \(p\)\nobreakdash-value is around \num[round-mode = figures,
-        round-precision = 2]{\Sexpr{call.t.test$p.value}}. Assuming a significance level
+        round-precision = 2]{\Sexpr{call.ttest$p.value}}. Assuming a significance level
         (\(\alpha\)) of \num{0.05}, \(p > \alpha\); the evidence against \(H_0\) is weak,
         so we do not reject it. In other words, we cannot conclude that the mean length
         of all seniors' calls in this city is different than that of all calls made on
@@ -475,17 +475,17 @@ ggplot(homes.tidy, aes(bdrms, log.price)) +
         % does not seem to influence the t.test output width here, so this is
         % unfortunately left as is.
 <<homes-t-test>>=
-(homes.t.test <-
+(homes.ttest <-
   t.test(log.price ~ bdrms, homes.tidy, alternative = "less", var.equal = TRUE))
 @
         % NOTE: \num cannot be used around the p-value below because \Sexpr outputs LaTeX
         % notation (for scientific notation) that is incompatible with siunitx. We
         % default to using R's signif for formatting decimal places instead.
-        We see that our \(p\)\nobreakdash-value is around \Sexpr{signif(homes.t.test$p.value,
-        3)}. Assuming a significance level (\(\alpha\)) of \num{0.05}, \(p \leq \alpha\);
-        the evidence against \(H_0\) is strong, so we reject it. In other words, we can
-        conclude that the mean (log--)asking price for \num{4}\nobreakdash-bedroom homes is
-        higher than that for \num{3}\nobreakdash-bedroom homes.
+        We see that our \(p\)\nobreakdash-value is around \Sexpr{signif(homes.ttest$
+        p.value, 3)}. Assuming a significance level (\(\alpha\)) of \num{0.05}, \(p \leq
+        \alpha\); the evidence against \(H_0\) is strong, so we reject it. In other
+        words, we can conclude that the mean (log--)asking price for \num{4}\nobreakdash-%
+        bedroom homes is higher than that for \num{3}\nobreakdash-bedroom homes.
       \end{solution}
 
   \end{parts}
