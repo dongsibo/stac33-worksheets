@@ -1,0 +1,221 @@
+% !Rnw weave = knitr
+\documentclass[addpoints,answers]{exam}
+\usepackage{amsmath}  % for \nobreakdash
+\usepackage[
+  a4paper,
+  margin = 2cm,
+  footskip = 20pt  % footer pushed too far with exam class; adjust with footskip
+]{geometry}
+%\usepackage[utf8]{inputenc}  % this is ignored with utf8 based engines like XeTeX
+\usepackage{lastpage}
+\usepackage{siunitx}  % for number formatting
+
+% These packages are best loaded last after other packages.
+\usepackage[pdfusetitle]{hyperref}
+%\usepackage{refcheck}  % must be loaded after hyperref; uncomment to check references
+
+% Global R settings
+% -----------------
+<<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
+@
+
+% Commands
+% --------
+\newcommand{\assignment}{Worksheet~5}
+\newcommand{\coursecode}{STAC33H3~S}
+\newcommand{\semester}{Winter 2023}
+\newcommand{\name}{Sibo Dong}
+
+% Typography
+% ----------
+\title{\coursecode, \semester: \assignment}
+% This file is shared in a public Git repository, so a dummy student number is used
+% below for privacy, just in case.
+\author{\name \\ \texttt{1234567890}}
+\date{Monday February~13, 2023 12:00pm}
+
+\runningheadrule
+\header{\coursecode, \semester}{}{\assignment}
+\footer{}{}{Page \thepage \ of \pageref{LastPage}}
+
+% Use titled questions with an altered question format to somewhat match markup in
+% worksheet_5_c33.html
+\qformat{\textbf{Question \thequestion: \thequestiontitle}\dotfill (\totalpoints\ points)}
+
+% NOTE: If page breaks for knitr code chunks aren't needed in the final document, it is
+% safe to leave the \renewenvironment line commented out.
+%
+% Don't define kframe environment; kframe uses frame, which does not interact well inside
+% of another framed box, like the box around solutions from the exam class. The downside
+% to doing this is that we lose background colour since there is no more box/frame, but
+% page breaks are worth it.
+%\renewenvironment{kframe}{}{}
+
+% Miscellaneous
+% -------------
+\synctex=1
+
+\begin{document}
+
+\maketitle
+\thispagestyle{foot}  % include only footer on title page
+
+\noindent
+Questions are below. Dr.~Butler's solutions---see \href{https://ritsokiguess.site/STAC33%
+/worksheet_5_c33.html}{\texttt{worksheet\_5\_c33.html}}---are below all the question
+parts for a question; scroll down there if you get stuck. There might be extra discussion
+below that for some of the questions; you might find that interesting to read, maybe
+after tutorial.
+
+\medskip
+\noindent
+For these worksheets, you will learn the most by spending a few minutes thinking about
+how you would answer each question before you look at Dr.~Butler's solution. There are no
+grades attached to these worksheets, so feel free to guess: it makes no difference at all
+how wrong your initial guess is.
+
+\bigskip
+\begin{center}
+  \gradetable[v][questions]
+\end{center}
+
+\newpage
+
+\noindent
+\textbf{Note:} This worksheet (and the \coursecode{} course) make(s) use of the
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}.
+We also set the random number generator (RNG) seed for reproducibility in certain
+portions of this worksheet:
+
+<<common, message = FALSE>>=
+library(tidyverse)
+set.seed(as.Date("2023-02-13"))  # for reproducibility with RNG
+@
+
+\begin{questions}
+
+\titledquestion{Seniors phones revisited}
+  In a previous worksheet, we investigated the mean length of phone calls made by
+  seniors, using a \(t\)\nobreakdash-test. The data were in \url{http://ritsokiguess.site/%
+  datafiles/senior_phone.csv}. This time, we investigate whether a \(t\)\nobreakdash-test
+  was really the right thing to do.
+
+  \begin{parts}
+
+    \part
+      Read in and display (some of) the data. (Copy and paste what you did before.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Draw an appropriate graph of these data. Observe the skewed shape.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Previously, we wondered whether the sample size was large enough to overcome that
+      (considerable) skewness. Address this question by obtaining a bootstrap sampling
+      distribution of the sample mean. What do you conclude?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Child psychology}
+  According to research in child psychology, working mothers spend a mean time of
+  \num{11}~minutes per day talking to their children, with a standard deviation (SD) of
+  \num{2.3}~minutes. Your research suggests that the mean should be greater than that,
+  and you are planning a study of working mothers (who work outside the home) to see how
+  many minutes \emph{they} spend talking to their children. You think that the mean
+  should be \num{12}~minutes per day, and you want to design your study so that a mean
+  of~\num{11} should be rejected with a reasonably high probability.
+
+  \begin{parts}
+
+    \part
+      If you interview \num{20}~working mothers, what is the power of your test if your
+      thought about the mean is correct? Estimate by simulation. Assume that the time
+      that a mother spends talking to her children has a normal distribution.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Explain briefly why \texttt{power.t.test} can be used to calculate an answer to
+      this problem, and use it to check your result in the previous part.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      A standard level of power in studies in child psychology is \qty{80}{\percent}
+      (\num{0.80}). According to what you have seen so far, is it necessary to interview
+      \num{20}~working mothers, or more, or less? Explain briefly. Use \texttt{power.t.test}
+      to obtain an appropriate sample size, under the assumptions you have made.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Two-sample power}
+  Suppose we have two populations, which we both suppose to be normally distributed. The
+  first population has a mean of~\num{20}, and the second population has a mean
+  of~\num{25}. Both populations have the same SD of~\num{9}.
+
+  \begin{parts}
+
+    \part
+      Suppose we take samples of \num{30}~observations from each population. Use
+      \texttt{power.t.test} to find the probability that a two-sample \(t\)\nobreakdash-test
+      will (correctly) reject the null hypothesis that the two populations have the same
+      mean, in favour of a one-sided alternative. (Hint: \texttt{delta} should be
+      positive.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Find the sample size needed to obtain a power of~\num{0.75}. Comment briefly on
+      whether your sample size makes sense.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Reproduce your power result from Part~\ref{part@3@1} by simulation. Some things to
+      consider:
+      \begin{itemize}
+        \item You will need to generate \emph{two} columns of random samples, one from
+          each population.
+        \item \texttt{t.test} can also run a two-sample \(t\)\nobreakdash-test by giving
+          the two columns separately, rather than as we have done it before by having a
+          column with all the measurements and a separate column saying which group they
+          came from.
+        \item You will need to get the right \texttt{alternative}. With two columns input
+          like this, the alternative is relative to the column you give first.
+      \end{itemize}
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Give an example of a situation where the simulation approach could be used and
+      \texttt{power.t.test} could not.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\end{questions}
+
+\end{document}
