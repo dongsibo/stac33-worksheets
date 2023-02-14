@@ -41,7 +41,11 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 
 % Use titled questions with an altered question format to somewhat match markup in
 % worksheet_3_c33.html
-\qformat{\textbf{Question \thequestion: \thequestiontitle}\dotfill (\totalpoints\ points)}
+\qformat{%
+  \textbf{Question \thequestion: \thequestiontitle}%
+  \addcontentsline{toc}{section}{\thequestiontitle}%
+  \dotfill (\totalpoints\ points)%
+}
 
 % NOTE: If page breaks for knitr code chunks aren't needed in the final document, it is
 % safe to leave the \renewenvironment line commented out.
