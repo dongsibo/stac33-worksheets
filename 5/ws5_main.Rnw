@@ -175,12 +175,44 @@ ggplot(calls, aes("senior", call_length)) +
       (considerable) skewness. Address this question by obtaining a bootstrap sampling
       distribution of the sample mean. What do you conclude?
       \begin{solution}
-        % TODO
+        Bootstrapping can help us verify whether the sampling distribution of the sample
+        mean of the call lengths is normal. First, we need to assume that our sample of
+        \num{\Sexpr{nrow(calls)}}~senior customers in some city is representative of all
+        senior customers in that city (i.e., the population). We can then draw bootstrap
+        samples and their means:
+<<calls-bootstrap>>=
+tibble(.rows = 1000) %>%
+  rowwise() %>%
+  mutate(call.sample = list(sample(calls$call_length, replace = TRUE)),
+         call.mean = mean(call.sample)) -> calls.bs
+@
+        We draw a histogram of the bootstrapped sample means of the call lengths (see
+        \autoref{fig:calls-bootstrap} for the outputted histogram):
+<<calls-bootstrap-plot, eval = FALSE>>=
+ggplot(calls.bs, aes(call.mean)) +
+  geom_histogram(bins = 10) +
+  labs(x = "Mean call length (minutes)", y = "Frequency")
+@
+        We can see from our histogram that the sampling distribution of the sample mean
+        appears fairly normal. Thus, using a \(t\)\nobreakdash-test here is reasonable as
+        the sample is large enough to overcome its skewness and outliers.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<calls-bootstrap-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Bootstrapped call length means for senior customers of some cellphone company%
+    }
+    \label{fig:calls-bootstrap}
+  \end{figure}
+\fi
 
   \end{parts}
 
-\newpage
+\clearpage
 
 \titledquestion{Child psychology}
   According to research in child psychology, working mothers spend a mean time of
