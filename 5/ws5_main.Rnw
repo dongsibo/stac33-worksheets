@@ -17,6 +17,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -110,14 +111,64 @@ set.seed(as.Date("2023-02-13"))  # for reproducibility with RNG
     \part
       Read in and display (some of) the data. (Copy and paste what you did before.)
       \begin{solution}
-        % TODO
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
+<<read-calls-data, message = FALSE>>=
+(calls <- read_csv("http://ritsokiguess.site/datafiles/senior_phone.csv"))
+@
       \end{solution}
 
     \part
       Draw an appropriate graph of these data. Observe the skewed shape.
       \begin{solution}
-        % TODO
+        We draw a histogram for the call lengths to visualize their distribution, with
+        the number of bins selected via \href{https://en.wikipedia.org/wiki/Sturges'_rule}{%
+        Sturges' rule} (see \autoref{fig:call-length-1} for the outputted histogram):
+<<calls-plot-1, eval = FALSE>>=
+ggplot(calls, aes(call_length)) +
+  geom_histogram(bins = 9) +
+  labs(x = "Call length (minutes)", y = "Frequency")
+@
+        We can see that the call lengths are right-skewed off of~\num{0} instead of being
+        normally distributed.
+        \par
+        Alternatively, we can draw a single-box box plot for the call lengths to focus on
+        and assess their skewness (see \autoref{fig:call-length-2} for the outputted box
+        plot):
+<<calls-plot-2, eval = FALSE>>=
+ggplot(calls, aes("senior", call_length)) +
+  geom_boxplot() +
+  labs(x = "Age demographic", y = "Call length (minutes)")
+@
+        Due to the box's larger upper half and its very long upper whisker, the calls are
+        heavily right-skewed, as seen previously. Moreover, the unusually numerous large
+        outliers indicate this skewness being a feature of the whole distribution rather
+        than these few outliers being distinct from the rest of the distribution.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<calls-plot-1, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Call lengths for \num{\Sexpr{nrow(calls)}}~senior customers of some cellphone
+      company%
+    }
+    \label{fig:call-length-1}
+  \end{figure}
+
+  \begin{figure}[h]
+    \centering
+<<calls-plot-2, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Call lengths for \num{\Sexpr{nrow(calls)}}~senior customers of some cellphone
+      company%
+    }
+    \label{fig:call-length-2}
+  \end{figure}
+\fi
 
     \part
       Previously, we wondered whether the sample size was large enough to overcome that
