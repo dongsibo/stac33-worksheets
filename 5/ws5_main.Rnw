@@ -262,7 +262,19 @@ ggplot(calls.bs, aes(call.mean)) +
       Explain briefly why \texttt{power.t.test} can be used to calculate an answer to
       this problem, and use it to check your result in the previous part.
       \begin{solution}
-        % TODO
+        \texttt{power.t.test} assumes that a \(t\)\nobreakdash-test is appropriate, i.e.,
+        the data or sampling distribution of the sampling mean are normally distributed.
+        We know that the former is true given our normality assumption in
+        Part~\ref{part@2@1}. Our test is also a \emph{\(t\)\nobreakdash-test} (and not
+        some other test), so \texttt{power.t.test} can be used for our calculations here:
+<<child-psychology-power>>=
+(psych.pow <- power.t.test(n = 20, delta = 12 - 11, sd = 2.3,
+                           type = "one.sample", alternative = "one.sided"))
+@
+        We can see that the calculated power of our \(t\)\nobreakdash-test is
+        approximately \num{\Sexpr{round(psych.pow$power, 3)}}. This is quite close to our
+        estimated power of~\num{\Sexpr{psych.sim %>% filter(`pvalue <= 0.05`) %>%
+        pull(n) / psych.sim %>% summarize(sum(n))}} in Part~\ref{part@2@1}.
       \end{solution}
 
     \part
