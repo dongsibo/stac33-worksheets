@@ -230,7 +230,32 @@ ggplot(calls.bs, aes(call.mean)) +
       thought about the mean is correct? Estimate by simulation. Assume that the time
       that a mother spends talking to her children has a normal distribution.
       \begin{solution}
-        % TODO
+        Given the information in this question, we are interested in testing \(H_0 \colon
+        \mu = 11\) against \(H_a \colon \mu > 11\). Assuming normality of the data, we
+        estimate the power of our test via simulation as follows:
+        \begin{itemize}
+          \item Draw random normal samples of size~\num{20} with our presumed mean
+            of~\num{12} and the previous studies' SD of~\num{2.3} (since we do not have a
+            better SD on hand)
+          \item Apply a \(t\)\nobreakdash-test to each sample to obtain the corresponding
+            \(p\)\nobreakdash-value
+          \item Count how many times we correctly rejected \(H_0\) given a significance
+            level of~\(\alpha = 0.05\)
+        \end{itemize}
+<<child-psychology-simulation-power>>=
+(tibble(.rows = 1000) %>%
+  rowwise() %>%
+  mutate(sample = list(rnorm(20, 12, 2.3)),
+         ttest = list(t.test(sample, alternative = "greater", mu = 11)),
+         pvalue = ttest$p.value) %>%
+  ungroup() %>%  # for later column-wise operations on psych.sim
+  count(pvalue <= 0.05) -> psych.sim)
+@
+        Assuming the mean is actually \num{12}~minutes, we can see that we correctly
+        rejected the null hypothesis \num{\Sexpr{psych.sim %>% filter(`pvalue <= 0.05`) %>%
+        pull(n)}}~times out of~\num{\Sexpr{psych.sim %>% summarize(sum(n))}}. Thus, the
+        estimated power of our test is~\num{\Sexpr{psych.sim %>% filter(`pvalue <= 0.05`) %>%
+        pull(n) / psych.sim %>% summarize(sum(n))}}.
       \end{solution}
 
     \part
