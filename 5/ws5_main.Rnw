@@ -299,6 +299,13 @@ ggplot(calls.bs, aes(call.mean)) +
 
 \newpage
 
+\begingroup
+\sisetup{
+  drop-zero-decimal,
+  round-mode = places,
+  round-pad = false,
+  round-precision = 3
+}%
 \titledquestion{Two-sample power}
   Suppose we have two populations, which we both suppose to be normally distributed. The
   first population has a mean of~\num{20}, and the second population has a mean
@@ -313,7 +320,17 @@ ggplot(calls.bs, aes(call.mean)) +
       mean, in favour of a one-sided alternative. (Hint: \texttt{delta} should be
       positive.)
       \begin{solution}
-        % TODO
+        A two-sample \(t\)\nobreakdash-test concerns itself with the difference between
+        the means. We specify this as a positive \texttt{delta} in \texttt{power.t.test}
+        to calculate the power of our one-sided test:
+<<two-sample-power>>=
+(twosam.pow <- power.t.test(n = 30, delta = 25 - 20, sd = 9,
+                            type = "two.sample", alternative = "one.sided"))
+@
+        Thus, the power of our two-sample \(t\)\nobreakdash-test is approximately
+        \num{\Sexpr{twosam.pow$power}}. (Note that \texttt{delta} has to be positive for
+        one-sided \(t\)\nobreakdash-tests since \texttt{power.t.test} assumes the first
+        population is larger.)
       \end{solution}
 
     \part
@@ -348,6 +365,7 @@ ggplot(calls.bs, aes(call.mean)) +
       \end{solution}
 
   \end{parts}
+\endgroup
 
 \end{questions}
 
