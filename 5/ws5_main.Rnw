@@ -337,7 +337,19 @@ ggplot(calls.bs, aes(call.mean)) +
       Find the sample size needed to obtain a power of~\num{0.75}. Comment briefly on
       whether your sample size makes sense.
       \begin{solution}
-        % TODO
+        Using \texttt{power.t.test}, we can omit \texttt{n} and instead specify
+        \texttt{power} to have the power calculation figure out the necessary sample size
+        for each population to reach a power of~\num{0.75} in our test:
+<<two-sample-power75>>=
+(twosam.pow75 <- power.t.test(delta = 25 - 20, sd = 9, power = 0.75,
+                              type = "two.sample", alternative = "one.sided"))
+@
+        Thus, in order to reach \qty{\Sexpr{twosam.pow75$power * 100}}{\percent} power in
+        our two-sample \(t\)\nobreakdash-test, we need a sample size of~\num{\Sexpr{
+        ceiling(twosam.pow75$n)}} from each population. This makes sense as larger
+        samples means increased power; in Part~\ref{part@3@1}, we had smaller samples of
+        size~\num{\Sexpr{twosam.pow$n}} and thus a lower power of~\num{\Sexpr{twosam.pow$
+        power}}.
       \end{solution}
 
     \part
