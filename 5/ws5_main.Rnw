@@ -401,7 +401,18 @@ ggplot(calls.bs, aes(call.mean)) +
       Give an example of a situation where the simulation approach could be used and
       \texttt{power.t.test} could not.
       \begin{solution}
-        % TODO
+        The simulation approach is more flexible than \texttt{power.t.test}. In
+        particular, simulation can be done with any test, while \texttt{power.t.test} can
+        only be used if a \(t\)\nobreakdash-test is appropriate. Thus, if the sampling
+        distribution of our test statistic was not normally distributed, we would be able
+        to use simulation but not \texttt{power.t.test} to estimate a test's power. For
+        example, we could change the \texttt{rnorm} calls in Part~\ref{part@3@3} to have
+        the samples be generated from a non-normal distribution.
+        \par
+        \texttt{power.t.test} also assumes that in two-sample tests, the two populations
+        have equal sample sizes and equal SDs. These are not constraints with the
+        simulation approach as the arguments to \texttt{rnorm} in Part~\ref{part@3@3} are
+        all easily changeable.
       \end{solution}
 
   \end{parts}
