@@ -251,10 +251,10 @@ ggplot(boat.race, aes(weight)) +
         We draw a bar chart of ICU patient vital statues grouped by their admission type
         (see \autoref{fig:icudat} for the outputted bar chart):
 <<icudat-plot, eval = FALSE>>=
-ggplot(icudat %>%
-       mutate(sta = recode_factor(sta, `0` = "Lived", `1` = "Died"),
-              typ = recode_factor(typ, `0` = "Elective", `1` = "Emergency")),
-       aes(typ, fill = sta)) +
+icudat %>%
+  mutate(sta = recode_factor(sta, `0` = "Lived", `1` = "Died"),
+         typ = recode_factor(typ, `0` = "Elective", `1` = "Emergency")) %>%
+  ggplot(aes(typ, fill = sta)) +
   geom_bar(position = "dodge") +
   labs(x = "Type of admission", y = "Frequency", fill = "Vital status")
 @
