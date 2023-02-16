@@ -283,7 +283,16 @@ ggplot(calls.bs, aes(call.mean)) +
       \num{20}~working mothers, or more, or less? Explain briefly. Use \texttt{power.t.test}
       to obtain an appropriate sample size, under the assumptions you have made.
       \begin{solution}
-        % TODO
+        Using \texttt{power.t.test}, we can omit \texttt{n} and instead specify
+        \texttt{power} to have the power calculation figure out the necessary sample size
+        to reach a power of~\num{0.80} in our test:
+<<child-psychology-power80>>=
+(psych.pow80 <- power.t.test(delta = 12 - 11, sd = 2.3, power = 0.80,
+                             type = "one.sample", alternative = "one.sided"))
+@
+        Thus, in order to reach \qty{\Sexpr{psych.pow80$power * 100}}{\percent} power in
+        our \(t\)\nobreakdash-test, we need to interview \num{\Sexpr{ceiling(
+        psych.pow80$n)}}~working mothers (i.e., more than~\num{20}).
       \end{solution}
 
   \end{parts}
