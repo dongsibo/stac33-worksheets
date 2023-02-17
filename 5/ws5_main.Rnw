@@ -242,20 +242,26 @@ ggplot(calls.bs, aes(call.mean)) +
           \item Count how many times we correctly rejected \(H_0\) given a significance
             level of~\(\alpha = 0.05\)
         \end{itemize}
-<<child-psychology-simulation-power>>=
+<<child-psychology-simulation-power, echo = -(3:8)>>=
+psych.sim <- list()  # for variables related to the simulation
 (tibble(.rows = 1000) %>%
   rowwise() %>%
   mutate(sample = list(rnorm(20, 12, 2.3)),
          ttest = list(t.test(sample, alternative = "greater", mu = 11)),
          pvalue = ttest$p.value) %>%
-  ungroup() %>%  # for later column-wise operations on psych.sim
-  count(pvalue <= 0.05) -> psych.sim)
+  ungroup() %>%  # for later column-wise operations on psych.sim$pval
+  count(pvalue <= 0.05) -> psych.sim$pval)
+
+# Helper variables for simpler inline R expressions. These are not relevant to
+# the reader, so they are hidden in the final PDF document.
+psych.sim$pval %>% filter(`pvalue <= 0.05`) %>% pull() -> psych.sim$rejects
+psych.sim$pval %>% summarize(sum(n)) %>% pull() -> psych.sim$n
+with(psych.sim, rejects / n) -> psych.sim$power
 @
         Assuming the mean is actually \num{12}~minutes, we can see that we correctly
-        rejected the null hypothesis \num{\Sexpr{psych.sim %>% filter(`pvalue <= 0.05`) %>%
-        pull(n)}}~times out of~\num{\Sexpr{psych.sim %>% summarize(sum(n))}}. Thus, the
-        estimated power of our test is~\num{\Sexpr{psych.sim %>% filter(`pvalue <= 0.05`) %>%
-        pull(n) / psych.sim %>% summarize(sum(n))}}.
+        rejected the null hypothesis \num{\Sexpr{psych.sim$rejects}}~times out
+        of~\num{\Sexpr{psych.sim$n}}. Thus, the estimated power of our test
+        is~\num{\Sexpr{psych.sim$power}}.
       \end{solution}
 
     \part
@@ -273,8 +279,7 @@ ggplot(calls.bs, aes(call.mean)) +
 @
         We can see that the calculated power of our \(t\)\nobreakdash-test is
         approximately \num{\Sexpr{round(psych.pow$power, 3)}}. This is quite close to our
-        estimated power of~\num{\Sexpr{psych.sim %>% filter(`pvalue <= 0.05`) %>%
-        pull(n) / psych.sim %>% summarize(sum(n))}} in Part~\ref{part@2@1}.
+        estimated power of~\num{\Sexpr{psych.sim$power}} in Part~\ref{part@2@1}.
       \end{solution}
 
     \part
