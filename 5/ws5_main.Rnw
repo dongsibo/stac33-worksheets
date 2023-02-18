@@ -383,7 +383,8 @@ with(psych.sim, rejects / n) -> psych.sim$power
           \item Count how many times we correctly rejected \(H_0\) given a significance
             level of~\(\alpha = 0.05\).
         \end{itemize}
-<<two-sample-simulation-power>>=
+<<two-sample-simulation-power, echo = -(3:8)>>=
+twosam.sim <- list()  # for variables related to the simulation
 (tibble(.rows = 1000) %>%
   rowwise() %>%
   mutate(sample1 = list(rnorm(30, 20, 9)),
@@ -391,15 +392,20 @@ with(psych.sim, rejects / n) -> psych.sim$power
          ttest = list(t.test(sample1, sample2,
                              alternative = "less", var.equal = TRUE)),
          pvalue = ttest$p.value) %>%
-  ungroup() %>%  # for later column-wise operations on twosam.sim
-  count(pvalue <= 0.05) -> twosam.sim)
+  ungroup() %>%  # for later column-wise operations on twosam.sim$pval
+  count(pvalue <= 0.05) -> twosam.sim$pval)
+
+# Helper variables for simpler inline R expressions. These are not relevant to
+# the reader, so they are hidden in the final PDF document.
+twosam.sim$pval %>% filter(`pvalue <= 0.05`) %>% pull() -> twosam.sim$rejects
+twosam.sim$pval %>% summarize(sum(n)) %>% pull() -> twosam.sim$n
+with(twosam.sim, rejects / n) -> twosam.sim$power
 @
-        We can see that we correctly rejected the null hypothesis \num{\Sexpr{twosam.sim %>%
-        filter(`pvalue <= 0.05`) %>% pull(n)}}~times out of~\num{\Sexpr{twosam.sim %>%
-        summarize(sum(n))}}. Thus, the estimated power of our two-sample \(t\)\nobreakdash-test
-        is~\num{\Sexpr{twosam.sim %>% filter(`pvalue <= 0.05`) %>% pull(n) /
-        twosam.sim %>% summarize(sum(n))}}. This is fairly close to the \num{\Sexpr{
-        twosam.pow$power}}~power calculated in Part~\ref{part@3@1}.
+        We can see that we correctly rejected the null hypothesis \num{\Sexpr{twosam.sim$
+        rejects}}~times out of~\num{\Sexpr{twosam.sim$n}}. Thus, the estimated power of
+        our two-sample \(t\)\nobreakdash-test is~\num{\Sexpr{twosam.sim$power}}. This is
+        fairly close to the \num{\Sexpr{twosam.pow$power}}~power calculated in
+        Part~\ref{part@3@1}.
       \end{solution}
 
     \part
