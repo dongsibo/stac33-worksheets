@@ -249,13 +249,12 @@ psych.sim <- list()  # for variables related to the simulation
   mutate(sample = list(rnorm(20, 12, 2.3)),
          ttest = list(t.test(sample, alternative = "greater", mu = 11)),
          pvalue = ttest$p.value) %>%
-  ungroup() %>%  # for later column-wise operations on psych.sim$pval
   count(pvalue <= 0.05) -> psych.sim$pval)
 
 # Helper variables for simpler inline R expressions. These are not relevant to
 # the reader, so they are hidden in the final PDF document.
 psych.sim$pval %>% filter(`pvalue <= 0.05`) %>% pull() -> psych.sim$rejects
-psych.sim$pval %>% summarize(sum(n)) %>% pull() -> psych.sim$n
+psych.sim$pval %>% ungroup() %>% summarize(sum(n)) %>% pull() -> psych.sim$n
 with(psych.sim, rejects / n) -> psych.sim$power
 @
         Assuming the mean is actually \num{12}~minutes, we can see that we correctly
@@ -392,13 +391,12 @@ twosam.sim <- list()  # for variables related to the simulation
          ttest = list(t.test(sample1, sample2,
                              alternative = "less", var.equal = TRUE)),
          pvalue = ttest$p.value) %>%
-  ungroup() %>%  # for later column-wise operations on twosam.sim$pval
   count(pvalue <= 0.05) -> twosam.sim$pval)
 
 # Helper variables for simpler inline R expressions. These are not relevant to
 # the reader, so they are hidden in the final PDF document.
 twosam.sim$pval %>% filter(`pvalue <= 0.05`) %>% pull() -> twosam.sim$rejects
-twosam.sim$pval %>% summarize(sum(n)) %>% pull() -> twosam.sim$n
+twosam.sim$pval %>% ungroup() %>% summarize(sum(n)) %>% pull() -> twosam.sim$n
 with(twosam.sim, rejects / n) -> twosam.sim$power
 @
         We can see that we correctly rejected the null hypothesis \num{\Sexpr{twosam.sim$
