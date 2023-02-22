@@ -95,7 +95,7 @@ portions of this worksheet:
 
 <<common, message = FALSE>>=
 library(tidyverse)
-set.seed(as.Date("2023-02-13"))  # for reproducibility with RNG
+set.seed(ymd("2023-02-13"))  # for reproducibility with RNG
 @
 
 \begin{questions}

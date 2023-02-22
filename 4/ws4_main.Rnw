@@ -383,7 +383,7 @@ homes.tidy %>% count(bdrms)
 homes.tidy %>% filter(bdrms == 3) -> `3.homes`
 homes.tidy %>% filter(bdrms == 4) -> `4.homes`
 
-set.seed(as.Date("2023-02-06"))  # for reproducibility with sample draws
+set.seed(ymd("2023-02-06"))  # for reproducibility with sample draws
 tibble(.rows = 1000) %>%
   rowwise() %>%
   mutate(`3.sample` = list(sample(`3.homes`$price, replace = TRUE)),
