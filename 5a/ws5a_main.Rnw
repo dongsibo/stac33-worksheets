@@ -126,7 +126,11 @@ set.seed(ymd("2023-02-27"))
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
+<<read-bidri-data, message = FALSE>>=
+(bidri <- read_csv("http://ritsokiguess.site/datafiles/bidri.csv"))
+@
       \end{solution}
 
     \part
