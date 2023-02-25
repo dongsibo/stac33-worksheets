@@ -1,6 +1,6 @@
 % !Rnw weave = knitr
 \documentclass[addpoints,answers]{exam}
-\usepackage{amsmath}  % for \nobreakdash
+\usepackage{amsmath}  % for \nobreakdash, etc.
 \usepackage[
   a4paper,
   margin = 2cm,
@@ -190,7 +190,19 @@ ggplot(bidri, aes(sample = copper)) +
       different median percentage of copper. What do you conclude, in the context of the
       data?
       \begin{solution}
-        % TODO
+        We are interested in testing \(H_0 \colon M = 4\) against \(H_a \colon M \neq
+        4\), where \(M\) is the population median of copper content in Bidri ware from
+        the Victoria and Albert Museum. We perform a two-sided sign test to determine
+        whether or not to reject \(H_0\):
+<<bidri-sign-test>>=
+(bidri.stest <- sign_test(bidri, copper, med0 = 4))
+@
+        We see that our \(p\)\nobreakdash-value is around \num{\Sexpr{round(bidri.stest$
+        p_values[3, 2], 2)}}. Assuming a significance level of~\(\alpha = 0.05\), \(p
+        \leq \alpha\); the evidence against \(H_0\) is strong, so we reject it. In other
+        words, we can conclude that the Bidri ware at this museum comes from a population
+        with a median percentage of copper not equal to the \num{4}~percent found in
+        other Bidri ware.
       \end{solution}
 
     \part
