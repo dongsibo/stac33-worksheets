@@ -17,6 +17,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -137,14 +138,37 @@ set.seed(ymd("2023-02-27"))
       Make a suitable plot to assess whether these values come from a normal
       distribution.
       \begin{solution}
-        % TODO
+        We draw a normal Q--Q plot to compare the sample copper content against a
+        normal theoretical distribution (see \autoref{fig:bidri-qq} for the outputted
+        Q--Q plot):
+<<bidri-qq-plot, eval = FALSE>>=
+ggplot(bidri, aes(sample = copper)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(x = "Normal theoretical quantiles", y = "Sample copper content quantiles")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<bidri-qq-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Normal Q--Q plot for sample copper content of Bidri artifacts}
+    \label{fig:bidri-qq}
+  \end{figure}
+\fi
 
     \part
       What do you conclude about normality from your plot? (Dr.~Butler sees two pieces of
       relevant evidence.)
       \begin{solution}
-        % TODO
+        We see from \autoref{fig:bidri-qq} that there is an extremely large outlier; one
+        of the copper content values is much higher than the others. We also see that the
+        points form a systematic curve away from the straight line. In particular, the
+        low points bunch together and the high points spread apart. Along with the large
+        outlier, this indicates that the distribution of the sample copper content is
+        right-skewed; the values are not normal.
       \end{solution}
 
     \part
