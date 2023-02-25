@@ -175,7 +175,13 @@ ggplot(bidri, aes(sample = copper)) +
       Why do you think a researcher would favour a sign test over a \(t\)\nobreakdash-test
       for these data? Explain briefly.
       \begin{solution}
-        % TODO
+        We ascertained in Part~\ref{part@1@3} that our data is right-skewed. Our sample
+        size is also \num{\Sexpr{nrow(bidri)}}, which by the central limit theorem, would
+        normally be large enough to overcome the skewness in the data. However, we have
+        an massive outlier, so the sampling distribution of the sample mean may not be
+        normally distributed even with this sample size. Thus, it may preferable to
+        favour the median (for a sign test) instead of the mean (for a
+        \(t\)\nobreakdash-test) as our statistic of interest.
       \end{solution}
 
     \part
