@@ -205,12 +205,29 @@ ggplot(bidri, aes(sample = copper)) +
         other Bidri ware.
       \end{solution}
 
+    \begingroup
+    \sisetup{
+      drop-zero-decimal,
+      round-mode = places,
+      round-precision = 1  % to match values in bidri.csv
+    }%
     \part
       Find a \qty{90}{\percent} confidence interval for the median copper content (of the
       artifacts from which these are a sample).
       \begin{solution}
-        % TODO
+        We invert the sign test to obtain a \qty{90}{\percent} confidence interval for
+        the median copper content:
+        % ci_median is not that fast due to loops in R, so cache its chunk for faster
+        % knitting.
+<<bidri-confidence-interval, cache = TRUE>>=
+(bidri.conf90 <- ci_median(bidri, copper, conf.level = 0.90))
+@
+        Thus, we are \qty{90}{\percent} confident that the true median of copper content
+        (of the artifacts from which these are a sample) lies within the range of
+        \qtyrange{\Sexpr{bidri.conf90[1]}}{\Sexpr{bidri.conf90[2]}}{\percent}. Note that
+        this interval lies below the \num{4}~percent mentioned in Part~\ref{part@1@5}.
       \end{solution}
+    \endgroup
 
     \part
       Estimate (by simulation) and plot the bootstrap sampling distribution of the sample

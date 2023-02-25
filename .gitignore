@@ -8,7 +8,9 @@
 *.xdv
 *.RData
 *.Rhistory
+
 .Rproj.user/
+cache/
 
 # Most .tex files will be intermediate products from .Rnw or .Rmd files, so it
 # shouldn't be necessary to track them.
