@@ -234,8 +234,44 @@ ggplot(bidri, aes(sample = copper)) +
       mean for these data, and explain why this offers further support for not doing a
       \(t\)\nobreakdash-test here.
       \begin{solution}
-        % TODO
+        Bootstrapping can help us verify whether the sampling distribution of the sample
+        mean of the copper content is normal. First, we need to assume that our sample of
+        \Sexpr{nrow(bidri)}~Bidri artifacts from the Victoria and Albert Museum is
+        representative of all Bidri ware at this museum (i.e., the population). We can
+        then draw bootstrap samples and their means:
+<<bidri-bootstrap>>=
+tibble(.rows = 1000) %>%
+  rowwise() %>%
+  mutate(cu.sample = list(sample(bidri$copper, replace = TRUE)),
+         cu.mean = mean(cu.sample)) -> bidri.bs
+@
+        We draw a normal Q--Q plot of the bootstrapped sample means of the copper content
+        (see \autoref{fig:bidri-bootstrap} for the outputted Q--Q plot):
+<<bidri-bootstrap-plot, eval = FALSE>>=
+ggplot(bidri.bs, aes(sample = cu.mean)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(x = "Normal theoretical quantiles",
+       y = "Bootstrap sample copper content quantiles")
+@
+        We can see from the Q--Q plot that the points systematically curve away from the
+        straight line. In particular, the low points bunch together and the high points
+        spread apart, so the sampling distribution of the sample mean is right-skewed
+        instead of normal. Thus, as previously asserted in Part~\ref{part@1@4}, a
+        \(t\)\nobreakdash-test is not as appropriate as a sign test here; a sample size
+        of~\num{\Sexpr{nrow(bidri)}} was not enough to overcome the effect of the extreme
+        outlier.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<bidri-bootstrap-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Normal Q--Q plot for copper content bootstrap samples of Bidri artifacts}
+    \label{fig:bidri-bootstrap}
+  \end{figure}
+\fi
 
   \end{parts}
 
