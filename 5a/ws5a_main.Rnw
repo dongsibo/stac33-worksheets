@@ -203,6 +203,15 @@ ggplot(bidri, aes(sample = copper)) +
         words, we can conclude that the Bidri ware at this museum comes from a population
         with a median percentage of copper not equal to the \num{4}~percent found in
         other Bidri ware.
+        \par\rule{\linewidth}{\arrayrulewidth}
+        Similarly, had our alternative hypothesis been \(H_a \colon M < 4\), we would
+        still have been able to reject \(H_0\) but with a stronger conclusion: the Bidri
+        ware at this museum come from a population with \emph{less than} \num{4}~percent
+        copper content. This is evident from the \num{\Sexpr{bidri.stest$
+        above_below[1]}}~values below \num{4}~percent and the \num{\Sexpr{bidri.stest$
+        above_below[2]}}~values above, which is unbalanced enough to suggest that \(M\)
+        is less than~\num{4} (see also the corresponding \(p\)\nobreakdash-value
+        of~\num{\Sexpr{round(bidri.stest$p_values[1, 2], 2)}}).
       \end{solution}
 
     \begingroup
