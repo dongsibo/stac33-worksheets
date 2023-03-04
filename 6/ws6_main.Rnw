@@ -1,6 +1,6 @@
 % !Rnw weave = knitr
 \documentclass[addpoints,answers]{exam}
-\usepackage{amsmath}  % for \nobreakdash
+\usepackage{amsmath}  % for \nobreakdash, etc.
 \usepackage[
   a4paper,
   margin = 2cm,
@@ -8,6 +8,7 @@
 ]{geometry}
 %\usepackage[utf8]{inputenc}  % this is ignored with utf8 based engines like XeTeX
 \usepackage{lastpage}
+\usepackage{siunitx}  % for number formatting
 
 % These packages are best loaded last after other packages.
 \usepackage[pdfusetitle]{hyperref}
@@ -163,7 +164,26 @@ ggplot(fuel, aes(sample = Diff)) +
       (Average could be mean or median, whichever you think is best). Do an appropriate
       test.
       \begin{solution}
-        % TODO
+        We first need to consider whether to use the mean or median as our test
+        statistic. From \autoref{fig:fuel-qq}, we see that most of the points roughly
+        follow the straight line. We do have a have a low outlier, but it is not extreme,
+        so given our sample size of~\num{\Sexpr{nrow(fuel)}}, the central limit theorem
+        should ensure that the sampling distribution of the sample mean is normal. In
+        other words, the normality assumption for a \(t\)\nobreakdash-test is probably
+        satisfied.
+        \par
+        We are interested in testing \(H_0 \colon \mu = 0\) against \(H_a \colon \mu \neq
+        0\), where \(\mu\) is the population mean of the fuel efficiency measurement
+        differences. We perform a two-sided \(t\)\nobreakdash-test to determine whether
+        or not to reject \(H_0\):
+<<fuel-t-test>>=
+(fuel.ttest <- t.test(fuel$Diff))
+@
+        We see that our \(p\)\nobreakdash-value is around \num{\Sexpr{round(fuel.ttest$
+        p.value, 2)}}. Assuming a significance level of~\(\alpha = 0.05\), \(p \leq
+        \alpha\); the evidence against \(H_0\) is strong, so we reject it. In other
+        words, we can conclude that there is a difference between the average fuel
+        efficiency measurements of the driver and the computer.
       \end{solution}
 
     \part
