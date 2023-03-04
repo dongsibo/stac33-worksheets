@@ -113,7 +113,11 @@ library(tidyverse)
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the TSV file (from the URL above) into a variable and display its
+        contents:
+<<read-fuel-data, message = FALSE>>=
+(fuel <- read_tsv("http://ritsokiguess.site/datafiles/mpgcomparison.txt"))
+@
       \end{solution}
 
     \part
