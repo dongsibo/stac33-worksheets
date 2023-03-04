@@ -123,7 +123,9 @@ library(tidyverse)
     \part
       What is it that makes this paired data? Explain briefly.
       \begin{solution}
-        % TODO
+        This data is considered to be paired since each fill-up (i.e., data point) is
+        associated with a \emph{pair} of separate measurements for the same thing:
+        computer-~and human-calculated values for fuel efficiency in this case.
       \end{solution}
 
     \part
