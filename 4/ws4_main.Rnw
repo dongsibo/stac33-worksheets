@@ -256,7 +256,7 @@ ggplot(senior.phone, aes("senior", call_length)) +
         using a \(t\)\nobreakdash-test in this situation may be reasonable; the size of
         the sample overcomes its skewness.
         \par
-        (We saw in the ``one- and two-sample inference'' and ``bootstrap for sampling
+        (We saw in the ``one-~and two-sample inference'' and ``bootstrap for sampling
         distribution'' lecture slides that even a sample size of \num{25} for \texttt{%
         jays15-home.csv} was considered large. Accordingly, the sampling distribution was
         shown to be normal.)
