@@ -1,5 +1,6 @@
 % !Rnw weave = knitr
 \documentclass[addpoints,answers]{exam}
+\usepackage{amsmath}  % for \nobreakdash
 \usepackage[
   a4paper,
   margin = 2cm,
@@ -15,6 +16,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -132,8 +134,29 @@ library(tidyverse)
       Draw a suitable graph of these data, bearing in mind what you might want to learn
       from your graph.
       \begin{solution}
-        % TODO
+        As we are interested in conducting an appropriate test in Part~\ref{part@1@4},
+        knowing whether the paired differences are normally distributed (for the sake of
+        a \(t\)\nobreakdash-test) may be of interest. Thus, we draw a normal Q--Q plot to
+        compare the fuel efficiency measurement differences against a normal theoretical
+        distribution (see \autoref{fig:fuel-qq} for the outputted Q--Q plot):
+<<fuel-qq-plot, eval = FALSE>>=
+ggplot(fuel, aes(sample = Diff)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(x = "Normal theoretical quantiles",
+       y = "Fuel efficiency measurement difference quantiles")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<fuel-qq-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Normal Q--Q plot for fuel efficiency measurement differences of some vehicle}
+    \label{fig:fuel-qq}
+  \end{figure}
+\fi
 
     \part
       Is there any difference between the average results of the driver and the computer?
