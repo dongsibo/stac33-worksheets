@@ -89,10 +89,13 @@ how wrong your initial guess is.
 
 \noindent
 \textbf{Note:} This worksheet (and the \coursecode{} course) make(s) use of the
-collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}:
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}.
+We also set the random number generator (RNG) seed for reproducibility in certain
+portions of this worksheet:
 
 <<common, message = FALSE>>=
 library(tidyverse)
+set.seed(ymd("2023-03-06"))
 @
 
 \begin{questions}
@@ -184,7 +187,48 @@ ggplot(fuel, aes(sample = Diff)) +
         \alpha\); the evidence against \(H_0\) is strong, so we reject it. In other
         words, we can conclude that there is a difference between the average fuel
         efficiency measurements of the driver and the computer.
+        \rule{\linewidth}{\arrayrulewidth}
+        Bootstrapping can help us verify whether the sampling distribution of the sample
+        mean of the fuel efficiency measurement differences is normal. First, we need to
+        assume that our sample of \num{\Sexpr{nrow(fuel)}}~fill-ups is representative of
+        all fill-ups for this particular vehicle (i.e., the population). We can then draw
+        bootstrap samples and their means:
+<<fuel-bootstrap>>=
+tibble(.rows = 1000) %>%
+  rowwise() %>%
+  mutate(gal.sample = list(sample(fuel$Diff, replace = TRUE)),
+         gal.mean = mean(gal.sample)) -> fuel.bs
+@
+        We draw a normal Q--Q plot of the bootstrapped sample means of the fuel
+        efficiency measurement differences (see \autoref{fig:fuel-bootstrap} for the
+        outputted Q--Q plot):
+<<fuel-bootstrap-plot, eval = FALSE>>=
+ggplot(fuel.bs, aes(sample = gal.mean)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(x = "Normal theoretical quantiles",
+       y = "Bootstrap sample difference quantiles")
+@
+        We can see from the Q--Q plot that some of the points slightly curve away from
+        the straight line. In particular, the low points bunch together somewhat (as do
+        the high points). However, these deviations from the straight line are relatively
+        slight, so the sampling distribution of the sample mean is still somewhat normal.
+        Thus, as previously asserted above, a \(t\)\nobreakdash-test is not too
+        unreasonable here.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<fuel-bootstrap-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Normal Q--Q plot for bootstrapped fuel efficiency measurement differences of some
+      vehicle%
+    }
+    \label{fig:fuel-bootstrap}
+  \end{figure}
+\fi
 
     \part
       The people who designed the car's computer are interested in whether the values
