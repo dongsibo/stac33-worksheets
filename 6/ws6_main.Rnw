@@ -237,7 +237,60 @@ ggplot(fuel.bs, aes(sample = gal.mean)) +
       median) difference is not enough. Describe what you would look at in addition, and
       how that would help.
       \begin{solution}
-        % TODO
+        \begingroup
+        \sisetup{
+          drop-zero-decimal,
+          round-mode = places,
+          round-precision = 1,
+          range-units = single
+        }%
+        The average difference being close to~\num{0} does not necessarily mean that the
+        individual differences themselves are usually close together. For example, if
+        half of the fuel efficiency difference values are~\num{10}, while the other half
+        are~\num{-10}, then the mean is~\num{0} even though the individual differences
+        are significantly spread out from~\num{0}. A similar situation can be contrived
+        for the median; the median difference is~\num{0} if a little more than a third of
+        the differences are~\num{0} while the remaining differences are equally
+        distributed on~\num{10} and~\num{-10}.
+        \par
+        As hinted above, what we fail to look for in addition to the average are the
+        values' spread. If both the average difference and the spread of the differences
+        are close to~\num{0}, then we can conclude that the values calculated by the
+        computer and by the driver on the same fill-up are consistently similar. Since we
+        assessed that a \(t\)\nobreakdash-test was appropriate in Part~\ref{part@1@4}, we
+        can look at the standard deviation (SD) to assess the spread of the fuel
+        efficiency measurement differences:
+<<fuel-spread>>=
+fuel %>% summarize(DiffSD = sd(Diff))
+@
+        We might consider an arbitrary SD of~\num{1.5} to be tolerable, which is not the
+        case for the SD above, so this would help imply that values calculated by the
+        computer and the driver on the same fill-up are not usually close together. (Had
+        we used a sign test in Part~\ref{part@1@4}, we would have instead looked at the
+        interquartile range with \texttt{IQR()} to assess the spread.)
+        \par
+        In a similar vein, we could have also looked at a confidence interval to assess
+        the range of estimates for the population fuel efficiency measurement difference.
+        We obtained a \qty{95}{\percent} confidence interval for the mean fuel efficiency
+        measurement difference in Part~\ref{part@1@4}:
+<<fuel-confidence-interval>>=
+fuel.ttest$conf.int
+@
+        We are \qty{95}{\percent} confident that the true mean of the fuel efficiency
+        differences lies within the range of \numrange{\Sexpr{fuel.ttest$conf.int[1]}}%
+        {\Sexpr{fuel.ttest$conf.int[2]}}~miles per US gallon. This interval is
+        above~\num{0} and has a length of~\num{\Sexpr{diff(fuel.ttest$conf.int)}}. This
+        length is based on the typical fuel efficiency values below:
+<<fuel-means>>=
+fuel %>% summarize(CompMean = mean(Computer), DriverMean = mean(Driver))
+@
+          We might consider the confidence interval length to be long as it is more than
+          (an arbitrary) \qty{5}{\percent} of the larger typical value of~\num{43.2}.
+          Thus, we would conclude that that that the individual fuel efficiency
+          differences vary quite a bit. (A similar analysis can be derived for a
+          confidence interval for the median with \texttt{ci\_median()} from Dr.~Butler's
+          \href{https://github.com/nxskok/smmr}{smmr} package.)
+        \endgroup
       \end{solution}
 
   \end{parts}
