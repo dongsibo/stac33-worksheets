@@ -103,7 +103,7 @@ March~6, and will go with Assignment~6, which will be due on March~12.
 \noindent
 \textbf{Note:} This worksheet (and the \coursecode{} course) make(s) use of the
 collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}
-as well as Dr.~Butler's \href{https://github.com/nxskok/smmr}{smmr}~package for the sign
+as well as Dr.~Butler's \href{https://github.com/nxskok/smmr}{smmr} package for the sign
 test. We also set the random number generator (RNG) seed for reproducibility in certain
 portions of this worksheet:
 
