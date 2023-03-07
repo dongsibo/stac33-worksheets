@@ -145,7 +145,8 @@ set.seed(ymd("2023-02-27"))
 ggplot(bidri, aes(sample = copper)) +
   stat_qq() +
   stat_qq_line() +
-  labs(x = "Normal theoretical quantiles", y = "Sample copper content quantiles")
+  labs(x = "Normal theoretical quantiles",
+       y = "Sample copper content quantiles (%)")
 @
       \end{solution}
 
@@ -261,7 +262,7 @@ ggplot(bidri.bs, aes(sample = cu.mean)) +
   stat_qq() +
   stat_qq_line() +
   labs(x = "Normal theoretical quantiles",
-       y = "Bootstrap sample copper content quantiles")
+       y = "Bootstrap sample copper content quantiles (%)")
 @
         We can see from the Q--Q plot that the points systematically curve away from the
         straight line. In particular, the low points bunch together and the high points
