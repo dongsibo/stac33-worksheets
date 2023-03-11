@@ -173,7 +173,7 @@ ggplot(tuna, aes(canned_in, price)) +
             sample means are unlikely to be normal due to the extreme skewness previously
             mentioned and due to the small sample sizes of each group, \Sexpr{tuna %>%
             count(canned_in) %>% pull() %>% knitr::combine_words()}. The central limit
-            theorem will be of little help here.
+            theorem (CLT) will be of little help here.
         \end{itemize}
         Thus, it may not be a good idea to run a two-sample \(t\)\nobreakdash-test on the
         prices of tuna canned in oil or water.
@@ -281,8 +281,61 @@ tuna %>% count(price == median(price))
       recommend as a suitable test to compare the egg lengths in the nests of the
       different host species? Explain briefly.
       \begin{solution}
-        % TODO
+        We draw normal Q--Q plots of the cuckoo egg lengths for each host species to
+        compare against normal theoretical distributions (see \autoref{fig:cuckoo-qq} for
+        the outputted Q--Q plots):
+<<cuckoo-qq-plot, eval = FALSE>>=
+ggplot(cuckoo, aes(sample = egg_length)) +
+  stat_qq() +
+  stat_qq_line() +
+  facet_wrap(vars(bird_species)) +
+  labs(x = "Normal theoretical quantiles", y = "Egg length quantiles")
+@
+        We can see several things from the Q--Q plots:
+        \begin{itemize}
+          \item The hedge sparrow plot has three low outliers and one somewhat high
+            outlier. The low outliers are now enough that the sampling distribution of
+            the sample mean of cuckoo egg lengths for hedge sparrows may be non-normal.
+            We will take a look at the sample size for this group to determine whether
+            CLT can help here.
+          \item The meadow pipit plot appears to have long tails, as opposed to outliers.
+            This seems to be the case as these tails appear to be a feature of the whole
+            distribution, though the ``lower tail'' could also be considered low outliers
+            as these points are much lower than the others. This distribution is thus
+            non-normal, but as above, CLT may apply here.
+          \item The points on the plots for the remaining host species roughly follow
+            their straight lines to a reasonable degree, so it seems acceptable to
+            consider those distributions close to normal.
+        \end{itemize}
+        We now consider the sample sizes---mainly for the hedge sparrow and meadow pipit
+        host species---to see if they are large enough for CLT to overcome their
+        non-normal shapes:
+<<cuckoo-host-species-count>>=
+cuckoo %>% count(bird_species)
+@
+        The hedge sparrow group has a sample size of~\num{\Sexpr{sum(cuckoo$bird_species
+        == "HedgeSparrow")}}, while the meadow pipit group has a sample size
+        of~\num{\Sexpr{sum(cuckoo$bird_species == "MeadowPipet")}}. The former sample
+        size is not large enough for CLT, while the latter is; the only group where we
+        are concerned about non-normality is that of the hedge sparrow. Thus, not all the
+        data is normally distributed within groups, so as previously mentioned in
+        Part~\ref{part@2@3}, ANOVA cannot be run here. Mood's median test is more
+        appropriate.
+        \par
+        (Had we considered the groups to be normal enough, the next step would have been
+        to check whether the equality of their spreads, i.e., standard deviances, to
+        determine whether to use ordinary ANOVA or Welch ANOVA.)
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<cuckoo-qq-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Normal Q--Q plots for cuckoo egg lengths of various host species}
+    \label{fig:cuckoo-qq}
+  \end{figure}
+\fi
 
     \part
       Run an (ordinary) analysis of variance, including any follow-up if warranted. What
