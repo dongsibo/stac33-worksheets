@@ -257,7 +257,11 @@ tuna %>% count(price == median(price))
       Read in and display (some of) the data. Note that some of the host bird names are
       misspelled. (You do not need to correct the misspellings.)
       \begin{solution}
-        % TODO
+        We read in the text file (from the URL above) into a variable and display part of
+        its contents:
+<<read-cuckoo-data, message = FALSE>>=
+(cuckoo <- read_delim("http://ritsokiguess.site/datafiles/cuckoo.txt"))
+@
       \end{solution}
 
     \part
