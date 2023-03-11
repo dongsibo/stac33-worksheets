@@ -1,6 +1,6 @@
 % !Rnw weave = knitr
 \documentclass[addpoints,answers]{exam}
-\usepackage{amsmath}  % for \nobreakdash
+\usepackage{amsmath}  % for \nobreakdash, etc.
 \usepackage[
   a4paper,
   margin = 2cm,
@@ -184,7 +184,18 @@ ggplot(tuna, aes(canned_in, price)) +
       differs between tuna canned in water and in oil. What do you conclude, in the
       context of the data?
       \begin{solution}
-        % TODO
+        We are interested in testing \(H_0 \colon M_\text{diff} = 0\) against \(H_a
+        \colon M_\text{diff} \neq 0\), where \(M_\text{diff}\) is the difference between
+        the median selling price of tuna canned in oil and tuna canned in water. We
+        perform Mood's median test to determine whether or not to reject \(H_0\):
+<<tuna-median-test>>=
+(tuna.mtest <- median_test(tuna, price, canned_in))
+@
+        We see that our \(p\)\nobreakdash-value is around \num{\Sexpr{round(tuna.mtest$
+        test[3, 2], 2)}}. Assuming a significance level of~\(\alpha = 0.05\), \(p >
+        \alpha\); the evidence against \(H_0\) is weak, so we cannot reject it. In other
+        words, we cannot conclude that the median selling price of tuna differs between
+        tuna canned in oil and tuna canned in water.
       \end{solution}
 
     \part
@@ -192,7 +203,31 @@ ggplot(tuna, aes(canned_in, price)) +
       previous part) is entirely consistent with the \(p\)\nobreakdash-value that you
       found.
       \begin{solution}
-        % TODO
+        % NOTE: Trying to have the knitr output below be enclosed in proper LaTeX syntax
+        % (e.g. using \num{}, using NBSP correctly) would result in messier code, so
+        % style is forgone for the sake of readability.
+        From Part~\ref{part@1@4}, we see that the data values for each group that are
+        above and below the overall median are (almost) equal. In particular, the values
+        above and below the overall median for tuna canned in oil are
+        \Sexpr{knitr::combine_words(tuna.mtest$table["oil", ])}, which is an exact
+        fifty-fifty split. For tuna canned in water, these values are
+        \Sexpr{knitr::combine_words(tuna.mtest$table["water", ])}, which is almost a
+        fifty-fifty split.
+        \par
+        These results indicate that the medians of the two groups are not different,
+        which is exactly what we concluded in Part~\ref{part@1@4} by not rejecting
+        \(H_0\). Moreover, our splits for each group are extremely close to fifty-fifty,
+        which correlates with the large \(p\)\nobreakdash-value of~\num{\Sexpr{round(
+        tuna.mtest$test[3, 2], 2)}} that we previously obtained.
+        \par\rule{\linewidth}{\arrayrulewidth}
+        Note that the total number of observations in the contingency table
+        is~\num{\Sexpr{sum(tuna.mtest$table)}}, while the total number of observations in
+        our data is~\num{\Sexpr{nrow(tuna)}}: two values are missing. These two values
+        are equal to the overall median and thus not counted in \texttt{tuna.mtest\$%
+        table}:
+<<tuna-count-median>>=
+tuna %>% count(price == median(price))
+@
       \end{solution}
 
   \end{parts}
