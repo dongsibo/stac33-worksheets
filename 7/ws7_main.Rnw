@@ -269,7 +269,11 @@ tuna %>% count(price == median(price))
       explain briefly why a normal quantile plot, for each host species separately, will
       be useful.
       \begin{solution}
-        % TODO
+        The main assumption with an analysis of variance (ANOVA) is that the data is
+        normally distributed within groups. (Regular ANOVA also requires equal spreads,
+        similarly to pooled \(t\)\nobreakdash-tests.) Thus, since we specifically care
+        about normality rather than shape, normal quantile plots for each host species
+        will be useful to determine whether we can perform ANOVA.
       \end{solution}
 
     \part
