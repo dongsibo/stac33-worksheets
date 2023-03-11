@@ -17,6 +17,7 @@
 % Global R settings
 % -----------------
 <<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
 knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 @
 
@@ -126,14 +127,56 @@ library(smmr)
     \part
       Make a suitable graph of these data.
       \begin{solution}
-        % TODO
+        As we are interested in assessing the appropriateness of a two-sample
+        \(t\)\nobreakdash-test in Part~\ref{part@1@3}, knowing whether the selling prices
+        of canned tuna are normally distributed (for each liquid in \texttt{canned\_in})
+        may be of interest. Thus, we draw a box plot of canned tuna prices grouped by the
+        liquid in the can, mainly to assess their skewness (see \autoref{fig:tuna-price}
+        for the outputted box plot):
+<<tuna-price-plot, eval = FALSE>>=
+ggplot(tuna, aes(canned_in, price)) +
+  geom_boxplot() +
+  labs(x = "Liquid in can", y = "Price (cents)")
+@
+        Note that normal Q--Q plots would have also been suitable here.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<tuna-price-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Prices of light tuna in \num{170}\nobreakdash-gram cans from
+      \num{\Sexpr{nrow(tuna)}}~supermarkets%
+    }
+    \label{fig:tuna-price}
+  \end{figure}
+\fi
 
     \part
       Why might it be a \emph{bad} idea to run a two-sample \(t\)\nobreakdash-test on
       these data? Explain briefly.
       \begin{solution}
-        % TODO
+        From \autoref{fig:tuna-price}, we see that the median tuna price as a whole is
+        less than \num{75}~cents, which is relatively small. Moreover, the tuna prices
+        for both groups are heavily right-skewed due to the boxes' larger upper halves
+        and their very long upper right whiskers. This gives us two things to consider:
+        \begin{itemize}
+          \item The means of the two groups are probably not suitable measures of the
+            average tuna price since they will be pulled much higher than the medians.
+          \item
+            % NOTE: Trying to have the knitr output below be enclosed in proper LaTeX
+            % syntax (e.g. using \num{}, using NBSP correctly) would result in messier
+            % code, so style is forgone for the sake of readability.
+            Even if we ignore the point above, the sampling distributions of the
+            sample means are unlikely to be normal due to the extreme skewness previously
+            mentioned and due to the small sample sizes of each group, \Sexpr{tuna %>%
+            count(canned_in) %>% pull() %>% knitr::combine_words()}. The central limit
+            theorem will be of little help here.
+        \end{itemize}
+        Thus, it may not be a good idea to run a two-sample \(t\)\nobreakdash-test on the
+        prices of tuna canned in oil or water.
       \end{solution}
 
     \part
