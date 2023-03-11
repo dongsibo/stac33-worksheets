@@ -116,7 +116,11 @@ library(smmr)
     \part
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
+<<read-tuna-data, message = FALSE>>=
+(tuna <- read_csv("http://ritsokiguess.site/datafiles/tuna.csv"))
+@
       \end{solution}
 
     \part
