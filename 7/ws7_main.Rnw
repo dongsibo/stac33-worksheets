@@ -342,7 +342,44 @@ cuckoo %>% count(bird_species)
       do you conclude, in the context of the data? (Run this analysis even if you don't
       think it's the best thing to do.)
       \begin{solution}
-        % TODO
+        We are interested in testing \(H_0 \colon \mu_1 = \dots = \mu_6\) against \(H_a
+        \colon \text{``not all means the same''}\), where \(\mu_1, \dots, \mu_6\) are the
+        population means of the cuckoo egg lengths for each of the six host species. We
+        perform an analysis of variance to determine whether or not to reject \(H_0\):
+<<cuckoo-anova>>=
+cuckoo.aov <- aov(egg_length ~ bird_species, cuckoo)
+summary(cuckoo.aov)
+@
+        We see that our \(p\)\nobreakdash-value is around \num{\Sexpr{round(summary(
+        cuckoo.aov)[[1]][1, "Pr(>F)"], 2)}}. Assuming a significance level of~\(\alpha =
+        0.05\), \(p \leq \alpha\); the evidence against \(H_0\) is strong, so we reject
+        it. In other words, we can conclude that not all the mean cuckoo egg lengths of
+        each host species are the same.
+        \par
+        We have six host species (i.e., groups), so the conclusion above from our
+        analysis of variance is not very useful. As a follow-up, we run Tukey's honest
+        significantly difference (HSD) test to determine which groups differ from each
+        other:
+<<cuckoo-tukey>>=
+TukeyHSD(cuckoo.aov)$bird_species %>%
+  as_tibble(rownames = "comparison") %>%
+  arrange(`p adj`)
+@
+        Still assuming a significance level of~\(\alpha = 0.05\), we can see that the
+        most statistically significant \(p\)\nobreakdash-values are those for the wren
+        compared to the remaining five host species since \(p \leq \alpha\) in those
+        cases. The \(p\)\nobreakdash-values for the meadow pipit versus both the hedge
+        sparrow and tree pipit are also just barely significant. In other words, we can
+        conclude the following:
+        \begin{itemize}
+          \item The mean length of cuckoo eggs in wren nests differs from that of the
+            other five host species.
+          \item The mean length of cuckoo eggs in meadow pipit nests also differs
+            somewhat from that of hedge sparrows and tree pipits.
+        \end{itemize}
+        The result for cuckoo eggs in wren nests is not that surprising since we can
+        already see from \autoref{fig:cuckoo-qq} that such eggs, on average, have
+        significantly shorter lengths than the other eggs.
       \end{solution}
 
     \part
