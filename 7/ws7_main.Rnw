@@ -423,7 +423,19 @@ pairwise_median_test(cuckoo, egg_length, bird_species) %>% arrange(adj_p_value)
       Compare all your significant results from the previous two parts. Are the results
       substantially different? Explain briefly.
       \begin{solution}
-        % TODO
+        The results from running our initial analysis of variance and Mood's median tests
+        are similar. In both cases, we rejected the null hypothesis that the average
+        cuckoo egg lengths of all host species were the same. The
+        \(p\)\nobreakdash-values for each test were also substantially small.
+        \par
+        The results from our follow-up tests were different but still somewhat similar.
+        The pairwise Mood's median tests were more conservative than Tukey's HSD test
+        since it deemed fewer comparisons to be significantly different. In particular,
+        some of the meadow pipit comparisons were just barely significant in Tukey's HSD
+        and insignificant in the pairwise median tests. Tukey's HSD also deemed wren vs.
+        pied wagtail significant, which was not significant in the pairwise median tests.
+        Given these minor differences, the results from both follow-up procedures are not
+        substantially different.
       \end{solution}
 
   \end{parts}
