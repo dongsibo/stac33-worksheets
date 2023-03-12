@@ -55,7 +55,7 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 % of another framed box, like the box around solutions from the exam class. The downside
 % to doing this is that we lose background colour since there is no more box/frame, but
 % page breaks are worth it.
-%\renewenvironment{kframe}{}{}
+\renewenvironment{kframe}{}{}
 
 % Miscellaneous
 % -------------
@@ -219,7 +219,7 @@ ggplot(tuna, aes(canned_in, price)) +
         \(H_0\). Moreover, our splits for each group are extremely close to fifty-fifty,
         which correlates with the large \(p\)\nobreakdash-value of~\num{\Sexpr{round(
         tuna.mtest$test[3, 2], 2)}} that we previously obtained.
-        \par\rule{\linewidth}{\arrayrulewidth}
+        \rule{\linewidth}{\arrayrulewidth}
         Note that the total number of observations in the contingency table
         is~\num{\Sexpr{sum(tuna.mtest$table)}}, while the total number of observations in
         our data is~\num{\Sexpr{nrow(tuna)}}: two values are missing. These two values
@@ -386,7 +386,37 @@ TukeyHSD(cuckoo.aov)$bird_species %>%
       Run a Mood's median test, and, if appropriate, follow-up tests. What do you now
       conclude, in the context of the data?
       \begin{solution}
-        % TODO
+        % NOTE: A "the" is missing from "not all medians [the] same" to reduce length and
+        % avoid overfull \hbox. Maybe using \text here is not the best.
+        We are interested in testing \(H_0 \colon M_1 = \dots = M_6\) against \(H_a \colon
+        \text{``not all medians same''}\), where \(M_1, \dots, M_6\) are the population
+        medians of the cuckoo egg lengths for each of the six host species. We perform
+        Mood's median test to determine whether or not to reject \(H_0\):
+<<cuckoo-median-test>>=
+(cuckoo.mtest <- median_test(cuckoo, egg_length, bird_species))
+@
+        We see that our \(p\)\nobreakdash-value is around \num{\Sexpr{round(cuckoo.mtest$
+        test[3, 2], 2)}}. Assuming a significance level of~\(\alpha = 0.05\), \(p \leq
+        \alpha\); the evidence against \(H_0\) is strong, so we reject it. In other
+        words, we can conclude that not all the median cuckoo egg lengths of each host
+        species are the same.
+        \par
+        We have six host species (i.e., groups), so the conclusion above from our Mood's
+        median test is not very useful. As a follow-up, we run pairwise Mood's median
+        tests to determine which groups differ from each other:
+        % pairwise_median_test is not that fast, so cache its chunk for faster knitting.
+<<cuckoo-pairwise-median-test, cache = TRUE>>=
+pairwise_median_test(cuckoo, egg_length, bird_species) %>% arrange(adj_p_value)
+@
+        Still assuming a significance level of~\(\alpha = 0.05\), we can see that the
+        most statistically significant \(p\)\nobreakdash-values are those for the wren
+        compared to four of the five remaining host species (i.e., not pied wagtails)
+        since \(p \leq \alpha\) in those cases. In other words, we can conclude that the
+        median length of cuckoo eggs in wren nests differs from that of the other host
+        species, except for pied wagtails.
+        \par
+        As mentioned in Part~\ref{part@2@4} this result is not that surprising given
+        \autoref{fig:cuckoo-qq}.
       \end{solution}
 
     \part
