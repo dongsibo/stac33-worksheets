@@ -1,0 +1,208 @@
+% !Rnw weave = knitr
+\documentclass[addpoints,answers]{exam}
+\usepackage[
+  a4paper,
+  margin = 2cm,
+  footskip = 20pt  % footer pushed too far with exam class; adjust with footskip
+]{geometry}
+%\usepackage[utf8]{inputenc}  % this is ignored with utf8 based engines like XeTeX
+\usepackage{lastpage}
+\usepackage{siunitx}  % for number formatting
+
+% These packages are best loaded last after other packages.
+\usepackage[pdfusetitle]{hyperref}
+%\usepackage{refcheck}  % must be loaded after hyperref; uncomment to check references
+
+% Global R settings
+% -----------------
+<<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
+knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
+@
+
+% Commands
+% --------
+\newcommand{\assignment}{Worksheet~8}
+\newcommand{\coursecode}{STAC33H3~S}
+\newcommand{\semester}{Winter 2023}
+\newcommand{\name}{Sibo Dong}
+
+% Typography
+% ----------
+\title{\coursecode, \semester: \assignment}
+% This file is shared in a public Git repository, so a dummy student number is used
+% below for privacy, just in case.
+\author{\name \\ \texttt{1234567890}}
+\date{Monday March~20, 2023 12:00pm}
+
+\runningheadrule
+\header{\coursecode, \semester}{}{\assignment}
+\footer{}{}{Page \thepage \ of \pageref{LastPage}}
+
+% Use titled questions with an altered question format to somewhat match markup in
+% worksheet_8_c33.html
+\qformat{%
+  \textbf{Question \thequestion: \thequestiontitle}%
+  \addcontentsline{toc}{section}{\thequestiontitle}%
+  \dotfill (\totalpoints\ points)%
+}
+
+% NOTE: If page breaks for knitr code chunks aren't needed in the final document, it is
+% safe to leave the \renewenvironment line commented out.
+%
+% Don't define kframe environment; kframe uses frame, which does not interact well inside
+% of another framed box, like the box around solutions from the exam class. The downside
+% to doing this is that we lose background colour since there is no more box/frame, but
+% page breaks are worth it.
+%\renewenvironment{kframe}{}{}
+
+% Miscellaneous
+% -------------
+\synctex=1
+
+\begin{document}
+
+\maketitle
+\thispagestyle{foot}  % include only footer on title page
+
+\noindent
+Questions are below. Dr.~Butler's solutions---see \href{https://ritsokiguess.site/STAC33%
+/worksheet_8_c33.html}{\texttt{worksheet\_8\_c33.html}}---are below all the question
+parts for a question; scroll down there if you get stuck. There is extra discussion below
+that for some of the questions; you might find that interesting to read, maybe after
+tutorial.
+
+\medskip
+\noindent
+For these worksheets, you will learn the most by spending a few minutes thinking about
+how you would answer each question before you look at Dr.~Butler's solution. There are no
+grades attached to these worksheets, so feel free to guess: it makes no difference at all
+how wrong your initial guess is.
+
+\bigskip
+\begin{center}
+  \gradetable[v][questions]
+\end{center}
+
+\newpage
+
+\noindent
+\textbf{Note:} This assignment (and the \coursecode{} course) make(s) use of the
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}
+as well as Dr.~Butler's \href{https://github.com/nxskok/smmr}{smmr} package for Mood's
+median test:
+
+<<common, message = FALSE>>=
+library(tidyverse)
+library(smmr)
+@
+
+\begin{questions}
+
+\titledquestion{Consistency of lab tests}
+  Consistency between laboratory tests is important and yet the results may depend on who
+  did the test and where the test was performed. In an experiment to test levels of
+  consistency, a large jar of dried egg powder was divided up into a number of samples.
+  Because the powder was homogenized (all the same), the fat content of the samples is
+  actually the same, but this fact is hidden from the laboratories. Thus any observed
+  differences between the results are differences among the labs. In each of the six
+  labs, the fat content of the egg powder was measured eight times.
+
+  The data are in \url{http://ritsokiguess.site/datafiles/eggs.csv}.
+
+  \begin{parts}
+
+    \part
+      Read in and display (some of) the data. (There are some other columns that we will
+      not use in this question.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Make a suitable plot of the variables of interest.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Describe briefly how any of the labs deviate from the general pattern.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Run an (ordinary) analysis of variance, and conduct any appropriate follow-ups.
+      What do you conclude, in the context of the data? (Hint: Using \(\alpha = 0.10\)
+      will make your conclusions clearer.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Run a suitable Mood's median test on the same data, including any followups if
+      warranted.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Home prices}
+  A Realtor kept track of the asking prices of \num{37} homes for sale in West Lafayette,
+  Indiana, in a particular year. Unfortunately for us, the data are as shown in
+  \url{http://ritsokiguess.site/datafiles/homes.txt}. The small numbers, \num{3}
+  and~\num{4}, on lines by themselves, are the number of bedrooms of the homes whose
+  asking prices follow that number. The actual asking prices, in dollars, are aligned in
+  columns, up to six of them in a line.
+
+  We need to get these data into a tidy format, with one column being the number of
+  bedrooms and the other being the asking price of the home.
+
+  The question has three parts, but you will spend most of your time and thinking on
+  Part~\ref{part@2@2}. Part~\ref{part@2@3} is straightforward once you have done
+  Part~\ref{part@2@2}.
+
+  \begin{parts}
+
+    \part
+      Read in the (untidy) data from the file, in a way that you get all the data values.
+      To make sure that R reads all six columns, set up a vector of six column names (it
+      does not matter what they are) and tell the appropriate \texttt{read\_*()} function
+      to use these as the column names. (You will have to look this last thing up. Say
+      where you found the answer.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Obtain a tidy data frame, according to the specifications in the question. Describe
+      your process clearly enough that anyone reading your answer would be able to do it
+      themselves and see why it works.
+      \par
+      Hints: You might find it useful to find out about the following, if you don't
+      already know about them:
+      \begin{itemize}
+        \item \texttt{drop\_na()}
+        \item \texttt{ifelse()}
+        \item \texttt{fill()}
+      \end{itemize}
+      Also think about how you know whether a number in the data file is a selling price
+      or a number of bedrooms.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Use your tidy data frame to make a box plot of these data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\end{questions}
+
+\end{document}
