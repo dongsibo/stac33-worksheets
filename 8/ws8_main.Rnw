@@ -116,7 +116,11 @@ library(smmr)
       Read in and display (some of) the data. (There are some other columns that we will
       not use in this question.)
       \begin{solution}
-        % TODO
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
+<<read-eggs-data, message = FALSE>>=
+(eggs <- read_csv("https://ritsokiguess.site/datafiles/eggs.csv"))
+@
       \end{solution}
 
     \part
