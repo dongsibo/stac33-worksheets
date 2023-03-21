@@ -1,5 +1,6 @@
 % !Rnw weave = knitr
 \documentclass[addpoints,answers]{exam}
+\usepackage{amsmath}  % for \nobreakdash, etc.
 \usepackage[
   a4paper,
   margin = 2cm,
@@ -54,7 +55,7 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 % of another framed box, like the box around solutions from the exam class. The downside
 % to doing this is that we lose background colour since there is no more box/frame, but
 % page breaks are worth it.
-%\renewenvironment{kframe}{}{}
+\renewenvironment{kframe}{}{}
 
 % Miscellaneous
 % -------------
@@ -168,7 +169,34 @@ ggplot(eggs, aes(Lab, Fat)) +
       What do you conclude, in the context of the data? (Hint: Using \(\alpha = 0.10\)
       will make your conclusions clearer.)
       \begin{solution}
-        % TODO
+        We are interested in testing \(H_0 \colon \mu_\text{I} = \dots = \mu_\text{VI}\)
+        against \(H_a \colon\)``not all means the same'', where \(\mu_\text{I}, \dots,
+        \mu_\text{VI}\) are the population means of the egg powder's fat content as
+        measured by each of the six laboratories. We perform an analysis of variance to
+        determine whether or not to reject \(H_0\):
+<<eggs-anova>>=
+eggs.aov <- aov(Fat ~ Lab, eggs)
+summary(eggs.aov)
+@
+        We see that our \(p\)\nobreakdash-value is around \num{\Sexpr{round(summary(
+        eggs.aov)[[1]][1, "Pr(>F)"], 2)}}. Assuming a significance level of~\(\alpha =
+        0.10\), \(p \leq \alpha\); the evidence against \(H_0\) is strong, so we reject
+        it. In other words, we can conclude that not all the means of the egg powder's
+        measured fat content were the same among the labs.
+        \par
+        We have six labs (i.e., groups), so the conclusion above from our analysis of
+        variance is not very useful. As a follow-up, we run Tukey's honest significantly
+        difference (HSD) test to determine which groups differ from each other:
+<<eggs-tukey>>=
+TukeyHSD(eggs.aov)$Lab %>%
+  as_tibble(rownames = "comparison") %>%
+  arrange(`p adj`)
+@
+        Still assuming a significance level of~\(\alpha = 0.10\), we can see that the
+        only \(p\)\nobreakdash-values that are statistically significant are those for
+        Lab~I compared to the remaining five labs since \(p \leq \alpha\) in those cases.
+        In other words, we can conclude that mean of the egg powder's fat content as
+        measured by Lab~I differ from those of the other laboratories.
       \end{solution}
 
     \part
