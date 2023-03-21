@@ -126,13 +126,41 @@ library(smmr)
     \part
       Make a suitable plot of the variables of interest.
       \begin{solution}
-        % TODO
+        We draw a box plot of the measured fat content grouped by each lab (see
+        \autoref{fig:eggs-fat} for the outputted box plot):
+<<eggs-fat-plot, eval = FALSE>>=
+ggplot(eggs, aes(Lab, Fat)) +
+  geom_boxplot() +
+  labs(x = "Laboratory", y = "Measured fat content")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<eggs-fat-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Measured fat content of homogenized egg powder from six laboratories}
+    \label{fig:eggs-fat}
+  \end{figure}
+\fi
 
     \part
       Describe briefly how any of the labs deviate from the general pattern.
       \begin{solution}
-        % TODO
+        We see several deviations from the general pattern in \autoref{fig:eggs-fat}:
+        \begin{itemize}
+          \item The measurements from Lab~I have a significantly higher median than those
+            of the other labs. Lab~I's measurements are also much more spread out since
+            its box and whiskers are the longest. Lab~I also appears to be left-skewed
+            due to the box's longer lower half and lower whisker.
+          \item The measurements from Lab~V have the least amount of spread due to its
+            very short box and whiskers. However, Lab~V does have one low outlier, which
+            is also the only outlier among all labs.
+          \item Relatively, the measurements from Lab~VI are also more spread out (though
+            not to the degree that Lab~I is). Lab~VI also appears to have a lower median
+            compared to the other labs.
+        \end{itemize}
       \end{solution}
 
     \part
