@@ -203,7 +203,22 @@ TukeyHSD(eggs.aov)$Lab %>%
       Run a suitable Mood's median test on the same data, including any followups if
       warranted.
       \begin{solution}
-        % TODO
+        We are interested in testing \(H_0 \colon M_\text{I} = \dots = M_\text{VI}\)
+        against \(H_a \colon\)``not all medians the same'', where \(M_\text{I} = \dots =
+        M_\text{VI}\) are the population medians of the egg powder's fat content as
+        measured by each of the six laboratories. We perform Mood's median test to
+        determine whether or not to reject \(H_0\):
+<<eggs-median-test>>=
+(eggs.mtest <- median_test(eggs, Fat, Lab))
+@
+        We see that our \(p\)\nobreakdash-value is around \num{\Sexpr{round(eggs.mtest$
+        test[3, 2], 2)}}. Assuming a significance level of~\(\alpha = 0.05\), \(p >
+        \alpha\); the evidence against \(H_0\) is weak, so we cannot reject it. In other
+        words, we can conclude that medians of the egg powder's measured fat content were
+        the same among the labs.
+        \par
+        The conclusion above is more useful than one obtained by rejecting \(H_0\), so we
+        stop here: no follow-up tests are needed.
       \end{solution}
 
   \end{parts}
