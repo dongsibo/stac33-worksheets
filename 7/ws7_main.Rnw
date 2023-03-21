@@ -343,7 +343,7 @@ cuckoo %>% count(bird_species)
       think it's the best thing to do.)
       \begin{solution}
         We are interested in testing \(H_0 \colon \mu_1 = \dots = \mu_6\) against \(H_a
-        \colon \text{``not all means the same''}\), where \(\mu_1, \dots, \mu_6\) are the
+        \colon\)``not all means the same'', where \(\mu_1, \dots, \mu_6\) are the
         population means of the cuckoo egg lengths for each of the six host species. We
         perform an analysis of variance to determine whether or not to reject \(H_0\):
 <<cuckoo-anova>>=
@@ -386,12 +386,10 @@ TukeyHSD(cuckoo.aov)$bird_species %>%
       Run a Mood's median test, and, if appropriate, follow-up tests. What do you now
       conclude, in the context of the data?
       \begin{solution}
-        % NOTE: A "the" is missing from "not all medians [the] same" to reduce length and
-        % avoid overfull \hbox. Maybe using \text here is not the best.
-        We are interested in testing \(H_0 \colon M_1 = \dots = M_6\) against \(H_a \colon
-        \text{``not all medians same''}\), where \(M_1, \dots, M_6\) are the population
-        medians of the cuckoo egg lengths for each of the six host species. We perform
-        Mood's median test to determine whether or not to reject \(H_0\):
+        We are interested in testing \(H_0 \colon M_1 = \dots = M_6\) against \(H_a
+        \colon\)``not all medians the same'', where \(M_1, \dots, M_6\) are the
+        population medians of the cuckoo egg lengths for each of the six host species. We
+        perform Mood's median test to determine whether or not to reject \(H_0\):
 <<cuckoo-median-test>>=
 (cuckoo.mtest <- median_test(cuckoo, egg_length, bird_species))
 @
