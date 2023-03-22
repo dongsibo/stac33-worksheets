@@ -321,8 +321,34 @@ TukeyHSD(eggs.aov)$Lab %>%
     \part
       Use your tidy data frame to make a box plot of these data.
       \begin{solution}
-        % TODO
+        We draw a box plot of house prices grouped by the number of bedrooms (see
+        \autoref{fig:home-prices} for the outputted box plot):
+<<homes-price-plot, eval = FALSE>>=
+homes.tidy %>%
+  mutate(bdrms = as.factor(bdrms)) %>%
+  ggplot(aes(bdrms, price)) +
+  geom_boxplot() +
+  labs(x = "Number of bedrooms", y = "Asking price ($)")
+@
+        One thing we can observe from this box plot is that the typical (or median)
+        asking price of \num{4}\nobreakdash-bedroom homes is much higher than that of
+        \num{3}\nobreakdash-bedroom homes. (This is also one of the box plots obtained in
+        Question~2 of \href{https://ritsokiguess.site/STAC33/worksheet_4_c33.html}{%
+        \texttt{worksheet\_4\_c33.html}} which serves as further confirmation that our
+        tidied data is correct.)
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<homes-price-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{%
+      Asking prices of \num{\Sexpr{nrow(homes.tidy)}}~homes in West Lafayette, Indiana%
+    }
+    \label{fig:home-prices}
+  \end{figure}
+\fi
 
   \end{parts}
 
