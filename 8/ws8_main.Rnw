@@ -281,7 +281,41 @@ TukeyHSD(eggs.aov)$Lab %>%
       Also think about how you know whether a number in the data file is a selling price
       or a number of bedrooms.
       \begin{solution}
-        % TODO
+        Our \texttt{homes} data frame is somewhat wide and untidy as there are multiple
+        house prices (i.e., observations) per row. To make the data tidier, we want just
+        one column for all the prices via \texttt{pivot\_longer()}. By default,
+        \texttt{pivot\_longer()} creates a column with the old column names. However,
+        these names are unimportant and arbitrary (as mentioned in Part~\ref{part@2@1}),
+        so we drop them when pivoting. The N/A values in \texttt{home} also do not
+        indicate actual missing house prices; they are meaningless and dropped as well:
+<<homes-pivot-longer>>=
+(homes %>%
+  pivot_longer(everything(),
+               names_to = NULL,
+               values_to = "price",
+               values_drop_na = TRUE) -> homes.tidy)
+@
+        Note that the \num{4} and~\num{3} are also included in the \texttt{price} column.
+        In particular, all the values below \num{4} and above \num{3} are prices for
+        \num{4}\nobreakdash-bedroom homes, while the remaining values below \num{3} are
+        prices for \num{3}\nobreakdash-bedroom homes. If we had an additional column with
+        this exact structure but with missing values substituted for the actual house
+        prices (i.e., not \num{4} and~\num{3}), we could then use \texttt{fill()} to fill
+        in the correct number of bedrooms associated with each house price.
+        \par
+        We first mutate the \texttt{price} column into a column for the number of
+        bedrooms but with the actual prices as missing values:
+<<homes-add-na-column>>=
+(homes.tidy %>% mutate(bdrms = ifelse(price %in% 3:4, price, NA)) -> homes.tidy)
+@
+        We then fill in all the missing values under \texttt{bdrms} with the correct
+        number of bedrooms based on the previous non-missing value above them (\num{4}
+        or~\num{3}). The entries left in the data frame with the number of bedrooms (and
+        not the price) under \texttt{price} are not actual observations, so we also
+        filter out these rows to obtain our final, tidy data frame:
+<<homes-fill-na-column>>=
+(homes.tidy %>% fill(bdrms) %>% filter(!(price %in% 3:4)) -> homes.tidy)
+@
       \end{solution}
 
     \part
