@@ -249,7 +249,21 @@ TukeyHSD(eggs.aov)$Lab %>%
       to use these as the column names. (You will have to look this last thing up. Say
       where you found the answer.)
       \begin{solution}
-        % TODO
+        The data from the text file is delimited by multiple white spaces, so using
+        \texttt{read\_table()} seems appropriate here. However, most of our ``columns''
+        have missing values, so only the first column of the text file will be read into
+        a data frame if \texttt{read\_table()} is called without any additional
+        arguments.
+        \par
+        The resulting data frame needs to be forced into six columns in order to read all
+        the data in the text file. To do this, we specify six arbitrary column names with
+        \texttt{col\_names} (per \texttt{?read\_table}) when invoking
+        \texttt{read\_table()}; names are mandatory for data frame columns and there is no
+        other argument to specify the column count:
+<<read-homes-data, warning = FALSE, message = FALSE>>=
+(homes <- read_table("http://ritsokiguess.site/datafiles/homes.txt",
+                     col_names = letters[1:6]))
+@
       \end{solution}
 
     \part
