@@ -357,8 +357,8 @@ summary(cuckoo.aov)
         each host species are the same.
         \par
         We have six host species (i.e., groups), so the conclusion above from our
-        analysis of variance is not very useful. As a follow-up, we run Tukey's honest
-        significantly difference (HSD) test to determine which groups differ from each
+        analysis of variance is not very useful. As a follow-up, we run Tukey's honestly
+        significant difference (HSD) test to determine which groups differ from each
         other:
 <<cuckoo-tukey>>=
 TukeyHSD(cuckoo.aov)$bird_species %>%

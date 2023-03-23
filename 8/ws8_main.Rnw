@@ -185,7 +185,7 @@ summary(eggs.aov)
         measured fat content were the same among the labs.
         \par
         We have six labs (i.e., groups), so the conclusion above from our analysis of
-        variance is not very useful. As a follow-up, we run Tukey's honest significantly
+        variance is not very useful. As a follow-up, we run Tukey's honestly significant
         difference (HSD) test to determine which groups differ from each other:
 <<eggs-tukey>>=
 TukeyHSD(eggs.aov)$Lab %>%
