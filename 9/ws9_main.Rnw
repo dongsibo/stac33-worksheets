@@ -1,0 +1,320 @@
+% !Rnw weave = knitr
+\documentclass[addpoints,answers]{exam}
+\usepackage[
+  a4paper,
+  margin = 2cm,
+  footskip = 20pt  % footer pushed too far with exam class; adjust with footskip
+]{geometry}
+%\usepackage[utf8]{inputenc}  % this is ignored with utf8 based engines like XeTeX
+\usepackage{lastpage}
+\usepackage{siunitx}  % for number formatting
+
+% These packages are best loaded last after other packages.
+\usepackage[pdfusetitle]{hyperref}
+%\usepackage{refcheck}  % must be loaded after hyperref; uncomment to check references
+
+% Global R settings
+% -----------------
+<<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
+knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
+@
+
+% Commands
+% --------
+\newcommand{\assignment}{Worksheet~9}
+\newcommand{\coursecode}{STAC33H3~S}
+\newcommand{\semester}{Winter 2023}
+\newcommand{\name}{Sibo Dong}
+
+% Typography
+% ----------
+\title{\coursecode, \semester: \assignment}
+% This file is shared in a public Git repository, so a dummy student number is used
+% below for privacy, just in case.
+\author{\name \\ \texttt{1234567890}}
+\date{Monday March~27, 2023 12:00pm}
+
+\runningheadrule
+\header{\coursecode, \semester}{}{\assignment}
+\footer{}{}{Page \thepage \ of \pageref{LastPage}}
+
+% Use titled questions with an altered question format to somewhat match markup in
+% worksheet_9_c33.html
+\qformat{%
+  \textbf{Question \thequestion: \thequestiontitle}%
+  \addcontentsline{toc}{section}{\thequestiontitle}%
+  \dotfill (\totalpoints\ points)%
+}
+
+% NOTE: If page breaks for knitr code chunks aren't needed in the final document, it is
+% safe to leave the \renewenvironment line commented out.
+%
+% Don't define kframe environment; kframe uses frame, which does not interact well inside
+% of another framed box, like the box around solutions from the exam class. The downside
+% to doing this is that we lose background colour since there is no more box/frame, but
+% page breaks are worth it.
+%\renewenvironment{kframe}{}{}
+
+% Miscellaneous
+% -------------
+\synctex=1
+
+\begin{document}
+
+\maketitle
+\thispagestyle{foot}  % include only footer on title page
+
+\noindent
+Questions are below. Dr.~Butler's solutions---see \href{https://ritsokiguess.site/STAC33%
+/worksheet_9_c33.html}{\texttt{worksheet\_9\_c33.html}}---are below all the question
+parts for a question; scroll down there if you get stuck. There is extra discussion below
+that for some of the questions; you might find that interesting to read, maybe after
+tutorial.
+
+\medskip
+\noindent
+For these worksheets, you will learn the most by spending a few minutes thinking about
+how you would answer each question before you look at Dr.~Butler's solution. There are no
+grades attached to these worksheets, so feel free to guess: it makes no difference at all
+how wrong your initial guess is.
+
+\medskip
+\noindent
+This time there are \numquestions\ questions; the second and third get into some
+different issues related to regression.
+
+\bigskip
+\begin{center}
+  \gradetable[v][questions]
+\end{center}
+
+\newpage
+
+\noindent
+\textbf{Note:} This assignment (and the \coursecode{} course) make(s) use of the
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}:
+
+<<common, message = FALSE>>=
+library(tidyverse)
+@
+
+\begin{questions}
+
+\titledquestion{Pivoting}
+  In this question, you are given some data frames and a bit of code, and your job is to
+  decide what the code does and what its output will be, \emph{before} you run it and
+  find out.
+
+  \begin{parts}
+
+    \part
+      Starting from this data frame:
+<<create-d1>>=
+(d1 <- tribble(
+  ~x, ~y, ~z,
+  10, 11, 13,
+   9, 12, 14
+))
+@
+      what will happen if you run this code?
+<<d1-pivot-longer, eval = FALSE>>=
+d1 %>% pivot_longer(y:z, names_to = "name", values_to = "value")
+@
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Starting from here:
+<<create-d2>>=
+(d2 <- tribble(
+  ~x, ~y_first, ~y_second, ~y_third,
+  "a",      10,        11,       13,
+  "b",      12,        15,       16
+))
+@
+      this code is run. What is the output?
+<<d2-pivot-longer, eval = FALSE>>=
+d2 %>%
+  pivot_longer(starts_with("y"), names_to = c(".value", "when"), names_sep = "_")
+@
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Starting from here:
+<<create-d3>>=
+(d3 <- tribble(
+  ~id,  ~x, ~y,
+    1, "a", 10,
+    2, "a", 11,
+    1, "b", 12,
+    2, "b", 13
+))
+@
+      what happens if you run this?
+<<d3-pivot-wider, eval = FALSE>>=
+d3 %>% pivot_wider(names_from = x, values_from = y)
+@
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Starting from here:
+<<create-d4>>=
+(d4 <- tribble(
+   ~x,  ~y, ~z,
+  "a", "b",  9,
+  "c", "d", 10,
+  "a", "d", 11,
+  "c", "b", 12
+))
+@
+      what happens if you run this?
+<<d4-pivot-wider, eval = FALSE>>=
+d4 %>% pivot_wider(names_from = y, values_from = z)
+@
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Open space}
+  An organization called OASIS has tabulated the amount of parkland or open space within
+  city limits for each of a number of US cities. Our aim is to predict the amount of open
+  space from the population. The population of each city is given in thousands, and the
+  amount of open space is in acres.\footnote{One acre is approximately \num{0.4}~hectares
+  or \num{4000}~square metres.}
+
+  The data are in \url{http://ritsokiguess.site/datafiles/open-space.csv}.
+
+  \begin{parts}
+
+    \part[1]
+      Read in and display (some of) the data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[3]
+      Make a suitable plot of these data, bearing in mind the aims of the analysis. Add a
+      regression line to your plot.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[2]
+      Fit a regression predicting open space from population, and display the results.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[2]
+      Is there a significant effect of population on the amount of open space? Explain
+      briefly. What does this mean, in the context of the data?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[2]
+      When some of the values of a variable are much larger than others, a common
+      strategy is to take logs of all such variables (both the quantitative variables,
+      here). Find a way to re-draw your scatter plot on log-scales for both variables.
+      Cite your source, or describe your thought process, as appropriate. (In R,
+      \texttt{log()} means natural (base~\(e\)) log, which is fine here.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[2]
+      Run a regression predicting log--open space from log-population. Display the
+      results.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[3]
+      Using your regression of the previous part, predict the amount of open space in a
+      city that has a population of~\num{500} (thousand). Show your process.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Heights of parents and children}
+  In 1886, William Galton recorded the heights of \num{928}~(adult) children and their
+  parents' mid-height (that is, the average of the father's and mother's heights). Each
+  height was measured in inches and classified into intervals of width (mostly)
+  \num{1}~inch. The data are in \url{http://ritsokiguess.site/datafiles/Galton.csv}.
+
+  \begin{parts}
+
+    \part[1]
+      Read in and display (some of) the data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[2]
+      Make a suitable plot of your data frame.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[2]
+      There are \num{928}~individuals, but apparently fewer points than that on your
+      graph. What happened to the others?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[4]
+      Re-draw your graph, but this time using \texttt{geom\_jitter()} to plot the points.
+      Add a smooth trend. What seems to have happened, and what does the smooth trend
+      show?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[2]
+      Obtain the regression line for predicting child's height from parent's mid-height.
+      (That is, fit the regression model and display the output.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[4]
+      The paper that Galton wrote about these data was called ``Regression Towards
+      Mediocrity in Hereditary Stature''. This seems like an obvious title, since we just
+      did a regression analysis, but it was actually the \emph{first ever} use of the
+      term ``regression'' in a statistical context.
+      \par
+      Find the dictionary definition of ``regression'' that Galton would have used,
+      citing your source. Explain briefly what Galton meant by his article title. Hint:
+      ``Towards mediocrity'' means ``towards the mean''. You might like to do some
+      predictions.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part[3]
+      Obtain (i)~a plot of residuals against fitted values, (ii)~a normal quantile plot
+      of residuals. How do you know that these are both satisfactory?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\end{questions}
+
+\end{document}
