@@ -122,7 +122,17 @@ library(tidyverse)
 d1 %>% pivot_longer(y:z, names_to = "name", values_to = "value")
 @
       \begin{solution}
-        % TODO
+        The code chunk above will lengthen the data frame into four rows and three
+        columns. In particular, the \texttt{y} and \texttt{z} column names will be
+        combined into values under a \texttt{name} column. The four values under the old
+        \texttt{y} and \texttt{z} columns are lengthened into values under a new
+        \texttt{value} column that correspond to the old column names under
+        \texttt{name}. The \texttt{x} column is also repeated so that each value under it
+        matches the original \texttt{y} and \texttt{z}.
+        \par
+        The lengthened data frame is as follows:
+<<d1-pivot-longer, echo = FALSE>>=
+@
       \end{solution}
 
     \part
@@ -140,7 +150,17 @@ d2 %>%
   pivot_longer(starts_with("y"), names_to = c(".value", "when"), names_sep = "_")
 @
       \begin{solution}
-        % TODO
+        The code chunk above will lengthen the data frame into six rows and three
+        columns. In particular, the three \texttt{y\_*} columns will be converted into a
+        \texttt{y} column containing the six values under the original three columns and
+        a \texttt{when} column containing repeats of \texttt{first}, \texttt{second}, and
+        \texttt{third}, which correspond to the values under the old \texttt{y\_*}
+        columns. The \texttt{x} column is also repeated so that each value under it
+        matches the original \texttt{y\_*}.
+        \par
+        The lengthened data frame is as follows:
+<<d2-pivot-longer, echo = FALSE>>=
+@
       \end{solution}
 
     \part
@@ -159,7 +179,15 @@ d2 %>%
 d3 %>% pivot_wider(names_from = x, values_from = y)
 @
       \begin{solution}
-        % TODO
+        The code chunk above will widen the data frame into two rows and three columns.
+        In particular, the values under \texttt{x} will be split into an \texttt{a} and
+        \texttt{b} column. The values under these new columns are taken from the values
+        under the old \texttt{y} column that correspond to the column name under the
+        original \texttt{x}. Duplicate entries under \texttt{id} are also removed.
+        \par
+        The widened data frame is as follows:
+<<d3-pivot-wider, echo = FALSE>>=
+@
       \end{solution}
 
     \part
@@ -178,7 +206,15 @@ d3 %>% pivot_wider(names_from = x, values_from = y)
 d4 %>% pivot_wider(names_from = y, values_from = z)
 @
       \begin{solution}
-        % TODO
+        The code chunk above will widen the data frame into two rows and three columns.
+        In particular, the values under \texttt{y} will be split into a \texttt{b} and
+        \texttt{d} column. The values under these new columns are taken from the values
+        under the old \texttt{z} column that correspond to the column name under the
+        original \texttt{y}. Duplicate entries under \texttt{x} are also removed.
+        \par
+        The widened data frame is as follows:
+<<d4-pivot-wider, echo = FALSE>>=
+@
       \end{solution}
 
   \end{parts}
