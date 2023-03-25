@@ -246,8 +246,29 @@ d4 %>% pivot_wider(names_from = y, values_from = z)
       Make a suitable plot of these data, bearing in mind the aims of the analysis. Add a
       regression line to your plot.
       \begin{solution}
-        % TODO
+        As we are interested in predicting the amount of open space from the population,
+        knowing the former variable's relationship to the latter is of interest. Thus, we
+        draw a scatter plot to illustrate the relationship between city population (the
+        explanatory variable) and the amount of open space (the response variable). We
+        also add a linear regression line to the plot (see \autoref{fig:space} for the
+        outputted scatter plot):
+<<space-regression-plot, eval = FALSE>>=
+ggplot(space, aes(population, open_space)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "City population (thousands)", y = "Open space (acres)")
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<space-regression-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Effect of US cities' population sizes on their open space}
+    \label{fig:space}
+  \end{figure}
+\fi
 
     \part[2]
       Fit a regression predicting open space from population, and display the results.
