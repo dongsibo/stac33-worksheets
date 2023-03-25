@@ -372,7 +372,7 @@ homes.tidy %>% count(bdrms)
         Bootstrapping_(statistics)}{bootstrapping}.)
         \par
         Thus, there are reasonable doubts as to whether the requirements to apply the
-        \(t\)\nobreakdash-test hold.
+        \(t\)\nobreakdash-test hold.\\
         \rule{\linewidth}{\arrayrulewidth}
         Bootstrapping can help us verify whether the sampling distributions of the sample
         means for \num{3}\nobreakdash-bedroom and \num{4}\nobreakdash-bedroom homes are

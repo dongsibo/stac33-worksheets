@@ -203,8 +203,8 @@ ggplot(bidri, aes(sample = copper)) +
         \leq \alpha\); the evidence against \(H_0\) is strong, so we reject it. In other
         words, we can conclude that the Bidri ware at this museum comes from a population
         with a median percentage of copper not equal to the \num{4}~percent found in
-        other Bidri ware.
-        \par\rule{\linewidth}{\arrayrulewidth}
+        other Bidri ware.\\
+        \rule{\linewidth}{\arrayrulewidth}
         Similarly, had our alternative hypothesis been \(H_a \colon M < 4\), we would
         still have been able to reject \(H_0\) but with a stronger conclusion: the Bidri
         ware at this museum come from a population with \emph{less than} \num{4}~percent

@@ -218,7 +218,7 @@ ggplot(tuna, aes(canned_in, price)) +
         which is exactly what we concluded in Part~\ref{part@1@4} by not rejecting
         \(H_0\). Moreover, our splits for each group are extremely close to fifty-fifty,
         which correlates with the large \(p\)\nobreakdash-value of~\num{\Sexpr{round(
-        tuna.mtest$test[3, 2], 2)}} that we previously obtained.
+        tuna.mtest$test[3, 2], 2)}} that we previously obtained.\\
         \rule{\linewidth}{\arrayrulewidth}
         Note that the total number of observations in the contingency table
         is~\num{\Sexpr{sum(tuna.mtest$table)}}, while the total number of observations in

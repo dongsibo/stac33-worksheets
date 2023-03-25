@@ -186,7 +186,7 @@ ggplot(fuel, aes(sample = Diff)) +
         p.value, 2)}}. Assuming a significance level of~\(\alpha = 0.05\), \(p \leq
         \alpha\); the evidence against \(H_0\) is strong, so we reject it. In other
         words, we can conclude that there is a difference between the average fuel
-        efficiency measurements of the driver and the computer.
+        efficiency measurements of the driver and the computer.\\
         \rule{\linewidth}{\arrayrulewidth}
         Bootstrapping can help us verify whether the sampling distribution of the sample
         mean of the fuel efficiency measurement differences is normal. First, we need to
