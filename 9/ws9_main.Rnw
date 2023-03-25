@@ -235,7 +235,11 @@ d4 %>% pivot_wider(names_from = y, values_from = z)
     \part[1]
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the CSV file (from the URL above) into a variable and display its
+        contents:
+<<read-space-data, message = FALSE>>=
+(space <- read_csv("http://ritsokiguess.site/datafiles/open-space.csv"))
+@
       \end{solution}
 
     \part[3]
