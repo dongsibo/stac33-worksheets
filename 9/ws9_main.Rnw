@@ -368,8 +368,39 @@ space.point + scale_x_log10() + scale_y_log10()
       Run a regression predicting log--open space from log-population. Display the
       results.
       \begin{solution}
-        % TODO
+        We fit a linear regression model with log-population as the predictor and
+        log--open space as the response:
+<<space-model2>>=
+space.m2 <- lm(log(open_space) ~ log(population), space)
+@
+        The model parameters are displayed as follows (see \autoref{tab:space2-params}
+        for the outputted table):
+<<space-model2-parameters, eval = FALSE>>=
+xtable(space.m2,
+       caption = "Log--open space model parameters",
+       label = "tab:space2-params") %>%
+  print(caption.placement = "top", booktabs = TRUE)
+@
+        Some model summaries are displayed as follows (see \autoref{tab:space2-glance}
+        for the outputted table):
+<<space-model2-summaries, eval = FALSE>>=
+glance(space.m2) %>%
+  select(!c(logLik:deviance, nobs)) %>%  # not show in summary(), so omit
+  xtable(caption = "Log--open space model summaries",
+         label = "tab:space2-glance") %>%
+  print(caption.placement = "top", include.rownames = FALSE, booktabs = TRUE)
+@
+        As previously mentioned in Part~\ref{part@2@3}, \texttt{summary()} would have
+        also sufficed for displaying the model parameters and summaries but at the cost
+        of more space.
       \end{solution}
+
+\ifprintanswers
+<<space-model2-parameters, echo = FALSE, results = "asis", message = FALSE>>=
+@
+<<space-model2-summaries, echo = FALSE, results = "asis", message = FALSE>>=
+@
+\fi
 
     \part[3]
       Using your regression of the previous part, predict the amount of open space in a
