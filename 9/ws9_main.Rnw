@@ -406,7 +406,15 @@ glance(space.m2) %>%
       Using your regression of the previous part, predict the amount of open space in a
       city that has a population of~\num{500} (thousand). Show your process.
       \begin{solution}
-        % TODO
+        Our linear regression model in Part~\ref{part@2@3} takes in some population size,
+        takes its log, and then predicts the corresponding log--open space. Thus, we can
+        predict the amount of open space given a population of \num{500}~thousand by
+        exponentiating the results from \texttt{predict()}:
+<<space-predict-open-space>>=
+(space.pop500 <- predict(space.m2, list(population = 500)) %>% exp())
+@
+        We see that our model predicts around \num{\Sexpr{space.pop500 %>%
+        round()}}~acres of open space for a city with a population of \num{500}~thousand.
       \end{solution}
 
   \end{parts}
