@@ -1,5 +1,7 @@
 % !Rnw weave = knitr
 \documentclass[addpoints,answers]{exam}
+\usepackage{booktabs}  % for fancy table rules, e.g., \toprule, \midrule
+\usepackage{caption}  % for better \caption above tables
 \usepackage[
   a4paper,
   margin = 2cm,
@@ -93,10 +95,16 @@ different issues related to regression.
 
 \noindent
 \textbf{Note:} This assignment (and the \coursecode{} course) make(s) use of the
-collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}:
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}.
+In addition, the \href{https://broom.tidymodels.org/}{broom} package is used for
+reporting information about models in a compact format and the \href{https://%
+cran.r-project.org/web/packages/xtable/}{xtable} package is used for displaying such
+information in \LaTeX\ tables:
 
 <<common, message = FALSE>>=
 library(tidyverse)
+library(broom)
+library(xtable)
 @
 
 \begin{questions}
@@ -273,8 +281,37 @@ ggplot(space, aes(population, open_space)) +
     \part[2]
       Fit a regression predicting open space from population, and display the results.
       \begin{solution}
-        % TODO
+        We fit a linear regression model with population as the predictor and open space
+        as the response:
+<<space-model1>>=
+space.m1 <- lm(open_space ~ population, space)
+@
+        The model parameters are displayed as follows (see \autoref{tab:space1-params}
+        for the outputted table):
+<<space-model1-parameters, eval = FALSE>>=
+xtable(space.m1,
+       caption = "Open space model parameters",
+       label = "tab:space1-params") %>%
+  print(caption.placement = "top", booktabs = TRUE)
+@
+        Some model summaries are displayed as follows (see \autoref{tab:space1-glance}
+        for the outputted table):
+<<space-model1-summaries, eval = FALSE>>=
+glance(space.m1) %>%
+  select(!c(logLik:deviance, nobs)) %>%  # not shown in summary(), so omit
+  xtable(caption = "Open space model summaries", label = "tab:space1-glance") %>%
+  print(caption.placement = "top", include.rownames = FALSE, booktabs = TRUE)
+@
+        Note that \texttt{summary()} would have also sufficed for displaying the model
+        parameters and summaries but at the cost of more space.
       \end{solution}
+
+\ifprintanswers
+<<space-model1-parameters, echo = FALSE, results = "asis", message = FALSE>>=
+@
+<<space-model1-summaries, echo = FALSE, results = "asis", message = FALSE>>=
+@
+\fi
 
     \part[2]
       Is there a significant effect of population on the amount of open space? Explain
