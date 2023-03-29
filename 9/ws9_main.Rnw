@@ -432,7 +432,11 @@ glance(space.m2) %>%
     \part[1]
       Read in and display (some of) the data.
       \begin{solution}
-        % TODO
+        We read the CSV file (from the URL above) into a variable and display part of its
+        contents:
+<<read-heights-data, message = FALSE>>=
+(heights <- read_csv("http://ritsokiguess.site/datafiles/Galton.csv"))
+@
       \end{solution}
 
     \part[2]
