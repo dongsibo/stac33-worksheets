@@ -1,5 +1,6 @@
 % !Rnw weave = knitr
 \documentclass[addpoints,answers]{exam}
+\usepackage{amsmath}  % for \nobreakdash, etc.
 \usepackage{booktabs}  % for fancy table rules, e.g., \toprule, \midrule
 \usepackage{caption}  % for better \caption above tables
 \usepackage[
@@ -317,7 +318,22 @@ glance(space.m1) %>%
       Is there a significant effect of population on the amount of open space? Explain
       briefly. What does this mean, in the context of the data?
       \begin{solution}
-        % TODO
+        We are interested in testing \(H_0 \colon \beta_1 = 0\) against \(H_a \colon
+        \beta_1 \neq 0\), where \(\beta_1\) is the true slope of the linear regression
+        model in Part~\ref{part@2@3}. From the ``population'' row in
+        \autoref{tab:space1-params}, we see that our \(p\)\nobreakdash-value is around
+        \num{\Sexpr{summary(space.m1)$coeff["population", "Pr(>|t|)"] %>% round(2)}}.
+        Assuming a significance level of~\(\alpha = 0.05\), \(p \leq \alpha\); the
+        evidence against \(H_0\) is strong, so we reject it. In other words, we can
+        conclude that population does have a significant effect on the amount of open
+        space.
+        \par
+        Again, from the ``population'' row in \autoref{tab:space1-params}, we see that
+        our estimated slope (\(\hat\beta_1\)) is around \num{\Sexpr{space.m1$
+        coeff["population"] %>% round(1)}}. Coupled with the conclusion above, this means
+        that a city with a population larger by one thousand is also expected to have an
+        additional \num{\Sexpr{space.m1$coeff["population"] %>% round(1)}}~acres of open
+        space.
       \end{solution}
 
     \part[2]
