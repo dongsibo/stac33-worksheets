@@ -262,10 +262,11 @@ d4 %>% pivot_wider(names_from = y, values_from = z)
         also add a linear regression line to the plot (see \autoref{fig:space} for the
         outputted scatter plot):
 <<space-regression-plot, eval = FALSE>>=
-ggplot(space, aes(population, open_space)) +
+(ggplot(space, aes(population, open_space)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "City population (thousands)", y = "Open space (acres)")
+  labs(x = "City population (thousands)", y = "Open space (acres)") ->
+    space.point)
 @
       \end{solution}
 
@@ -343,8 +344,25 @@ glance(space.m1) %>%
       Cite your source, or describe your thought process, as appropriate. (In R,
       \texttt{log()} means natural (base~\(e\)) log, which is fine here.)
       \begin{solution}
-        % TODO
+        One way to achieve a scatter plot with log-scales is to scale the \(x\) and~\(y\)
+        aesthetics while leaving the original data untouched. This can be done with
+        \texttt{scale\_*\_log10()} per \texttt{?scale\_x\_continuous}:
+<<space-log-regression-plot, eval = FALSE>>=
+space.point + scale_x_log10() + scale_y_log10()
+@
+        A plot scaled using this method utilizes the original, unscaled values in the
+        tick labels, which lends itself to easier interpretation.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<space-log-regression-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Effect of US cities' log--population sizes on their log--open space}
+    \label{fig:space-log}
+  \end{figure}
+\fi
 
     \part[2]
       Run a regression predicting log--open space from log-population. Display the
