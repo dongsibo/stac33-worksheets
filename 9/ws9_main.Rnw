@@ -596,8 +596,50 @@ predict(heights.m1, heights.new)
       Obtain (i)~a plot of residuals against fitted values, (ii)~a normal quantile plot
       of residuals. How do you know that these are both satisfactory?
       \begin{solution}
-        % TODO
+        We draw a plot of the residuals against the fitted values to assess whether the
+        relationship between the mid-heights of parents and their child's height is
+        indeed linear (see \autoref{fig:heights1-resid} for the outputted residual plot):
+<<heights-model1-residual-plot, eval = FALSE>>=
+ggplot(heights.m1, aes(.fitted, .resid)) +
+  geom_jitter() +
+  labs(x = "Fitted values", y = "Residuals")
+@
+        The points in our residual plot appear to be randomly distributed around \num{0}
+        on the vertical axis, so there are no problems here; linear regression appears to
+        be alright.
+        \par
+        We also draw a normal Q--Q plot of the residuals to compare against a normal
+        theoretical distribution (see \autoref{fig:heights1-qq} for the outputted Q--Q
+        plot):
+<<heights-model1-qq-plot, eval = FALSE>>=
+ggplot(heights.m1, aes(sample = .resid)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(x = "Normal theoretical quantiles", y = "Residual quantiles")
+@
+        Most of the points in our Q--Q plot roughly follow the straight line. Some of the
+        high points bunch together, indicating a short left tail. However, this does not
+        pose a problem with the \(t\)~procedures in regression, so we are satisfied with
+        the normality of the residuals displayed in this plot.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<heights-model1-residual-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Residual plot for linear regression on heights of children}
+    \label{fig:heights1-resid}
+  \end{figure}
+
+  \begin{figure}[h]
+    \centering
+<<heights-model1-qq-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Normal Q--Q plot for residuals of linear regression on heights of children}
+    \label{fig:heights1-qq}
+  \end{figure}
+\fi
 
   \end{parts}
 
