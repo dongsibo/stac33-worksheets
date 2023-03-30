@@ -509,11 +509,50 @@ heights.gg + geom_jitter() + geom_smooth()
 \fi
 
     \part[2]
-      Obtain the regression line for predicting child's height from parent's mid-height.
+      Obtain the regression line for predicting child's height from parents' mid-height.
       (That is, fit the regression model and display the output.)
       \begin{solution}
-        % TODO
+        We fit a linear regression model with mid-height of parents as the predictor and
+        child's height as the response:
+<<heights-model1>>=
+heights.m1 <- lm(child ~ parent, heights)
+@
+        The model parameters are displayed as follows (see \autoref{tab:heights1-params}
+        for the outputted table):
+<<heights-model1-parameters, eval = FALSE>>=
+xtable(heights.m1,
+       caption = "Child height model parameters",
+       label = "tab:heights1-params") %>%
+  print(caption.placement = "top", booktabs = TRUE)
+@
+        Some model summaries are displayed as follows (see \autoref{tab:heights1-glance}
+        for the outputted table):
+<<heights-model1-summaries, eval = FALSE>>=
+glance(heights.m1) %>%
+  select(!c(logLik:deviance, nobs)) %>%  # not shown in summary(), so omit
+  xtable(caption = "Child height model summaries",
+         label = "tab:heights1-glance") %>%
+  print(caption.placement = "top", include.rownames = FALSE, booktabs = TRUE)
+@
+        As previously mentioned in Part~\ref{part@2@3} of \ref{question@2},
+        \texttt{summary()} would have also sufficed for displaying the model parameters
+        and summaries but at the cost of more space.
+        \par
+        From the model summaries, we can see that our \(R^2\) is around
+        \num{\Sexpr{summary(heights.m1)$r.squared %>% round(2)}}, which indicates a weak
+        linear relationship between our variables. However, the \(p\)\nobreakdash-value
+        for the slope in the ``parent'' row of our table of model parameters is basically
+        \num{0}, indicating that the slope is significantly different from~\num{0}. In
+        other words, taller parents do still have taller children on average (based on
+        this model).
       \end{solution}
+
+\ifprintanswers
+<<heights-model1-parameters, echo = FALSE, results = "asis", message = FALSE>>=
+@
+<<heights-model1-summaries, echo = FALSE, results = "asis", message = FALSE>>=
+@
+\fi
 
     \part[4]
       The paper that Galton wrote about these data was called ``Regression Towards
