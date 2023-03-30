@@ -9,6 +9,11 @@
 *.RData
 *.Rhistory
 
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
 .Rproj.user/
 cache/
 

@@ -2,6 +2,7 @@
 \documentclass[addpoints,answers]{exam}
 \usepackage{amsmath}  % for \nobreakdash, etc.
 \usepackage{booktabs}  % for fancy table rules, e.g., \toprule, \midrule
+\usepackage{biblatex}
 \usepackage{caption}  % for better \caption above tables
 \usepackage[
   a4paper,
@@ -61,6 +62,7 @@ knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
 
 % Miscellaneous
 % -------------
+\addbibresource{ws9.bib}
 \synctex=1
 
 \begin{document}
@@ -565,7 +567,29 @@ glance(heights.m1) %>%
       ``Towards mediocrity'' means ``towards the mean''. You might like to do some
       predictions.
       \begin{solution}
-        % TODO
+        One definition of ``regression'' that Galton may have used is ``the act of going
+        back to a previous place or state; return or reversion'' \parencite{dict:regression}.
+        Thus, the meaning of Galton's article title can be interpreted as ``going back
+        towards the mean''.
+        \par
+        We can further explore what Galton meant by trying some predictions with our
+        linear regression model from Part~\ref{part@3@5}. We first create a new data
+        frame with mid-heights of parents that are considered to be short and tall:
+<<heights-new-data>>=
+(heights %>%
+  summarize(min = min(parent), max = max(parent)) %>%
+  pivot_longer(everything(), names_to = NULL, values_to = "parent") ->
+    heights.new)
+@
+        We then predict the height of the child for each of the parents' mid-heights
+        using our model:
+<<heights-model1-predict>>=
+predict(heights.m1, heights.new)
+@
+        We can see that children whose parents are short are also predicted to be short
+        but not as short as their parents. Similar observations can be made for children
+        of tall parents. In both cases, the heights of the children are closer to the
+        \emph{average} height of all children: we have regressed towards the mean.
       \end{solution}
 
     \part[3]
@@ -578,5 +602,9 @@ glance(heights.m1) %>%
   \end{parts}
 
 \end{questions}
+
+\clearpage
+
+\printbibliography[heading = bibintoc]
 
 \end{document}
