@@ -100,12 +100,14 @@ collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{t
 In addition, the \href{https://broom.tidymodels.org/}{broom} package is used for
 reporting information about models in a compact format and the \href{https://%
 cran.r-project.org/web/packages/xtable/}{xtable} package is used for displaying such
-information in \LaTeX\ tables:
+information in \LaTeX\ tables. We also set the random number generator (RNG) seed for
+reproducibility in certain portions of this worksheet (i.e., for \texttt{geom\_jitter()}):
 
 <<common, message = FALSE>>=
 library(tidyverse)
 library(broom)
 library(xtable)
+set.seed(ymd("2023-03-27"))
 @
 
 \begin{questions}
@@ -442,14 +444,38 @@ glance(space.m2) %>%
     \part[2]
       Make a suitable plot of your data frame.
       \begin{solution}
-        % TODO
+        As we are interested in predicting the height of children from their parents'
+        mid-height in Part~\ref{part@3@5}, knowing the former variable's relationship to
+        the latter is of interest. Thus, we draw a scatter plot to illustrate the
+        relationship between the mid-height of parents (the explanatory variable) and
+        their child's height (the response variable; see \autoref{fig:heights1} for the
+        outputted scatter plot):
+<<heights-scatter-plot, eval = FALSE>>=
+ggplot(heights, aes(parent, child)) +
+  labs(x = "Mid-height of parents", y = "Height of child") -> heights.gg
+heights.gg + geom_point()
+@
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<heights-scatter-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Effect of parents' mid-heights on their children's heights}
+    \label{fig:heights1}
+  \end{figure}
+\fi
 
     \part[2]
       There are \num{928}~individuals, but apparently fewer points than that on your
       graph. What happened to the others?
       \begin{solution}
-        % TODO
+        All \num{\Sexpr{nrow(heights)}}~points must be in \autoref{fig:heights1}, so it
+        must be the case that many of the points have the same coordinates: there are
+        overlapping points. This is called ``overplotting''. Also, recall that Galton
+        classified the measured heights into \num{1}\nobreakdash-inch-wide
+        \emph{intervals}; this explains why so many points overlap.
       \end{solution}
 
     \part[4]
@@ -457,8 +483,30 @@ glance(space.m2) %>%
       Add a smooth trend. What seems to have happened, and what does the smooth trend
       show?
       \begin{solution}
-        % TODO
+        We reduce overplotting and add a regression line to \autoref{fig:heights1} (see
+        \autoref{fig:heights2} for the newly outputted scatter plot):
+<<heights-regression-plot, eval = FALSE>>=
+heights.gg + geom_jitter() + geom_smooth()
+@
+        \texttt{geom\_jitter()} adds some random variation to the location of points so
+        that same-valued points do not completely overlap. This allows us to see the
+        concentration of points at each location in our scatter plot.
+        \par
+        The regression line in our plot suggests a positive, linear correlation between
+        the mid-heights of parents and their children's heights. However, this
+        relationship does not appear that strong due to the large vertical spread of the
+        points.
       \end{solution}
+
+\ifprintanswers
+  \begin{figure}[h]
+    \centering
+<<heights-regression-plot, echo = FALSE, message = FALSE>>=
+@
+    \caption{Effect of parents' mid-heights on their children's heights}
+    \label{fig:heights2}
+  \end{figure}
+\fi
 
     \part[2]
       Obtain the regression line for predicting child's height from parent's mid-height.
