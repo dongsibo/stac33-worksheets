@@ -1,0 +1,267 @@
+% !Rnw weave = knitr
+\documentclass[addpoints,answers]{exam}
+\usepackage[
+  a4paper,
+  margin = 2cm,
+  footskip = 20pt  % footer pushed too far with exam class; adjust with footskip
+]{geometry}
+%\usepackage[utf8]{inputenc}  % this is ignored with utf8 based engines like XeTeX
+\usepackage{lastpage}
+\usepackage{siunitx}  % for number formatting
+
+% These packages are best loaded last after other packages.
+\usepackage[pdfusetitle]{hyperref}
+% These packages must be loaded after hyperref.
+\usepackage{ellipsis}  % for better ellipses
+%\usepackage{refcheck}  % uncomment to check references
+
+% Global R settings
+% -----------------
+<<setup, cache = FALSE, include = FALSE>>=
+knitr::opts_chunk$set(fig.asp = 5 / 8, out.width = "75%")
+knitr::opts_knit$set(concordance = TRUE)  # required for SyncTeX with .Rnw
+@
+
+% Commands
+% --------
+\newcommand{\assignment}{Worksheet~10}
+\newcommand{\coursecode}{STAC33H3~S}
+\newcommand{\semester}{Winter 2023}
+\newcommand{\name}{Sibo Dong}
+
+% Typography
+% ----------
+\title{\coursecode, \semester: \assignment}
+% This file is shared in a public Git repository, so a dummy student number is used
+% below for privacy, just in case.
+\author{\name \\ \texttt{1234567890}}
+\date{Monday April~3, 2023 12:00pm}
+
+\runningheadrule
+\header{\coursecode, \semester}{}{\assignment}
+\footer{}{}{Page \thepage \ of \pageref{LastPage}}
+
+% Use titled questions with an altered question format to somewhat match markup in
+% worksheet_10_c33.html
+\qformat{%
+  \textbf{Question \thequestion: \thequestiontitle}%
+  \addcontentsline{toc}{section}{\thequestiontitle}%
+  \dotfill (\totalpoints\ points)%
+}
+
+% NOTE: If page breaks for knitr code chunks aren't needed in the final document, it is
+% safe to leave the \renewenvironment line commented out.
+%
+% Don't define kframe environment; kframe uses frame, which does not interact well inside
+% of another framed box, like the box around solutions from the exam class. The downside
+% to doing this is that we lose background colour since there is no more box/frame, but
+% page breaks are worth it.
+%\renewenvironment{kframe}{}{}
+
+% Miscellaneous
+% -------------
+\synctex=1
+
+\begin{document}
+
+\maketitle
+\thispagestyle{foot}  % include only footer on title page
+
+\noindent
+Questions are below. Dr.~Butler's solutions---see \href{https://ritsokiguess.site/STAC33%
+/worksheet_10_c33.html}{\texttt{worksheet\_10\_c33.html}}---are below all the question
+parts for a question; scroll down there if you get stuck. There is extra discussion below
+that for some of the questions; you might find that interesting to read, maybe after
+tutorial.
+
+\medskip
+\noindent
+For these worksheets, you will learn the most by spending a few minutes thinking about
+how you would answer each question before you look at Dr.~Butler's solution. There are no
+grades attached to these worksheets, so feel free to guess: it makes no difference at all
+how wrong your initial guess is.
+
+\bigskip
+\begin{center}
+  \gradetable[v][questions]
+\end{center}
+
+\newpage
+
+\noindent
+\textbf{Note:} This assignment (and the \coursecode{} course) make(s) use of the
+collection of packages from the \href{https://en.wikipedia.org/wiki/Tidyverse}{tidyverse}:
+
+<<common, message = FALSE>>=
+library(tidyverse)
+@
+
+\begin{questions}
+
+\titledquestion{Behavior Risk Factor Surveillance System~2}
+  The Centers for Disease Prevention and Control (in the US) run a survey called the
+  Behavior Risk Factor Surveillance System, in which people submit information about
+  health conditions and risk behaviours. The data we have are percentages of adults
+  within each state for whom the item is true. The variables we are interested in here
+  are:
+
+  \begin{itemize}
+    \item \texttt{FruitVeg5} -- the percent of respondents who eat at least
+      \num{5}~servings of fruits and vegetables every day (response).
+    \item \texttt{SmokeEveryday} -- the percent of respondents who smoke every day.
+    \item \texttt{EdCollege} -- the percent of respondents who have completed a college
+      diploma or university degree.
+  \end{itemize}
+
+  The data are in \url{http://ritsokiguess.site/datafiles/brfss_no_utah.csv}. There are
+  many other variables, which you can ignore. The state of Utah is omitted.
+
+  You might have seen these data before; if you have, you might recall that we omitted
+  Utah, because (for religious reasons) a lot of people do not smoke there for reasons
+  that have nothing to do with eating fruits and vegetables.
+
+  \begin{parts}
+
+    \part
+      Read in and display (a little of) the data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Make a graph that shows the relationships, if any, between the response and the two
+      explanatory variables.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Describe any trends you see on your graph(s) (think form, direction, strength if
+      you find it helpful).
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Run a regression predicting the percent of adults who eat \num{5}~servings of
+      fruits and vegetables daily from \texttt{EdCollege} and \texttt{SmokeEveryday}, and
+      display the results.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Draw a complete set of residual plots for this regression (three or four plots,
+      depending how you count them). Do you have any concerns? Explain briefly.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\newpage
+
+\titledquestion{Houses in Duke Forest, North Carolina}
+  The data in \url{http://ritsokiguess.site/datafiles/duke_forest.csv} are of houses that
+  were sold around November 2020 in the Duke Forest area of Durham, North Carolina. For
+  each house, the selling price (in~\unit{US\$}), called \texttt{price}, was recorded,
+  along with some other features of the house:
+
+  \begin{itemize}
+    \item \texttt{bed} -- the number of bedrooms.
+    \item \texttt{bath} -- the number of bathrooms.
+    \item \texttt{area} -- the area of the inside of the house, in square feet.
+    \item \texttt{year\_built} -- the year the house was originally built.
+  \end{itemize}
+
+  Our aim is to predict the selling price of a house from its other features. There are
+  \num{97}~houses in the data set.
+
+  Note: This is rather a long question, but Dr.~Butler wanted to give you a chance to
+  practice everything.
+
+  \begin{parts}
+
+    \part
+      Read in and display (some of) the data.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Make a graph of selling price against each of the explanatory variables, using one
+      \texttt{ggplot()} line.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Comment briefly on your plots.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Fit a regression predicting \texttt{price} from the other variables, and display
+      the results.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      What is the meaning of the number in the \texttt{bath} row in the \texttt{Estimate}
+      column?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Plot the residuals from your regression against the fitted values. What evidence is
+      there that a transformation of the selling prices might be a good idea? (Hint: Look
+      at the right side of your graph.)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Run Box-Cox. What transformation of \texttt{price} is suggested, if any?
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Rerun your regression with a suitably transformed response variable, and display
+      the results.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Confirm that the plot of residuals against fitted values now looks better.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      Build a better model by removing any explanatory variables that play no role, one
+      at a time.
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+    \part
+      If you want to, make a full set of residual plots for your final model (residuals
+      vs. fitted values, normal quantile plot of residuals, residuals vs. all the
+      explanatory) and convince yourself that all is now at least reasonably good.
+      (Dr.~Butler allow for the possibility that you are now bored with this question and
+      would like to move on to something else, but Dr.~Butler had already done these, so
+      \dots)
+      \begin{solution}
+        % TODO
+      \end{solution}
+
+  \end{parts}
+
+\end{questions}
+
+\end{document}
